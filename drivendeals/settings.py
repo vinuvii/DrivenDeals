@@ -78,7 +78,7 @@ WSGI_APPLICATION = 'drivendeals.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'DrivenDeals',
+        'NAME': 'drivendeals',
         'USER': 'root',
         'PASSWORD': '',
         'HOST': 'localhost',
