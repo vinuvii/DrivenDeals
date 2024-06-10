@@ -1,5 +1,6 @@
 from .forms import UserProfileForm
 from django.contrib.auth.decorators import login_required
+from django.shortcuts import render
 
 def index(request):
     return render(request, 'user/profile.html')
@@ -30,6 +31,11 @@ def favourites(request):
 def my_listings(request):
     # Implement logic for my listings
     return render(request, 'user/my_listings.html')
+
+@login_required
+def my_bids(request):
+    # Your view logic here
+    return render(request, 'my_bids.html')
 
 @login_required
 def logout(request):
