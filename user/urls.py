@@ -7,5 +7,6 @@ urlpatterns = [
     path('profile/edit/', views.edit_profile, name='edit_profile'),
     path('favourites/', views.favourites, name='favourites'),
     path('my_listings/', views.my_listings, name='my_listings'),
+    path('my_bids/', views.my_bids, name='my_bids'),
     path('logout/', views.logout, name='logout'),
 ]

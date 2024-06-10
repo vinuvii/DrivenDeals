@@ -32,6 +32,11 @@ def my_listings(request):
     return render(request, 'user/my_listings.html')
 
 @login_required
+def my_bids(request):
+    # Implement logic for my listings
+    return render(request, 'user/my_bids.html')
+
+@login_required
 def logout(request):
     auth_logout(request)
     return redirect('login')  # Assuming you have a login view to redirect to
