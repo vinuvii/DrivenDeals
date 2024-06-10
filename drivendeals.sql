@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 09, 2024 at 05:12 PM
+-- Generation Time: Jun 10, 2024 at 10:51 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -169,7 +169,8 @@ CREATE TABLE `django_admin_log` (
 
 INSERT INTO `django_admin_log` (`id`, `action_time`, `object_id`, `object_repr`, `action_flag`, `change_message`, `content_type_id`, `user_id`) VALUES
 (1, '2024-06-09 14:11:18.957433', '1', 'Q7 3.0 quattro TDI Premium Plus', 1, '[{\"added\": {}}]', 7, 1),
-(2, '2024-06-09 15:04:14.210318', '2', 'Mercedes-Benz E-Class E 450 4MATIC WAGON AMG', 1, '[{\"added\": {}}]', 7, 1);
+(2, '2024-06-09 15:04:14.210318', '2', 'Mercedes-Benz E-Class E 450 4MATIC WAGON AMG', 1, '[{\"added\": {}}]', 7, 1),
+(3, '2024-06-10 07:23:30.699942', '3', 'Toyota Corolla S', 1, '[{\"added\": {}}]', 7, 1);
 
 -- --------------------------------------------------------
 
@@ -290,7 +291,8 @@ CREATE TABLE `vehicles_vehicle` (
 
 INSERT INTO `vehicles_vehicle` (`id`, `model`, `year`, `price`, `picture`, `description`) VALUES
 (1, 'Q7 3.0 quattro TDI Premium Plus', 2012, '18500000.00', 'vehicle_pictures/2012_Q7_3.0_quattro_TDI_Premium_Plus.png', '2012 Audi Q7 3.0 Quattro TDI\r\n\r\n Super SHARP !\r\n - Desirable Diesel + \r\n3 Row Seats + \r\nALL Wheel Drive - \r\nSHARP\r\nDriven less than 9k Miles per year (112k miles total)\r\nGreat Fuel Economy almost 30 MPG HWY !!\r\n\r\nAmazing Car !!'),
-(2, 'Mercedes-Benz E-Class E 450 4MATIC WAGON AMG', 2019, '7689000.00', 'vehicle_pictures/2019_Mercedes-Benz_E-Class_E_450_4MATIC_WAGON_AMG.png', '2019 MERCEDES BENZ E450 4MATIC WAGON WITH REAR JUMP SEAT FOR 7 PASSENGER SEATING\r\n\r\nAMG APPEARENCE PKG.\r\n\r\nPREMIUM PKG.\r\n\r\nWHITE EXTERIOR WITH A BEAUTIFUL BEIGE MB TEX INTERIOR.\r\n\r\n3.0 LITER TWIN TURBOCHARGED ENGINE THAT DELIVERS OUTSTANDING PERFORMANCE AND SUPERIOR FUEL ECONOMY ALONG WITH THE LEGENDARY MERCEDES BENZ DRIVING EXPERIENCE.\r\n\r\nSMOOTH AND RESPONSIVE AUTOMATIC TRANSMISSION.\r\n\r\nALL WHEEL DRIVE FOR ENHANCED SAFTEY AND TRACTION IN ALL WEATHER CONDITIONS.\r\n\r\nICE COLD FRONT AND REAR AIR COND.\r\n\r\nHEATED FRONT SEATS.\r\n\r\nALL POWER.\r\n\r\nPOWER GLASS SLIDING SUNROOF.');
+(2, 'Mercedes-Benz E-Class E 450 4MATIC WAGON AMG', 2019, '7689000.00', 'vehicle_pictures/2019_Mercedes-Benz_E-Class_E_450_4MATIC_WAGON_AMG.png', '2019 MERCEDES BENZ E450 4MATIC WAGON WITH REAR JUMP SEAT FOR 7 PASSENGER SEATING\r\n\r\nAMG APPEARENCE PKG.\r\n\r\nPREMIUM PKG.\r\n\r\nWHITE EXTERIOR WITH A BEAUTIFUL BEIGE MB TEX INTERIOR.\r\n\r\n3.0 LITER TWIN TURBOCHARGED ENGINE THAT DELIVERS OUTSTANDING PERFORMANCE AND SUPERIOR FUEL ECONOMY ALONG WITH THE LEGENDARY MERCEDES BENZ DRIVING EXPERIENCE.\r\n\r\nSMOOTH AND RESPONSIVE AUTOMATIC TRANSMISSION.\r\n\r\nALL WHEEL DRIVE FOR ENHANCED SAFTEY AND TRACTION IN ALL WEATHER CONDITIONS.\r\n\r\nICE COLD FRONT AND REAR AIR COND.\r\n\r\nHEATED FRONT SEATS.\r\n\r\nALL POWER.\r\n\r\nPOWER GLASS SLIDING SUNROOF.'),
+(3, 'Toyota Corolla S', 2015, '9800000.00', 'vehicle_pictures/2015_Toyota_Corolla_S.png', 'The 2015 Toyota Corolla S Edition boasts a sleek silver exterior free of any significant flaws and an interior that’s black with grey inserts, maintaining a like-new appearance. It’s powered by a 1.8 Litre engine that operates flawlessly without any mechanical concerns. This car has been meticulously serviced, which is evident from the CarFax report available for review. It comes equipped with all the standard features from this model year, all in perfect working condition. The vehicle presents well, offering a smooth driving experience, free of mechanical troubles, and is fitted with a good set of tires on factory alloy wheels. Emphasizing its aesthetic appeal, ease of driving, fuel efficiency, and excellent maintenance record, this Corolla S Edition is ready to deliver a reliable and enjoyable driving experience.');
 
 --
 -- Indexes for dumped tables
@@ -426,7 +428,7 @@ ALTER TABLE `auth_user_user_permissions`
 -- AUTO_INCREMENT for table `django_admin_log`
 --
 ALTER TABLE `django_admin_log`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `django_content_type`
@@ -450,7 +452,7 @@ ALTER TABLE `user_userprofile`
 -- AUTO_INCREMENT for table `vehicles_vehicle`
 --
 ALTER TABLE `vehicles_vehicle`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Constraints for dumped tables

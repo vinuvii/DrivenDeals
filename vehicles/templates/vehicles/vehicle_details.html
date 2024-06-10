@@ -19,7 +19,7 @@
         </nav>
         <h2>{{ vehicle.model }} {{ vehicle.year }}</h2>
         <p>{{ vehicle.description }}</p>
-        print({{ vehicle.picture.url }})
+
         {% if vehicle.picture %}
           <img src="{{ vehicle.picture.url }}" class="img-fluid" alt="{{ vehicle.model }}">
         {% else %}
