@@ -5,93 +5,344 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Vehicle Details</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
   <style>
-    body { background-color: #f4f4f4; }
-    .container { max-width: 1200px; }
-    .breadcrumb { background-color: #e9ecef; }
-    .card { box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); }
-    .img-fluid { border-radius: 5px; }
-    #placeBidButton { background-color: #007bff; color: white; }
+    body {
+      background-color: #f8f9fa;
+      font-family: 'Open Sans', sans-serif;
+    }
+
+    .container {
+      max-width: 1200px;
+    }
+
+    .breadcrumb {
+      background-color: transparent;
+      padding: 0;
+    }
+
+    .card {
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    }
+
+    .img-fluid {
+      border-radius: 5px;
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+    }
+
+    .modal-dialog {
+      max-width: 800px;
+      background: url('https://images.frandroid.com/wp-content/uploads/2016/02/google_car.jpg') no-repeat center center;
+      background-size: cover;
+      border-radius: 20px;
+      position: relative;
+    }
+
+    .vehicle-gallery {
+      position: relative;
+    }
+
+    .vehicle-gallery img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+    }
+
+    .vehicle-details-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .vehicle-info {
+      background-color: #f8f9fa;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    }
+
+    .vehicle-info h2 {
+      margin-top: 0;
+    }
+
+    .seller-info {
+      background-color: #f8f9fa;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+      margin-bottom: 20px;
+    }
+
+    .seller-info h5 {
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .modal-content {
+      background-color: rgba(255, 255, 255, 0.9);
+      border-radius: 20px;
+      padding: 20px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .modal-header {
+      border-bottom: none;
+    }
+
+    .modal-body {
+      text-align: center;
+    }
+
+    .vehicle-name {
+      font-size: 24px;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    .vehicle-price {
+      font-size: 20px;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    .item-description {
+      text-align: left;
+      font-size: 16px;
+    }
+
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 10px 0;
+    }
+
+    .reserve-status {
+      font-size: 16px;
+      font-weight: bold;
+      text-align: left;
+    }
+
+    .bids-total {
+      font-size: 16px;
+      font-weight: bold;
+      text-align: right;
+    }
+
+    .time-remaining {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 20px 0;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .time-remaining span {
+      margin: 0 5px;
+    }
+
+    .time-labels {
+      display: flex;
+      justify-content: center;
+      font-size: 12px;
+      color: #888;
+    }
+
+    .time-labels span {
+      margin: 0 5px;
+    }
+
+    .bid-values {
+      display: flex;
+      justify-content: space-around;
+      margin: 20px 0;
+    }
+
+    .bid-value {
+      background-color: #ADCCE9;
+      border: none;
+      color: white;
+      padding: 10px 20px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 14px;
+      margin: 4px 2px;
+      cursor: pointer;
+      border-radius: 10px;
+      transition: background-color 0.3s ease;
+      width: 145px;
+      height: 42px;
+    }
+
+    .bid-value:hover {
+      background-color: #77AAD9;
+    }
+
+    .form-control {
+      margin: 0;
+      border-radius: 0;
+      border-top-left-radius: 10px;
+      border-bottom-left-radius: 10px;
+    }
+
+    #placeBidButton {
+      margin-bottom: 20px;
+      background-color: #4C7397;
+      color: white;
+      border-radius: 10px;
+      transition: background-color 0.3s ease;
+      width: 145px;
+      display: 42px;
+      margin: 0 auto;
+    }
+
+    #placeBidButton:hover {
+      background-color: #77AAD9;
+    }
+
+    .max-bid-section {
+      text-align: left;
+      margin: 20px 0;
+    }
+
+    .max-bid-label {
+      font-size: 16px;
+      text-align: left;
+      margin-bottom: 10px;
+    }
+
+    .max-bid-input {
+      display: flex;
+      align-items: center;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .max-bid-currency {
+      font-weight: bold;
+      margin-right: 5px;
+    }
+
+    .terms {
+      font-size: 12px;
+      color: #888;
+      margin: 0;
+    }
+
+    .modal-background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 1;
+      border-radius: 20px;
+    }
+
+    .search-bar {
+      margin-bottom: 20px;
+    }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="row">
-      <div class="col-md-8">
-        <nav aria-label="breadcrumb">
-          <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="#">Back to previous page</a></li>
-            <li class="breadcrumb-item"><a href="#">Vehicle Marketplace</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Vehicle Details</li>
-          </ol>
-        </nav>
-        <h2>{{ vehicle.model }} {{ vehicle.year }}</h2>
-        <p>{{ vehicle.description }}</p>
-
-        {% if vehicle.picture %}
-          <img src="{{ vehicle.picture.url }}" class="img-fluid" alt="{{ vehicle.model }}">
-        {% else %}
-          <img src="https://via.placeholder.com/800x600" class="img-fluid" alt="{{ vehicle.model }}">
-        {% endif %}
+<div class="row">
+  <div class="col-md-12">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">Back to previous page</a></li>
+        <li class="breadcrumb-item"><a href="#">Vehicle Marketplace</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Vehicle Details</li>
+      </ol>
+    </nav>
+  </div>
+</div>
+<div class="container">
+  <div class="vehicle-details-grid">
+    <div class="vehicle-gallery">
+      <img src="{{ vehicle.picture.url }}" class="img-fluid" alt="{{ vehicle.model }}">
+      <div class="nav-buttons">
+        <button class="nav-button">&lt;</button>
+        <button class="nav-button">&gt;</button>
       </div>
-      <div class="col-md-4">
-        <div class="card">
-          <div class="card-body">
-            <h5 class="card-title">Seller Information</h5>
-            <p class="card-text">{{ vehicle.seller.username }}</p>
-            <p class="card-text">Seller Rating: {{ vehicle.seller.rating }}</p>
-            <h3 class="card-text">{{ vehicle.price }}</h3>
-            <p class="card-text">Ends in {{ vehicle.auction_end_time }}</p>
-            <button class="btn btn-primary btn-block" id="placeBidButton" data-toggle="modal" data-target="#placeBidModal">Place bid</button>
-            <button class="btn btn-outline-secondary btn-block">Add to watchlist</button>
-            <hr>
-            <p class="card-text">Get an inspection report</p>
-            <p class="card-text">Get delivery quotes</p>
+    </div>
+    <div class="vehicle-info">
+      <h2>{{ vehicle.model }} {{ vehicle.year }}</h2>
+      <div class="seller-info">
+        <h5>Seller Name</h5>
+        <p>Seller Location</p>
+        <p>Seller Email</p>
+        <p>Seller Phone Number</p>
+      </div>
+      <button class="btn btn-primary btn-block" id="placeBidButton" data-toggle="modal" data-target="#placeBidModal">Place Bid</button>
+      <button class="btn btn-outline-secondary btn-block">Add To Watch List</button>
+    </div>
+  </div>
+  <div class="row mt-3">
+    <div class="col-md-12">
+      <p>{{ vehicle.description }}</p>
+    </div>
+  </div>
+</div>
+<!-- Place Bid Pop Up -->
+<div class="modal fade" id="placeBidModal" tabindex="-1" role="dialog" aria-labelledby="placeBidModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Place Your Bid</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p class="vehicle-name">Vehicle Name</p>
+        <p class="vehicle-price">LKR 50,000</p>
+        <p class="item-description">Read the item description or contact seller for shipping information.</p>
+        <div class="info-row">
+          <p class="reserve-status">RESERVE NOT YET MET.</p>
+          <p class="bids-total">BIDS IN TOTAL FOR VEHICLE</p>
+        </div>
+        <div class="time-remaining">
+          <span>6</span> : <span>23</span> : <span>36</span> : <span>49</span>
+          <div class="time-labels">
+            <span>DAYS</span>
+            <span>HOURS</span>
+            <span>MINUTES</span>
+            <span>SECONDS</span>
           </div>
         </div>
+        <div class="bid-values">
+          <button class="bid-value">Value1</button>
+          <button class="bid-value">Value2</button>
+          <button class="bid-value">Value3</button>
+        </div>
+        <div class="max-bid-section">
+          <p class="max-bid-label">Or Enter Your Maximum Bid:</p>
+          <div class="max-bid-input">
+            <span class="max-bid-currency">LKR</span>
+            <input type="number" placeholder="Enter Your Maximum Bid" class="form-control">
+          </div>
+        </div>
+        <button class="btn btn-primary btn-block mb-3" id="placeBidButton">Place Bid</button> <!-- Added mb-3 class -->
+        <p class="terms mt-3"> <!-- Added mt-3 class -->
+          By placing a bid, you express consent to share your contact information with the seller and authorizing the seller to contact you regarding this vehicle. And if this bid wins, you are purchasing this item and legally required to make a payment before THE DATE. The item will be sent once payment is completed.
+        </p>
       </div>
     </div>
   </div>
-
-  <!-- Place Bid Pop Up -->
-  <div class="modal fade" id="placeBidModal" tabindex="-1" role="dialog" aria-labelledby="placeBidModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="placeBidModalLabel">Place your bid</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <p>Current bid: {{ vehicle.current_bid_amount }}</p>
-          <p>Buyer is responsible for vehicle pick-up or shipping</p>
-          <p>{{ vehicle.bids_count }} bids · Ends in {{ vehicle.auction_end_time }}</p>
-          <form id="bidForm" method="POST" action="{% url 'place_bid' %}">
-            {% csrf_token %}
-            <input type="hidden" name="car_id" value="{{ vehicle.id }}">
-            <div class="form-group mt-3">
-              <label for="max-bid">Your max bid</label>
-              <div class="input-group">
-                <div class="input-group-prepend">
-                  <span class="input-group-text">$</span>
-                </div>
-                <input type="number" class="form-control" id="max-bid" name="bid_amount" placeholder="Enter your maximum bid amount" min="{{ vehicle.min_bid_amount }}" required>
-              </div>
-            </div>
-            <p class="text-muted">By placing a bid, you are giving your express consent to share your contact information with the seller and authorizing the seller to contact you regarding this vehicle or similar vehicles. For more information see our Vehicle Marketplace Bidding Policy.</p>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-              <button type="submit" class="btn btn-primary">Bid</button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
 </body>
 </html>
