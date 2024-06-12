@@ -65,8 +65,12 @@
             <label for="postal_code"><strong>Postal Code:</strong></label>
             <p id="postal_code">{{ user_profile.postal_code }}</p>
         </div>
+        <div class="form-group">
+            <label for="trading_address"><strong>Trading Address:</strong></label>
+            <p id="trading_address">{{ user_profile.trading_address }}</p>
+        </div>
         <a href="{% url 'edit_profile' %}" class="btn btn-primary btn-block">Edit Profile</a>
-        <a href="{% url 'favourites' %}" class="btn btn-primary btn-block">Favourites</a>
+        <a href="{% url 'watchlist' %}" class="btn btn-primary btn-block">Watchlist</a>
         <a href="{% url 'my_listings' %}" class="btn btn-primary btn-block">My Listings</a>
         <a href="{% url 'my_bids' %}" class="btn btn-primary btn-block">My Bids</a>
         <button onclick="confirmLogout()" class="btn btn-primary btn-block">Log Out</button>
@@ -83,6 +87,8 @@
     </script>
 </body>
 </html>
+
+
 
 
 

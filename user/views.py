@@ -29,8 +29,8 @@ def edit_profile(request):
     return render(request, 'user/edit_profile.html', {'form': form})
 
 @login_required
-def favourites(request):
-    return render(request, 'user/favourites.html')
+def watchlist(request):
+    return render(request, 'user/watchlist.html')
 
 @login_required
 def my_listings(request):
