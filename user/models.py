@@ -24,3 +24,20 @@ def create_user_profile(sender, instance, created, **kwargs):
 def save_user_profile(sender, instance, **kwargs):
     instance.userprofile.save()
 
+
+class Listing(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    title = models.CharField(max_length=100)
+    description = models.TextField()
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def get_absolute_url(self):
+        return reverse('listing_detail', kwargs={'pk': self.pk})
+
+class WatchlistItem(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    item_id = models.IntegerField()  # Assuming item_id is an integer field representing the ID of the watched item
+
+    class Meta:
+        unique_together = ('user', 'item_id')
