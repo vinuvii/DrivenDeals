@@ -9,6 +9,7 @@ class UserProfile(models.Model):
     email_address = models.EmailField(default='')
     mobile_number = models.CharField(max_length=15, blank=True)
     postal_code = models.CharField(max_length=10, blank=True)
+    trading_address = models.CharField(max_length=255, blank=True, null=True)
 
     def __str__(self):
         return self.user.username
