@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Profile</title>
+    <title>Listing Detail</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css">
     <style>
         body {
@@ -48,54 +48,19 @@
 </head>
 <body>
     <div class="container">
-        <h1>User Profile</h1>
-        <div class="form-group">
-            <label for="username"><strong>Username:</strong></label>
-            <p id="username">{{ user_profile.user.username }}</p>
-        </div>
-        <div class="form-group">
-            <label for="email"><strong>Email:</strong></label>
-            <p id="email">{{ user_profile.user.email }}</p>
-        </div>
-        <div class="form-group">
-            <label for="mobile"><strong>Mobile Number:</strong></label>
-            <p id="mobile">{{ user_profile.mobile_number }}</p>
-        </div>
-        <div class="form-group">
-            <label for="postal_code"><strong>Postal Code:</strong></label>
-            <p id="postal_code">{{ user_profile.postal_code }}</p>
-        </div>
-        <div class="form-group">
-            <label for="trading_address"><strong>Trading Address:</strong></label>
-            <p id="trading_address">{{ user_profile.trading_address }}</p>
-        </div>
-        <a href="{% url 'edit_profile' %}" class="btn btn-primary btn-block">Edit Profile</a>
-        <a href="{% url 'watchlist' %}" class="btn btn-primary btn-block">Watchlist</a>
-        <a href="{% url 'my_listings' %}" class="btn btn-primary btn-block">My Listings</a>
-        <a href="{% url 'my_bids' %}" class="btn btn-primary btn-block">My Bids</a>
-        <button onclick="confirmLogout()" class="btn btn-primary btn-block">Log Out</button>
+        <h1>{{ listing.title }}</h1>
+        <p><strong>Model:</strong> {{ listing.model }}</p> <!-- Model field -->
+        <p><strong>Year:</strong> {{ listing.year }}</p> <!-- Year field -->
+        <p><strong>Price:</strong> ${{ listing.price }}</p>
+        <img src="{{ listing.picture.url }}" alt="{{ listing.title }}" style="max-width: 100%;"> <!-- Picture field -->
+        <p><strong>Description:</strong> {{ listing.description }}</p> <!-- Description field -->
+        <p><strong>Created at:</strong> {{ listing.created_at }}</p>
+        <!-- Include any additional details here -->
+        <a href="{% url 'my_listings' %}" class="btn btn-primary">Back to My Listings</a>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
-    <script>
-        function confirmLogout() {
-            const result = confirm("Are you sure you want to logout?");
-            if (result) {
-                window.location.href = "{% url 'logout' %}";
-            }
-        }
-    </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
 
 

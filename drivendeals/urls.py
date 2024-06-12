@@ -26,6 +26,7 @@ urlpatterns = [
     path('vehicles/', include('vehicles.urls')),
     path('bids/', include('bids.urls')),  # Include the bids app URLs
     path('', include('vehicles.urls')),  # Redirect root to vehicles
+
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 
