@@ -4,6 +4,18 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.db.models.signals import post_save
 
+class User(models.Model):
+    username = models.CharField(max_length=100)
+    password = models.CharField(max_length=100)  # Assuming storing hashed passwords securely
+    email = models.EmailField()
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
+    mobile_number = models.CharField(max_length=15)
+    postal_code = models.CharField(max_length=10)
+    trading_address = models.TextField()
+
+    def __str__(self):
+        return self.username
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
