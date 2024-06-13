@@ -3,14 +3,15 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.db.models.signals import post_save
+from django.contrib.auth.models import AbstractUser
 
-class User(models.Model):
-    username = models.CharField(max_length=100)
+class User(AbstractUser):
+    username = models.CharField(max_length=100, unique=True)
     password = models.CharField(max_length=100)  # Assuming storing hashed passwords securely
-    email = models.EmailField()
+    email = models.EmailField(unique=True)
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
-    mobile_number = models.CharField(max_length=15)
+    mobile_number = models.CharField(max_length=15, unique=True)
     postal_code = models.CharField(max_length=10)
     trading_address = models.TextField()
 

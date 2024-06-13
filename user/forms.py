@@ -26,18 +26,18 @@ class UserLoginForm(forms.Form):
     }))
 
 
-class UserRegistrationForm(UserCreationForm):
-    email = forms.EmailField()
+from django.contrib.auth.forms import UserCreationForm
+from django import forms
+from .models import User
+
+class CustomUserCreationForm(UserCreationForm):
+    class Meta(UserCreationForm.Meta):
+        model = User
+        fields = UserCreationForm.Meta.fields + ('email', 'first_name', 'last_name', 'mobile_number', 'postal_code', 'trading_address')
+
+class UserRegistrationForm(CustomUserCreationForm):
     username = forms.CharField(label='Username', max_length=100, widget=forms.TextInput(attrs={
         'placeholder': 'Username',
-        'class': 'form-control'
-    }))
-    password1 = forms.CharField(label='Password', widget=forms.PasswordInput(attrs={
-        'placeholder': 'Password',
-        'class': 'form-control'
-    }))
-    password2 = forms.CharField(label='Confirm Password', widget=forms.PasswordInput(attrs={
-        'placeholder': 'Confirm Password',
         'class': 'form-control'
     }))
     email = forms.EmailField(label='Email', widget=forms.EmailInput(attrs={
