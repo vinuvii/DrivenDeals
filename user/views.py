@@ -92,7 +92,7 @@ def signup_view(request):
 
 def logout_view(request):
     logout(request)
-    return redirect('login')
+    return redirect('home')
 
 def redirect_to_login(request):
     if not request.user.is_authenticated:
