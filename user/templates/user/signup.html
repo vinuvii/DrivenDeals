@@ -8,13 +8,13 @@
         body {
             margin: 0;
             padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
             background-color: #797979;
             color: #FFFFFF;
             font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh; /* Use min-height instead of height */
         }
 
         .register-container {
@@ -33,14 +33,17 @@
 
         .register-container input[type="text"],
         .register-container input[type="email"],
-        .register-container input[type="password"] {
-            width: 100%;
+        .register-container input[type="password"],
+        .register-container textarea {
+            width: calc(100% - 22px); /* Adjusted width to accommodate padding and borders */
             padding: 10px;
             margin: 10px 0;
             border: 1px solid #0D1B2A;
             border-radius: 5px;
             background-color: #ffffff;
             color: #000000;
+            box-sizing: border-box; /* Ensures padding and border are included in the width */
+            font-size: 14px; /* Adjust font size as needed */
         }
 
         .register-container button {
@@ -52,6 +55,7 @@
             background-color: #187bcd;
             color: #FFFFFF;
             cursor: pointer;
+            font-size: 16px; /* Adjust button font size */
         }
 
         .register-container .terms {
@@ -74,6 +78,8 @@
             {{ form.password1.label_tag }} {{ form.password1 }}
             {{ form.password2.label_tag }} {{ form.password2 }}
             {{ form.email.label_tag }} {{ form.email }}
+            {{ form.first_name.label_tag }} {{ form.first_name }}
+            {{ form.last_name.label_tag }} {{ form.last_name }}
             {{ form.mobile_number.label_tag }} {{ form.mobile_number }}
             {{ form.postal_code.label_tag }} {{ form.postal_code }}
             {{ form.trading_address.label_tag }} {{ form.trading_address }}
@@ -85,4 +91,3 @@
     </div>
 </body>
 </html>
-
