@@ -7,13 +7,15 @@ from django.contrib.auth.models import AbstractUser
 
 class User(AbstractUser):
     username = models.CharField(max_length=100, unique=True)
-    password = models.CharField(max_length=100)  # Assuming storing hashed passwords securely
-    email = models.EmailField(unique=True)
+    email = models.EmailField(unique=True)  # Use email as USERNAME_FIELD
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     mobile_number = models.CharField(max_length=15, unique=True)
     postal_code = models.CharField(max_length=10)
     trading_address = models.TextField()
+
+    USERNAME_FIELD = 'email'  # Use email as the unique identifier
+    REQUIRED_FIELDS = ['username']  # Add any other required fields
 
     def __str__(self):
         return self.username

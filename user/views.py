@@ -99,7 +99,22 @@ def redirect_to_login(request):
         return redirect(f"{reverse_lazy('login')}?next={request.path}")
     return redirect(request.path)
 
+from django.contrib.auth import authenticate, login
+from django.contrib import messages
+from .forms import UserLoginForm
+
+from django.contrib.auth import authenticate, login
+from .forms import UserLoginForm
+
+from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate, login
+from django.http import HttpResponseRedirect
+from django.urls import reverse
+
 def login_view(request):
+    error_message = None
+    next_url = request.POST.get('next') or request.GET.get('next')
+
     if request.method == 'POST':
         form = UserLoginForm(request.POST)
         if form.is_valid():
@@ -108,11 +123,15 @@ def login_view(request):
             user = authenticate(request, email=email, password=password)
             if user is not None:
                 login(request, user)
-                next_url = request.GET.get('next')
                 if next_url:
                     return redirect(next_url)
                 else:
-                    form.add_error(None, 'Invalid login credentials')
+                    return redirect('home')  # Default redirect if no next_url
+            else:
+                error_message = 'Incorrect email or password'
+        else:
+            error_message = 'Please enter a valid email and password'
     else:
         form = UserLoginForm()
-    return render(request, 'user/login.html', {'form': form})
+
+    return render(request, 'user/login.html', {'form': form, 'error_message': error_message, 'next': next_url})
