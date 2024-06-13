@@ -83,9 +83,9 @@ def signup_view(request):
         form = UserRegistrationForm(request.POST)
         if form.is_valid():
             user = form.save()
-            login(request, user)  # Automatically log the user in after registration
+            login(request, user)
             messages.success(request, 'Registration successful!')
-            return redirect('login')  # Redirect to login page after successful registration
+            return redirect('login')
     else:
         form = UserRegistrationForm()
     return render(request, 'user/signup.html', {'form': form})
