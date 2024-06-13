@@ -15,28 +15,25 @@ class UserProfileForm(forms.ModelForm):
         return instance
 
 
+class UserLoginForm(forms.Form):
+    email = forms.EmailField(widget=forms.EmailInput(attrs={
+        'placeholder': 'Email',
+        'class': 'form-control'
+    }))
+    password = forms.CharField(widget=forms.PasswordInput(attrs={
+        'placeholder': 'Password',
+        'class': 'form-control'
+    }))
+
+
 class UserRegistrationForm(UserCreationForm):
-    email = forms.EmailField(required=True)
-    mobile_number = forms.CharField(max_length=15, required=False)
-    postal_code = forms.CharField(max_length=10, required=False)
-    trading_address = forms.CharField(max_length=255, required=False)
+    email = forms.EmailField()
+    first_name = forms.CharField(max_length=100, required=True, help_text='Enter your first name')
+    last_name = forms.CharField(max_length=100, required=True, help_text='Enter your last name')
+    mobile_number = forms.CharField(max_length=20, required=True, help_text='Enter your contact number')
+    trading_address = forms.CharField(max_length=255, required=True, help_text='Enter your trading address')
+    postal_code = forms.CharField(max_length=20, required=True, help_text='Enter your postal code')
 
     class Meta:
         model = User
-        fields = ['username', 'email', 'password1', 'password2', 'mobile_number', 'postal_code', 'trading_address']
-
-    def save(self, commit=True):
-        user = super().save(commit=False)
-        user.email = self.cleaned_data['email']
-        if commit:
-            user.save()
-            UserProfile.objects.update_or_create(
-                user=user,
-                defaults={
-                    'email_address': self.cleaned_data['email'],
-                    'mobile_number': self.cleaned_data['mobile_number'],
-                    'postal_code': self.cleaned_data['postal_code'],
-                    'trading_address': self.cleaned_data['trading_address']
-                }
-            )
-        return user
+        fields = ['email', 'first_name', 'last_name', 'mobile_number', 'trading_address', 'postal_code']
