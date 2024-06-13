@@ -1,12 +1,14 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 from django.contrib import messages  # Import messages
+from django.contrib.auth.decorators import login_required
 from .models import Vehicle
 from .forms import VehicleForm
 
 def index(request):
     return render(request, 'vehicles/vehicle_listing.html')
 
+@login_required
 def list_vehicle(request):
     if request.method == 'POST':
         form = VehicleForm(request.POST, request.FILES)
