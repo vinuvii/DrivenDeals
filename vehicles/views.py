@@ -28,6 +28,8 @@ def vehicle_success(request):
 def vehicle_detail(request, vehicle_id):
     vehicle = get_object_or_404(Vehicle, pk=vehicle_id)
     context = {
-        'vehicle': vehicle
+        'is_authenticated': request.user.is_authenticated,
+        #'is_authenticated': False,
+        'vehicle': vehicle,
     }
     return render(request, 'vehicles/vehicle_details.html', context)

@@ -1,4 +1,4 @@
-<!DOCTYPE ht<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -191,10 +191,11 @@
       margin: 0;
       border-radius: 0;
       border-top-left-radius: 10px;
-      border-bottom-left-radius: 10px;
+      border-bottom-left
+-radius: 10px;
     }
 
-      .btn-custom {
+    .btn-custom {
       margin-bottom: 20px;
       border-radius: 10px; /* Soft edges */
       transition: background-color 0.3s ease;
@@ -291,13 +292,18 @@
     </div>
     <div class="vehicle-info">
       <h2>{{ vehicle.model }} {{ vehicle.year }}</h2>
-      <div class="seller-info">
-        <h5>Seller Name</h5>
-        <p>Seller Location</p>
-        <p>Seller Email</p>
-        <p>Seller Phone Number</p>
-      </div>
-      <button class="btn btn-primary btn-custom" id="placeBidButton" data-toggle="modal" data-target="#placeBidModal">Place Bid</button>
+            <div class="seller-info">
+                {% if is_authenticated %}
+                    <p>User is authenticated</p>
+                {% else %}
+                    <p>User is not authenticated</p>
+                {% endif %}
+                <h5>Seller Name</h5>
+                <p>Seller Location</p>
+                <p>Seller Email</p>
+                <p>Seller Phone Number</p>
+            </div>
+      <button class="btn btn-primary btn-custom" id="placeBidButton">Place Bid</button>
       <button class="btn btn-outline-secondary btn-custom" id="addToWatchListButton">Add To Watch List</button>
     </div>
   </div>
@@ -319,8 +325,8 @@
         </button>
       </div>
       <div class="modal-body">
-        <p class="vehicle-name"><b>Vehicle Name</b></p>
-        <p class="vehicle-price">LKR 50,000</p>
+        <p class="vehicle-name"><b>{{ vehicle.model }} {{ vehicle.year }}</b></p>
+        <p class="vehicle-price">LKR {{ vehicle.price }}</p>
         <p class="item-description">Read the item description or contact seller for shipping information.</p>
         <div class="info-row">
           <p class="reserve-status">RESERVE NOT YET MET.</p>
@@ -347,19 +353,35 @@
             <input type="number" placeholder="Enter Your Maximum Bid" class="form-control">
           </div>
         </div>
-        <button class="btn btn-primary btn-block mb-3" id="placeBidButton">Place Bid</button> <!-- Added mb-3 class -->
-        <p class="terms mt-3"> <!-- Added mt-3 class -->
+        <button class="btn btn-primary btn-block mb-3" id="placeBidModalButton">Place Bid</button>
+        <p class="terms mt-3">
           By placing a bid, you express consent to share your contact information with the seller and authorizing the seller to contact you regarding this vehicle. And if this bid wins, you are purchasing this item and legally required to make a payment before THE DATE. The item will be sent once payment is completed.
         </p>
       </div>
     </div>
   </div>
 </div>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var placeBidButton = document.getElementById('placeBidButton');
+    placeBidButton.addEventListener('click', handlePlaceBidClick);
+});
+
+function handlePlaceBidClick() {
+    // Pass the is_authenticated value from the server to JavaScript
+    var isAuthenticated = '{{ is_authenticated|yesno:"True,False" }}';
+
+    if (isAuthenticated === 'True') {
+        // Show the "Place Bid" modal
+        $('#placeBidModal').modal('show');
+    } else {
+        // Redirect to the login page
+        window.location.href = "{% url 'login' %}?next={{ request.path }}";
+    }
+}
+</script>
 </body>
 </html>

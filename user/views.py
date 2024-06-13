@@ -10,9 +10,9 @@ from .models import UserProfile, Listing
 from .models import WatchlistItem
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.models import User
-from .forms import UserRegistrationForm
+from .forms import UserLoginForm, UserRegistrationForm
 from django.contrib.auth.forms import UserCreationForm
-
+from django.urls import reverse_lazy
 
 def index(request):
     return render(request, 'user/profile.html')
@@ -69,32 +69,50 @@ def my_bids(request):
 def logout_confirmation(request):
     return render(request, 'user/logout_confirmation.html')
 
-def logout_view(request):
-    auth_logout(request)  # Use the auth_logout function from django.contrib.auth
-    return redirect('login')
 
 def custom_login(request):
-    return auth_views.LoginView.as_view(template_name='user/login.html')(request)
+    return auth_views.LoginView.as_view(template_name='user/login_copy.html')(request)
 
 @login_required
 def listing_detail(request, pk):
     listing = get_object_or_404(Listing, pk=pk)
     return render(request, 'user/listing_detail.html', {'listing': listing})
 
-def register(request):
+def signup_view(request):
     if request.method == 'POST':
         form = UserRegistrationForm(request.POST)
         if form.is_valid():
             user = form.save()
-            # Authenticate and login user
-            username = form.cleaned_data['username']
-            password = form.cleaned_data['password1']
-            user = authenticate(username=username, password=password)
-            login(request, user)
-            # Redirect to success page or homepage
-            return redirect('registration_success')  # Replace 'home' with your homepage URL name
+            login(request, user)  # Automatically log the user in after registration
+            messages.success(request, 'Registration successful!')
+            return redirect('login')  # Redirect to login page after successful registration
     else:
         form = UserRegistrationForm()
-    return render(request, 'user/register.html', {'form': form})
+    return render(request, 'user/signup.html', {'form': form})
 
+def logout_view(request):
+    logout(request)
+    return redirect('login')
 
+def redirect_to_login(request):
+    if not request.user.is_authenticated:
+        return redirect(f"{reverse_lazy('login')}?next={request.path}")
+    return redirect(request.path)
+
+def login_view(request):
+    if request.method == 'POST':
+        form = UserLoginForm(request.POST)
+        if form.is_valid():
+            email = form.cleaned_data.get('email')
+            password = form.cleaned_data.get('password')
+            user = authenticate(request, email=email, password=password)
+            if user is not None:
+                login(request, user)
+                next_url = request.GET.get('next')
+                if next_url:
+                    return redirect(next_url)
+                else:
+                    form.add_error(None, 'Invalid login credentials')
+    else:
+        form = UserLoginForm()
+    return render(request, 'user/login.html', {'form': form})
