@@ -8,6 +8,11 @@ from django.contrib.auth import logout
 from django.contrib.auth import views as auth_views
 from .models import UserProfile, Listing
 from .models import WatchlistItem
+from django.contrib.auth import login, authenticate
+from django.contrib.auth.models import User
+from .forms import UserRegistrationForm
+from django.contrib.auth.forms import UserCreationForm
+
 
 def index(request):
     return render(request, 'user/profile.html')
@@ -76,5 +81,20 @@ def listing_detail(request, pk):
     listing = get_object_or_404(Listing, pk=pk)
     return render(request, 'user/listing_detail.html', {'listing': listing})
 
+def register(request):
+    if request.method == 'POST':
+        form = UserRegistrationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            # Authenticate and login user
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password1']
+            user = authenticate(username=username, password=password)
+            login(request, user)
+            # Redirect to success page or homepage
+            return redirect('registration_success')  # Replace 'home' with your homepage URL name
+    else:
+        form = UserRegistrationForm()
+    return render(request, 'user/register.html', {'form': form})
 
 
