@@ -28,12 +28,39 @@ class UserLoginForm(forms.Form):
 
 class UserRegistrationForm(UserCreationForm):
     email = forms.EmailField()
-    first_name = forms.CharField(max_length=100, required=True, help_text='Enter your first name')
-    last_name = forms.CharField(max_length=100, required=True, help_text='Enter your last name')
-    mobile_number = forms.CharField(max_length=20, required=True, help_text='Enter your contact number')
-    trading_address = forms.CharField(max_length=255, required=True, help_text='Enter your trading address')
-    postal_code = forms.CharField(max_length=20, required=True, help_text='Enter your postal code')
-
-    class Meta:
-        model = User
-        fields = ['email', 'first_name', 'last_name', 'mobile_number', 'trading_address', 'postal_code']
+    username = forms.CharField(label='Username', max_length=100, widget=forms.TextInput(attrs={
+        'placeholder': 'Username',
+        'class': 'form-control'
+    }))
+    password1 = forms.CharField(label='Password', widget=forms.PasswordInput(attrs={
+        'placeholder': 'Password',
+        'class': 'form-control'
+    }))
+    password2 = forms.CharField(label='Confirm Password', widget=forms.PasswordInput(attrs={
+        'placeholder': 'Confirm Password',
+        'class': 'form-control'
+    }))
+    email = forms.EmailField(label='Email', widget=forms.EmailInput(attrs={
+        'placeholder': 'Email',
+        'class': 'form-control'
+    }))
+    first_name = forms.CharField(label='First Name', max_length=100, widget=forms.TextInput(attrs={
+        'placeholder': 'First Name',
+        'class': 'form-control'
+    }))
+    last_name = forms.CharField(label='Last Name', max_length=100, widget=forms.TextInput(attrs={
+        'placeholder': 'Last Name',
+        'class': 'form-control'
+    }))
+    mobile_number = forms.CharField(label='Contact Number', max_length=15, widget=forms.TextInput(attrs={
+        'placeholder': 'Contact Number',
+        'class': 'form-control'
+    }))
+    postal_code = forms.CharField(label='Postal Code', max_length=10, widget=forms.TextInput(attrs={
+        'placeholder': 'Postal Code',
+        'class': 'form-control'
+    }))
+    trading_address = forms.CharField(label='Trading Address', widget=forms.TextInput(attrs={
+        'placeholder': 'Trading Address',
+        'class': 'form-control'
+    }))
