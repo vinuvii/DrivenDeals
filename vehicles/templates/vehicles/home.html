@@ -12,6 +12,10 @@
         body {
             margin: 0;
             font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh; /* Ensures the page takes at least full viewport height */
+            position: relative; /* Needed for footer positioning */
         }
 
         .custom-header {
@@ -78,6 +82,7 @@
             justify-content: center;
             text-align: center;
             color: white;
+            margin-top: 70px; /* Adjusted to accommodate fixed header */
         }
         .hero-section::before {
             content: '';
@@ -113,17 +118,23 @@
         .featured-cars h2 {
             margin-bottom: 20px;
         }
+        .car-list-container {
+            position: relative;
+            overflow-x: auto;
+            white-space: nowrap;
+            margin: 20px 0;
+        }
         .car-list {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
+            display: inline-flex;
+            flex-wrap: nowrap;
+            gap: 20px;
+            padding: 10px;
         }
         .car-item {
-            margin: 10px;
+            width: 350px; /* Adjusted width of each car container */
             padding: 20px;
             background-color: #f1f1f1;
             border-radius: 10px;
-            width: 300px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             text-align: center;
         }
@@ -135,17 +146,44 @@
             text-decoration: none;
             color: #333;
         }
-        .contact-section {
-            background-color: #333;
-            color: white;
-            padding: 50px 20px;
-            text-align: center;
+        .car-item h3 {
+            font-size: 18px; /* Adjust font size as needed */
+            margin-top: 10px; /* Adjust margin for spacing */
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
-        .contact-section h2 {
-            margin-bottom: 20px;
+        .nav-button {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.3);
+            color: white;
+            border: none;
+            padding: 10px;
+            font-size: 24px;
+            cursor: pointer;
+        }
+        .nav-button.prev {
+            left: 10px;
+        }
+        .nav-button.next {
+            right: 10px;
+        }
+        .nav-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .contact-section {
+            margin-top: auto; /* Pushes it to the bottom */
+            background-color: #343a40;
+            color: #ffffff;
+            text-align: center;
+            padding: 20px 0;
         }
         .contact-section p {
-            margin: 10px 0;
+            margin: 5px 0;
         }
     </style>
 </head>
@@ -184,29 +222,53 @@
 <main>
     <section class="featured-cars">
         <h2>Featured Cars</h2>
-        <div class="car-list">
-            {% for car in cars %}
-            <div class="car-item">
-                <a href="{% url 'vehicle_detail' car.id %}">
-                    <img src="{{ car.picture.url }}" alt="{{ car.model }}">
-                    <h3>{{ car.model }}</h3>
-                    <p>Price: LKR {{ car.price|intcomma }}</p>
-                </a>
+        <div class="car-list-container">
+            <div class="car-list">
+                {% for car in cars %}
+                <div class="car-item">
+                    <a href="{% url 'vehicle_detail' car.id %}">
+                        <img src="{{ car.picture.url }}" alt="{{ car.model }}">
+                        <h3>{{ car.model }}</h3>
+                        <p>Price: LKR {{ car.price|intcomma }}</p>
+                    </a>
+                </div>
+                {% endfor %}
             </div>
-            {% endfor %}
         </div>
     </section>
 </main>
 
-<footer>
-    <section id="contact" class="contact-section">
-        <div class="container">
-            <h2>Contact Us</h2>
-            <p>Email: drivendeals@gmail.com</p>
-            <p>Phone: +94 777 586459</p>
-            <p>Address: No: 12, Park Street, Colombo, Sri Lanka</p>
-        </div>
-    </section>
+<footer id="contact" class="contact-section">
+    <div class="container">
+        <h3>Contact Us</h3>
+        <p>Email: drivendeals@gmail.com</p>
+        <p>Phone: +94 777 586459</p>
+    </div>
 </footer>
+
+<button class="nav-button prev" onclick="scrollCars('left')">&#8249;</button>
+<button class="nav-button next" onclick="scrollCars('right')">&#8250;</button>
+
+<script>
+    // JavaScript function to scroll the car list left or right
+    function scrollCars(direction) {
+        const container = document.querySelector('.car-list');
+        const scrollAmount = 350; // Adjusted as per .car-item width
+
+        if (direction === 'left') {
+            container.scrollBy({
+                left: -scrollAmount,
+                behavior: 'smooth'
+            });
+        } else if (direction === 'right') {
+            container.scrollBy({
+                left: scrollAmount,
+                behavior: 'smooth'
+            });
+        }
+    }
+</script>
+
 </body>
 </html>
+
