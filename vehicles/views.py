@@ -42,7 +42,8 @@ def vehicle_detail(request, vehicle_id):
     return render(request, 'vehicles/vehicle_details.html', context)
 
 def home(request):
-    return render(request, 'vehicles/home.html')
+    cars = Vehicle.objects.all()  # Assuming you have a Vehicle model
+    return render(request, 'vehicles/home.html', {'cars': cars})
 
 
 @login_required
