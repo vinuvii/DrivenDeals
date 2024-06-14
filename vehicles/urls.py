@@ -2,7 +2,8 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('', views.home, name='home'),  # Define the home page URL
+    path('', views.home, name='home'),
+    path('vehicle-listing/', views.vehicle_listing_view, name='vehicle_listing'),
     path('watchlist/', views.watchlist_view, name='watchlist'),
     path('my_listings/', views.my_listings_view, name='my_listings'),
     path('my_bids/', views.my_bids_view, name='my_bids'),

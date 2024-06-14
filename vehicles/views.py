@@ -65,3 +65,8 @@ def my_bids_view(request):
 def edit_profile_view(request):
     # Logic to fetch data for user's bids if needed
     return render(request, 'user/edit_profile.html')
+
+@login_required
+def vehicle_listing_view(request):
+    # Logic to fetch data for user's bids if needed
+    return render(request, 'vehicles/vehicle_listing.html')
