@@ -1,365 +1,616 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Vehicle Details</title>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-xw9Zw98IybJy7rFbLIDLnHSt7V4/D0N59kVNBw0FSn7a0p8nSbwo5of5k/6f8F2VsjB76tL/2EeVSB8HUMmiMw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <style>
-    body {
-      background-color: #f8f9fa;
-      font-family: 'Open Sans', sans-serif;
-    }
-    .header {
-      width: 100%;
-      padding: 15px 40px;
-      background-color: #343a40;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      color: #ffffff;
-      position: fixed;
-      top: 0;
-      z-index: 1000; /* Ensures the header stays on top */
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_head %}
+<style>
+    .vehicle-header {
+        width: 100%;
+        height: 300px; /* Adjust height as needed */
+        overflow: hidden;
+        position: relative;
+        margin-top: -150px;
     }
 
-    .header .company-name {
-      font-size: 24px;
-      font-weight: bold;
+    .vehicle-header img {
+        width: 100%;
+        height: 100%; /* Ensure the image fills its container */
+        object-fit: cover; /* Ensures the image covers the entire container */
+        position: absolute; /* Position image absolutely within its container */
+        top: 0;
+        left: 0;
     }
 
-    .header .profile-link a {
-      color: #ffffff;
-      text-decoration: none;
-      font-size: 18px;
-      display: flex;
-      align-items: center;
+    .vehicle-overlay {
+        font-family: 'Open Sans', 'Titillium Web', 'PT Sans', Arial, sans-serif;
+        position: absolute;
+        top: 180px;
+        left: 180px;
+        color: white;
+        padding: 5px 10px;
+        font-size: 36px;
+        font-weight: bold;
+        z-index: 10; /* Ensure overlay is above the image */
     }
 
-    .header .profile-link {
-      position: relative;
-      cursor: pointer;
+    .vehicle-details-section {
+        background-color: #f9f9f9;
+        padding: 40px 0;
     }
 
-    .header .profile-dropdown {
-      position: absolute;
-      top: 100%;
-      right: 0;
-      background-color: #343a40;
-      border-radius: 5px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      display: none;
-      z-index: 1001;
-      width: 200px; /* Adjusted width of the dropdown */
+    .vehicle-details-section__head-title {
+        position: relative;
     }
 
-    .header .profile-dropdown.show {
-      display: block;
+    .vehicle-details-section__head-title::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -20px; /* Adjust this value to control the distance from the text */
+        width: 5px; /* Adjust this value to control the thickness of the line */
+        height: 100%;
+        background-color: #de483d; /* Red color */
     }
 
-    .header .profile-dropdown a {
-      color: #ffffff;
-      padding: 12px 20px; /* Adjusted padding for better spacing */
-      display: block;
-      text-decoration: none;
-      font-size: 16px; /* Adjusted font size */
-      width: 100%; /* Ensures each link takes full width */
-      box-sizing: border-box; /* Ensures padding is included in the width */
+    .vehicle-details-section__head h1,
+    .vehicle-details-section__head h3 {
+        margin: 10px 0;
+        padding-left: 10px; /* Add padding to separate text from line */
     }
 
-    .header .profile-dropdown a:hover {
-      background-color: rgba(255, 255, 255, 0.1);
-    }
-    .container {
-      max-width: 1200px;
-      margin-top: 100px;
+    .vehicle-details-section__head-price {
+        text-align: right;
+        margin-top: 20px; /* Adjust spacing */
     }
 
-    .card {
-      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    .vehicle-details-section__head-price-num {
+        font-size: 30px;
+        font-weight: bold;
+        color: #ffffff;
+        background-color: #de483d; /* Background color */
+        display: inline-block;
+        padding: 10px 25px;
+        border-radius: 2px;
     }
 
-    .img-fluid {
-      border-radius: 5px;
-      width: 100%;
-      height: auto;
-      object-fit: cover;
+    .vehicle-details-section__head-price p {
+        font-size: 14px;
+        color: #666;
+        margin-top: 5px;
     }
 
-    .modal-dialog {
-      max-width: 800px;
-      background: url('https://images.frandroid.com/wp-content/uploads/2016/02/google_car.jpg') no-repeat center center;
-      background-size: cover;
-      border-radius: 20px;
-      position: relative;
+    .vehicle-card {
+        background-color: #ffffff;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        overflow: hidden;
+        margin-bottom: 20px;
+        padding: 20px; /* Added padding */
+        max-width: 800px; /* Adjusted max-width to control size */
+        margin: 0 auto; /* Center the vehicle-card */
     }
 
     .vehicle-gallery {
-      position: relative;
+        width: 100%;
+        height: auto;
+        position: relative;
+        overflow: hidden;
     }
 
     .vehicle-gallery img {
-      display: block;
-      max-width: 100%;
-      height: auto;
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+        border-radius: 5px;
+        cursor: pointer;
     }
 
-    .vehicle-details-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
-      max-width: 1200px;
-      margin: 0 auto;
+    .thumbnail-images {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        padding: 10px;
     }
 
-    .vehicle-info {
-      background-color: #f8f9fa;
-      padding: 20px;
-      border-radius: 5px;
-      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-      background-color: #e9ecef; /* Light gray background */
+    .thumbnail-images img {
+        width: 180px; /* Thumbnail width */
+        height: 150px; /* Thumbnail height */
+        object-fit: cover;
+        border-radius: 5px;
+        margin: 5px;
+        cursor: pointer;
     }
 
-    .vehicle-info h2 {
-      margin-top: 0;
-      font-weight: bold; /* Make vehicle name bold */
+    .thumbnail-images img:hover {
+        opacity: 0.7; /* Reduce opacity on hover */
     }
 
-    .seller-info {
-      background-color: #f8f9fa;
-      padding: 20px;
-      border-radius: 5px;
-      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-      margin-bottom: 20px;
+    .seller-details {
+        background-color: #f8f9fa;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
     }
 
-    .seller-info h5 {
-      font-weight: bold;
-      margin-bottom: 10px;
+    .seller-details h2 {
+        margin-top: 0;
+        font-weight: bold;
     }
 
-    .modal-content {
-      background-color: rgba(255, 255, 255, 0.9);
-      border-radius: 20px;
-      padding: 20px;
-      position: relative;
-      z-index: 2;
+    .seller-details p {
+        margin-bottom: 5px;
     }
 
-    .modal-header {
-      border-bottom: none;
+    .seller-card {
+        background-color: #ffffff;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        padding: 20px;
+        margin-bottom: 20px;
     }
 
-    .modal-body {
-      text-align: center;
+    .seller-card h2 {
+        font-size: 24px;
+        margin-top: 0;
+        margin-bottom: 15px;
+        font-weight: bold;
+        color: #000; /* Ensure seller card title color is black */
+        font-family: 'Open Sans', 'Titillium Web', 'PT Sans', Arial, sans-serif; /* Apply desired font */
     }
 
-    .vehicle-name {
-      font-size: 24px;
-      font-weight: bold;
-      text-align: center;
-    }
-
-    .vehicle-price {
-      font-size: 20px;
-      font-weight: bold;
-      text-align: center;
-    }
-
-    .item-description {
-      text-align: left;
-      font-size: 16px;
-    }
-
-    .info-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin: 10px 0;
-    }
-
-    .reserve-status {
-      font-size: 16px;
-      font-weight: bold;
-      text-align: left;
-    }
-
-    .bids-total {
-      font-size: 16px;
-      font-weight: bold;
-      text-align: right;
-    }
-
-    .time-remaining {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin: 20px 0;
-      font-size: 24px;
-      font-weight: bold;
-    }
-
-    .time-remaining span {
-      margin: 0 5px;
-    }
-
-    .time-labels {
-      display: flex;
-      justify-content: center;
-      font-size: 12px;
-      color: #888;
-    }
-
-    .time-labels span {
-      margin: 0 5px;
-    }
-
-    .bid-values {
-      display: flex;
-      justify-content: space-around;
-      margin: 20px 0;
-    }
-
-    .bid-value {
-      background-color: #ADCCE9;
-      border: none;
-      color: white;
-      padding: 10px 20px;
-      text-align: center;
-      text-decoration: none;
-      display: inline-block;
-      font-size: 14px;
-      margin: 4px 2px;
-      cursor: pointer;
-      border-radius: 10px;
-      transition: background-color 0.3s ease;
-      width: 145px;
-      height: 42px;
-    }
-
-    .bid-value:hover {
-      background-color: #77AAD9;
-    }
-
-    .form-control {
-      margin: 0;
-      border-radius: 0;
-      border-top-left-radius: 10px;
-      border-bottom-left-radius: 10px;
-    }
-
-    .btn-custom {
-      margin-bottom: 20px;
-      border-radius: 10px; /* Soft edges */
-      transition: background-color 0.3s ease;
-      width: 100%; /* Full width */
-      display: block;
-      height: 42px; /* Same height for consistency */
-    }
-
-    #placeBidButton {
-      margin-bottom: 20px;
-      background-color: #4C7397;
-      color: white;
-      border-radius: 10px;
-      transition: background-color 0.3s ease;
-      width: 100%; /* Full width */
-      display: block;
-    }
-
-    #placeBidButton:hover {
-      background-color: #77AAD9;
-    }
-
-    #addToWatchListButton {
-      border-radius: 10px; /* Soft edges */
-      width: 100%; /* Full width */
-      display: block;
-    }
-
-    .max-bid-section {
-      text-align: left;
-      margin: 20px 0;
-    }
-
-    .max-bid-label {
-      font-size: 16px;
-      text-align: left;
-      margin-bottom: 10px;
-    }
-
-    .max-bid-input {
-      display: flex;
-      align-items: center;
-      border-radius: 10px;
-      overflow: hidden;
-    }
-
-    .max-bid-currency {
-      font-weight: bold;
-      margin-right: 5px;
-    }
-
-    .terms {
-      font-size: 12px;
-      color: #888;
-      margin: 0;
+    .seller-card p {
+        margin-bottom: 5px;
+        color: #000; /* Ensure seller card text color is black */
+        font-family: 'Open Sans', 'Titillium Web', 'PT Sans', Arial, sans-serif; /* Apply desired font */
     }
 
     .modal-background {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.5);
-      z-index: 1;
-      border-radius: 20px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 1;
+        border-radius: 20px;
     }
 
-    .search-bar {
-      margin-bottom: 20px;
+    .modal-dialog {
+        max-width: 800px;
+        border-radius: 20px;
+        background: url('https://images.frandroid.com/wp-content/uploads/2016/02/google_car.jpg') no-repeat center center;
+        background-size: cover;
+        position: relative;
     }
-  </style>
-</head>
-<body>
-<header class="header">
-    <div class="company-name">Driven Deals</div>
-    <div class="profile-link" id="profileDropdown">
-        {% if user.is_authenticated %}
-            <a href="#" class="dropdown-toggle" id="userDropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                <i class="fas fa-user"></i> {{ user.first_name }} {{ user.last_name }}
-            </a>
-            <div class="profile-dropdown" aria-labelledby="userDropdown">
-                <a href="{% url 'watchlist' %}">My WatchList</a>
-                <a href="{% url 'my_listings' %}">My Listings</a>
-                <a href="{% url 'my_bids' %}">My Bids</a>
-                <a href="{% url 'edit_profile' %}">Edit My Profile</a>
-                <div class="dropdown-divider"></div>
-                <a href="{% url 'logout' %}">Logout</a> <!-- Link to the logout URL -->
-            </div>
-        {% else %}
-            <a href="{% url 'login' %}?next={{ request.path }}">
-                <i class="fas fa-user"></i> Login
-            </a>
-        {% endif %}
+
+    .modal-content {
+        background-color: rgba(255, 255, 255, 0.9);
+        border-radius: 20px;
+        padding: 20px;
+        position: relative;
+        z-index: 2;
+    }
+
+    .modal-header {
+        border-bottom: none;
+    }
+
+    .modal-body {
+        text-align: center;
+    }
+
+    .modal-header .close {
+        color: #fff; /* Close button color */
+    }
+
+    .modal-body p {
+        color: #000; /* Ensure modal body text color is black */
+        font-family: 'Open Sans', 'Titillium Web', 'PT Sans', Arial, sans-serif; /* Apply desired font */
+    }
+
+    .max-bid-section {
+        text-align: left;
+        margin: 20px 0;
+    }
+
+    .max-bid-label {
+        font-size: 16px;
+        text-align: left;
+        margin-bottom: 10px;
+        color: #000; /* Change text color to black */
+        font-family: 'Open Sans', 'Titillium Web', 'PT Sans', Arial, sans-serif; /* Apply desired font */
+    }
+
+    .max-bid-input {
+        display: flex;
+        align-items: center;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    .max-bid-currency {
+        font-weight: bold;
+        margin-right: 5px;
+        font-family: 'Open Sans', 'Titillium Web', 'PT Sans', Arial, sans-serif; /* Apply desired font */
+    }
+
+    .terms {
+        font-size: 12px;
+        color: #888;
+        margin: 0;
+        font-family: 'Open Sans', 'Titillium Web', 'PT Sans', Arial, sans-serif; /* Apply desired font */
+    }
+
+    .reserve-status {
+        font-size: 16px;
+        font-weight: bold;
+        text-align: left;
+        color: #000; /* Ensure reserve status text color is black */
+        font-family: 'Open Sans', 'Titillium Web', 'PT Sans', Arial, sans-serif; /* Apply desired font */
+    }
+
+    .bids-total {
+        font-size: 16px;
+        font-weight: bold;
+        text-align: right;
+        color: #000; /* Ensure bids total text color is black */
+        font-family: 'Open Sans', 'Titillium Web', 'PT Sans', Arial, sans-serif; /* Apply desired font */
+    }
+
+    .time-remaining {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 20px 0;
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    .time-remaining span {
+        margin: 0 5px;
+    }
+
+    .time-labels {
+        display: flex;
+        justify-content: center;
+        font-size: 12px;
+        color: #888;
+    }
+
+    .time-labels span {
+        margin: 0 5px;
+    }
+
+    .bid-values {
+        display: flex;
+        justify-content: space-around;
+        margin: 20px 0;
+    }
+    .bid-value {
+        background-color: #ADCCE9;
+        border: none;
+        color: white;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 14px;
+        margin: 4px 2px;
+        cursor: pointer;
+        border-radius: 10px;
+        transition: background-color 0.3s ease;
+        width: 145px;
+        height: 42px;
+        font-family: 'Open Sans', 'Titillium Web', 'PT Sans', Arial, sans-serif; /* Apply desired font */
+    }
+
+    .bid-value:hover {
+        background-color: #77AAD9;
+    }
+
+    .form-control {
+        margin: 0;
+        border-radius: 0;
+        border-top-left-radius: 10px;
+        border-bottom-left-radius: 10px;
+    }
+
+    .btn-custom {
+        margin-bottom: 20px;
+        border-radius: 10px; /* Soft edges */
+        transition: background-color 0.3s ease;
+        width: 100%; /* Full width */
+        display: block;
+        height: 42px; /* Same height for consistency */
+        font-family: 'Open Sans', 'Titillium Web', 'PT Sans', Arial, sans-serif; /* Apply desired font */
+    }
+
+    .max-bid-section {
+        text-align: left;
+        margin: 20px 0;
+    }
+
+    .max-bid-label {
+        font-size: 16px;
+        text-align: left;
+        margin-bottom: 10px;
+        color: #000; /* Change text color to black */
+        font-family: 'Open Sans', 'Titillium Web', 'PT Sans', Arial, sans-serif; /* Apply desired font */
+    }
+
+    .max-bid-input {
+        display: flex;
+        align-items: center;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    .max-bid-currency {
+        font-weight: bold;
+        margin-right: 5px;
+        font-family: 'Open Sans', 'Titillium Web', 'PT Sans', Arial, sans-serif; /* Apply desired font */
+    }
+
+    .terms {
+        font-size: 12px;
+        color: #888;
+        margin: 0;
+        font-family: 'Open Sans', 'Titillium Web', 'PT Sans', Arial, sans-serif; /* Apply desired font */
+    }
+
+    .reserve-status {
+        font-size: 16px;
+        font-weight: bold;
+        text-align: left;
+        color: #000; /* Ensure reserve status text color is black */
+        font-family: 'Open Sans', 'Titillium Web', 'PT Sans', Arial, sans-serif; /* Apply desired font */
+    }
+
+    .bids-total {
+        font-size: 16px;
+        font-weight: bold;
+        text-align: right;
+        color: #000; /* Ensure bids total text color is black */
+        font-family: 'Open Sans', 'Titillium Web', 'PT Sans', Arial, sans-serif; /* Apply desired font */
+    }
+
+    .time-remaining {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 20px 0;
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    .time-remaining span {
+        margin: 0 5px;
+    }
+
+    .time-labels {
+        display: flex;
+        justify-content: center;
+        font-size: 12px;
+        color: #888;
+    }
+
+    .time-labels span {
+        margin: 0 5px;
+    }
+
+    .bid-values {
+        display: flex;
+        justify-content: space-around;
+        margin: 20px 0;
+    }
+
+    .bid-value {
+        background-color: #ADCCE9;
+        border: none;
+        color: white;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 14px;
+        margin: 4px 2px;
+        cursor: pointer;
+        border-radius: 10px;
+        transition: background-color 0.3s ease;
+        width: 145px;
+        height: 42px;
+        font-family: 'Open Sans', 'Titillium Web', 'PT Sans', Arial, sans-serif; /* Apply desired font */
+    }
+
+    .bid-value:hover {
+        background-color: #77AAD9;
+    }
+
+    .form-control {
+        margin: 0;
+        border-radius: 0;
+        border-top-left-radius: 10px;
+        border-bottom-left-radius: 10px;
+    }
+
+    .btn-custom {
+        margin-bottom: 20px;
+        border-radius: 10px; /* Soft edges */
+        transition: background-color 0.3s ease;
+        width: 100%; /* Full width */
+        display: block;
+        height: 42px; /* Same height for consistency */
+        font-family: 'Open Sans', 'Titillium Web', 'PT Sans', Arial, sans-serif; /* Apply desired font */
+    }
+
+    .max-bid-section {
+        text-align: left;
+        margin: 20px 0;
+    }
+
+    .max-bid-label {
+        font-size: 16px;
+        text-align: left;
+        margin-bottom: 10px;
+        color: #000; /* Change text color to black */
+        font-family: 'Open Sans', 'Titillium Web', 'PT Sans', Arial, sans-serif; /* Apply desired font */
+    }
+
+    .max-bid-input {
+        display: flex;
+        align-items: center;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    .max-bid-currency {
+        font-weight: bold;
+        margin-right: 5px;
+        font-family: 'Open Sans', 'Titillium Web', 'PT Sans', Arial, sans-serif; /* Apply desired font */
+    }
+
+    .terms {
+        font-size: 12px;
+        color: #888;
+        margin: 0;
+        font-family: 'Open Sans', 'Titillium Web', 'PT Sans', Arial, sans-serif; /* Apply desired font */
+    }
+
+    .reserve-status {
+        font-size: 16px;
+        font-weight: bold;
+        text-align: left;
+        color: #000; /* Ensure reserve status text color is black */
+        font-family: 'Open Sans', 'Titillium Web', 'PT Sans', Arial, sans-serif; /* Apply desired font */
+    }
+
+    .bids-total {
+        font-size: 16px;
+        font-weight: bold;
+        text-align: right;
+        color: #000; /* Ensure bids total text color is black */
+        font-family: 'Open Sans', 'Titillium Web', 'PT Sans', Arial, sans-serif; /* Apply desired font */
+    }
+
+    .time-remaining {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 20px 0;
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    .time-remaining span {
+        margin: 0 5px;
+    }
+
+    .time-labels {
+        display: flex;
+        justify-content: center;
+        font-size: 12px;
+        color: #888;
+    }
+
+    .time-labels span {
+        margin: 0 5px;
+    }
+
+    .bid-values {
+        display: flex;
+        justify-content: space-around;
+        margin: 20px 0;
+    }
+
+    .bid-value {
+        background-color: #ADCCE9;
+        border: none;
+        color: white;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 14px;
+        margin: 4px 2px;
+        cursor: pointer;
+        border-radius: 10px;
+        transition: background-color 0.3s ease;
+        width: 145px;
+        height: 42px;
+        font-family: 'Open Sans', 'Titillium Web', 'PT Sans', Arial, sans-serif; /* Apply desired font */
+    }
+
+    .bid-value:hover {
+        background-color: #77AAD9;
+    }
+
+    .form-control {
+        margin: 0;
+        border-radius: 0;
+        border-top-left-radius: 10px;
+        border-bottom-left-radius: 10px;
+    }
+
+    .btn-custom {
+        margin-bottom: 20px;
+        border-radius: 10px; /* Soft edges */
+        transition: background-color 0.3s ease;
+        width: 100%; /* Full width */
+        display: block;
+        height: 42px; /* Same height for consistency */
+        font-family: 'Open Sans', 'Titillium Web', 'PT Sans', Arial, sans-serif; /* Apply desired font */
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="vehicle-details">
+    <div class="vehicle-header">
+        <img src="https://www.freewebheaders.com/wp-content/gallery/cars/cache/toyota-gt86-dashboard-car-website-header.jpg-nggid043742-ngg0dyn-1280x375x100-00f0w010c010r110f110r010t010.jpg" alt="Vehicle Details Page">
+             <div class="vehicle-overlay">Vehicle Details Page</div>
     </div>
-</header>
+</div>
+
+<section class="vehicle-details-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-9">
+                <div class="vehicle-details-section__head">
+                    <div class="vehicle-details-section__head-title">
+                        <h1>{{ vehicle.model }}</h1>
+                        <h3>{{ vehicle.year }}</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="vehicle-details-section__head-price">
+                    <div class="vehicle-details-section__head-price-num">LKR {{ vehicle.price }}</div>
+                    <p>Last Bid Price</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
 <div class="container">
-  <div class="vehicle-details-grid">
-    <div class="vehicle-gallery">
-      <img src="{{ vehicle.picture.url }}" class="img-fluid" alt="{{ vehicle.model }}">
-      <div class="nav-buttons">
-        <button class="nav-button">&lt;</button>
-        <button class="nav-button">&gt;</button>
-      </div>
-    </div>
-    <div class="vehicle-info">
-      <h2>{{ vehicle.model }} {{ vehicle.year }}</h2>
-            <div class="seller-info">
+    <div class="row">
+        <div class="col-md-7">
+            <div class="vehicle-card">
+                <div class="vehicle-gallery">
+                    <img id="main-image" src="{{ vehicle.picture.url }}" class="img-fluid" alt="{{ vehicle.model }}">
+                </div>
+                <div class="thumbnail-images">
+                    {% for image in vehicle.additional_images.all %}
+                        <img src="{{ image.url }}" alt="{{ vehicle.model }}" onclick="displayImage('{{ image.url }}')">
+                    {% endfor %}
+                    <!-- Display additional images -->
+                    <img src="https://th.bing.com/th/id/OIP.qNJ-3o_aLdtFRswCO9VLOgHaEK?w=217&h=180&c=7&r=0&o=5&dpr=1.3&pid=1.7" alt="Additional Image 1" onclick="displayImage('https://th.bing.com/th/id/OIP.qNJ-3o_aLdtFRswCO9VLOgHaEK?w=217&h=180&c=7&r=0&o=5&dpr=1.3&pid=1.7')">
+                    <img src="https://th.bing.com/th/id/OIP.9AA9ELQUr6WsoCJ2WcVcEwHaEK?w=217&h=180&c=7&r=0&o=5&dpr=1.3&pid=1.7" alt="Additional Image 2" onclick="displayImage('https://th.bing.com/th/id/OIP.9AA9ELQUr6WsoCJ2WcVcEwHaEK?w=217&h=180&c=7&r=0&o=5&dpr=1.3&pid=1.7')">
+                </div>
+            </div>
+        </div>
+        <div class="col-md-5">
+            <div class="seller-card">
                 {% if is_authenticated %}
                     <p>User is authenticated</p>
                 {% else %}
@@ -370,108 +621,90 @@
                 <p>Seller Email</p>
                 <p>Seller Phone Number</p>
             </div>
-      <button class="btn btn-primary btn-custom" id="placeBidButton">Place Bid</button>
-      <button class="btn btn-outline-secondary btn-custom" id="addToWatchListButton">Add To Watch List</button>
+            <button class="btn btn-primary btn-custom" id="placeBidButton">Place Bid</button>
+            <button class="btn btn-outline-secondary btn-custom" id="addToWatchListButton">Add To Watch List</button>
+        </div>
     </div>
-  </div>
-  <div class="row mt-3">
-    <div class="col-md-12">
-      <p>{{ vehicle.description }}</p>
+
+    <div class="row mt-3">
+        <div class="col-md-12">
+            <p>{{ vehicle.description }}</p>
+        </div>
     </div>
-  </div>
-</div>
-<!-- Place Bid Pop Up -->
-<div class="modal fade" id="placeBidModal" tabindex="-1" role="dialog" aria-labelledby="placeBidModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-background"></div>
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title"><b>Place Your Bid</b></h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <p class="vehicle-name"><b>{{ vehicle.model }} {{ vehicle.year }}</b></p>
-        <p class="vehicle-price">LKR {{ vehicle.price }}</p>
-        <p class="item-description">Read the item description or contact seller for shipping information.</p>
-        <div class="info-row">
-          <p class="reserve-status">RESERVE NOT YET MET.</p>
-          <p class="bids-total">BIDS IN TOTAL FOR VEHICLE</p>
+
+    <div class="modal fade" id="placeBidModal" tabindex="-1" role="dialog" aria-labelledby="placeBidModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-background"></div>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title"><b>Place Your Bid</b></h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p class="vehicle-name"><b>{{ vehicle.model }} {{ vehicle.year }}</b></p>
+                    <p class="vehicle-price">LKR {{ vehicle.price }}</p>
+                    <p class="item-description">Read the item description or contact seller for shipping information.</p>
+                    <div class="info-row">
+                        <p class="reserve-status">RESERVE NOT YET MET.</p>
+                        <p class="bids-total">BIDS IN TOTAL FOR VEHICLE</p>
+                    </div>
+                    <div class="time-remaining">
+                        <span>6</span> : <span>23</span> : <span>36</span> : <span>49</span>
+                        <div class="time-labels">
+                            <span>DAYS</span>
+                            <span>HOURS</span>
+                            <span>MINUTES</span>
+                            <span>SECONDS</span>
+                        </div>
+                    </div>
+                    <div class="bid-values">
+                        <button class="bid-value">Value1</button>
+                        <button class="bid-value">Value2</button>
+                        <button class="bid-value">Value3</button>
+                    </div>
+                    <div class="max-bid-section">
+                        <p class="max-bid-label">Or Enter Your Maximum Bid:</p>
+                        <div class="max-bid-input">
+                            <span class="max-bid-currency">LKR</span>
+                            <input type="number" placeholder="Enter Your Maximum Bid" class="form-control">
+                        </div>
+                    </div>
+                    <button class="btn btn-primary btn-block mb-3" id="placeBidModalButton">Place Bid</button>
+                    <p class="terms mt-3">
+                        By placing a bid, you express consent to share your contact information with the seller and authorizing the seller to contact you regarding this vehicle. And if this bid wins, you are purchasing this item and legally required to make a payment before THE DATE. The item will be sent once payment is completed.
+                    </p>
+                </div>
+            </div>
         </div>
-        <div class="time-remaining">
-          <span>6</span> : <span>23</span> : <span>36</span> : <span>49</span>
-          <div class="time-labels">
-            <span>DAYS</span>
-            <span>HOURS</span>
-            <span>MINUTES</span>
-            <span>SECONDS</span>
-          </div>
-        </div>
-        <div class="bid-values">
-          <button class="bid-value">Value1</button>
-          <button class="bid-value">Value2</button>
-          <button class="bid-value">Value3</button>
-        </div>
-        <div class="max-bid-section">
-          <p class="max-bid-label">Or Enter Your Maximum Bid:</p>
-          <div class="max-bid-input">
-            <span class="max-bid-currency">LKR</span>
-            <input type="number" placeholder="Enter Your Maximum Bid" class="form-control">
-          </div>
-        </div>
-        <button class="btn btn-primary btn-block mb-3" id="placeBidModalButton">Place Bid</button>
-        <p class="terms mt-3">
-          By placing a bid, you express consent to share your contact information with the seller and authorizing the seller to contact you regarding this vehicle. And if this bid wins, you are purchasing this item and legally required to make a payment before THE DATE. The item will be sent once payment is completed.
-        </p>
-      </div>
     </div>
-  </div>
 </div>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    var placeBidButton = document.getElementById('placeBidButton');
-    placeBidButton.addEventListener('click', handlePlaceBidClick);
-});
-
-function handlePlaceBidClick() {
-    // Pass the is_authenticated value from the server to JavaScript
-    var isAuthenticated = '{{ is_authenticated|yesno:"True,False" }}';
-
-    if (isAuthenticated === 'True') {
-        // Show the "Place Bid" modal
-        $('#placeBidModal').modal('show');
-    } else {
-        // Redirect to the login page with the next parameter
-        var loginUrl = '{% url "login" %}?next={{ request.path }}';
-        window.location.href = loginUrl;
+    function displayImage(imageUrl) {
+        document.getElementById('main-image').src = imageUrl;
     }
-}
 
-$(document).ready(function() {
-  $('#profileDropdown').hover(function() {
-    $('.profile-dropdown').toggleClass('show');
-  });
-});
-
-document.addEventListener('DOMContentLoaded', function() {
-  var logoutLink = document.getElementById('logoutLink');
-  if (logoutLink) {
-    logoutLink.addEventListener('click', function(event) {
-      event.preventDefault(); // Prevent default link behavior
-
-      // Show confirmation dialog
-      var confirmLogout = confirm('Do you wish to logout?');
-      if (confirmLogout) {
-        // Redirect to logout URL
-        window.location.href = "{% url 'logout' %}"; // Replace with your actual logout URL
-      }
+    document.addEventListener('DOMContentLoaded', function() {
+        var placeBidButton = document.getElementById('placeBidButton');
+        placeBidButton.addEventListener('click', handlePlaceBidClick);
     });
-  }
-});
+
+    function handlePlaceBidClick() {
+        // Pass the is_authenticated value from the server to JavaScript
+        var isAuthenticated = '{{ is_authenticated|yesno:"True,False" }}';
+
+        if (isAuthenticated === 'True') {
+            // Show the "Place Bid" modal
+            $('#placeBidModal').modal('show');
+        } else {
+            // Redirect to the login page with the next parameter
+            var loginUrl = '{% url "login" %}?next={{ request.path }}';
+            window.location.href = loginUrl;
+        }
+    }
 </script>
-</body>
-</html>
+
+{% endblock %}
+

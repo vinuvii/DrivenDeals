@@ -1,22 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            background-color: #797979;
-            color: #FFFFFF;
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh; /* Use min-height instead of height */
-        }
+{% extends 'base.html' %}
 
+{% block extra_head %}
+<style>
         .register-container {
             background-color: #adadad;
             padding: 40px;
@@ -68,7 +53,9 @@
             text-decoration: none;
         }
     </style>
-</head>
+{% endblock %}
+
+{% block content %}
 <body>
     <div class="register-container">
         <h2>Register</h2>
@@ -90,4 +77,4 @@
         </div>
     </div>
 </body>
-</html>
+{% endblock %}
