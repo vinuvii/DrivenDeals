@@ -24,19 +24,18 @@ def profile(request):
 
 @login_required
 def edit_profile(request):
-    if request.user.is_authenticated:  # Ensure user is authenticated
-        user_profile = get_object_or_404(UserProfile, user=request.user)
-        if request.method == 'POST':
-            form = UserProfileForm(request.POST, instance=user_profile)
-            if form.is_valid():
-                form.save()
-                messages.success(request, 'Your profile was updated successfully!')
-                return redirect('profile')
-        else:
-            form = UserProfileForm(instance=user_profile)
-        return render(request, 'user/edit_profile.html', {'form': form})
+    user_profile = get_object_or_404(UserProfile, user=request.user)
+
+    if request.method == 'POST':
+        form = UserProfileForm(request.POST, instance=user_profile)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Your profile was updated successfully!')
+            return redirect('profile')
     else:
-        return redirect('login')  # Redirect to login if user is not authenticated
+        form = UserProfileForm(instance=user_profile)
+    print(form)
+    return render(request, 'user/edit_profile.html', {'form': form})
 
 
 @login_required

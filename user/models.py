@@ -4,6 +4,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.db.models.signals import post_save
 from django.contrib.auth.models import AbstractUser
+from django import forms
 
 class User(AbstractUser):
     username = models.CharField(max_length=100, unique=True)
@@ -57,3 +58,8 @@ class WatchlistItem(models.Model):
 
     class Meta:
         unique_together = ('user', 'item_id')
+
+class UserProfileForm(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = ['email_address', 'mobile_number', 'postal_code', 'trading_address']

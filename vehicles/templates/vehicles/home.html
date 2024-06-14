@@ -1,3 +1,4 @@
+{% load humanize %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -172,51 +173,40 @@
     </div>
 </header>
 
-    <div class="hero-section">
-        <div class="hero-content">
-            <h1>DRIVEN DEALS</h1>
-            <p>BEST CAR DEALER IN TOWN!</p>
-            <a href="#contact" class="btn">Contact Us</a>
-        </div>
+<div class="hero-section">
+    <div class="hero-content">
+        <h1>DRIVEN DEALS</h1>
+        <p>BEST CAR DEALER IN TOWN!</p>
+        <a href="#contact" class="btn">Contact Us</a>
     </div>
+</div>
 
-    <main>
-        <section class="featured-cars">
-            <h2>Featured Cars</h2>
-            <div class="car-list">
-                <div class="car-item">
-                    <a href="car_details1.html">
-                        <img src="car1.jpg" alt="Car 1">
-                        <h3>Car Model 1</h3>
-                        <p>Short description of the car.</p>
-                    </a>
-                </div>
-                <div class="car-item">
-                    <a href="car_details2.html">
-                        <img src="car2.jpg" alt="Car 2">
-                        <h3>Car Model 2</h3>
-                        <p>Short description of the car.</p>
-                    </a>
-                </div>
-                <div class="car-item">
-                    <a href="car_details3.html">
-                        <img src="car3.jpg" alt="Car 3">
-                        <h3>Car Model 3</h3>
-                        <p>Short description of the car.</p>
-                    </a>
-                </div>
+<main>
+    <section class="featured-cars">
+        <h2>Featured Cars</h2>
+        <div class="car-list">
+            {% for car in cars %}
+            <div class="car-item">
+                <a href="{% url 'vehicle_detail' car.id %}">
+                    <img src="{{ car.picture.url }}" alt="{{ car.model }}">
+                    <h3>{{ car.model }}</h3>
+                    <p>Price: LKR {{ car.price|intcomma }}</p>
+                </a>
             </div>
-        </section>
-    </main>
-    <footer>
-        <section id="contact" class="contact-section">
-            <div class="container">
-                <h2>Contact Us</h2>
-                <p>Email: drivendeals@gmail.com</p>
-                <p>Phone: +94 777 586459</p>
-                <p>Address: No: 12, Park Street, Colombo, Sri Lanka</p>
-            </div>
-        </section>
-    </footer>
+            {% endfor %}
+        </div>
+    </section>
+</main>
+
+<footer>
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <h2>Contact Us</h2>
+            <p>Email: drivendeals@gmail.com</p>
+            <p>Phone: +94 777 586459</p>
+            <p>Address: No: 12, Park Street, Colombo, Sri Lanka</p>
+        </div>
+    </section>
+</footer>
 </body>
 </html>
