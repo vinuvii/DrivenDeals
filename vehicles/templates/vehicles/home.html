@@ -153,27 +153,6 @@
             text-overflow: ellipsis;
             white-space: nowrap;
         }
-        .nav-button {
-            position: fixed;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(0, 0, 0, 0.3);
-            color: white;
-            border: none;
-            padding: 10px;
-            font-size: 24px;
-            cursor: pointer;
-        }
-        .nav-button.prev {
-            left: 10px;
-        }
-        .nav-button.next {
-            right: 10px;
-        }
-        .nav-button:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
 
         .contact-section {
             margin-top: auto; /* Pushes it to the bottom */
@@ -246,29 +225,7 @@
     </div>
 </footer>
 
-<button class="nav-button prev" onclick="scrollCars('left')">&#8249;</button>
-<button class="nav-button next" onclick="scrollCars('right')">&#8250;</button>
-
-<script>
-    // JavaScript function to scroll the car list left or right
-    function scrollCars(direction) {
-        const container = document.querySelector('.car-list');
-        const scrollAmount = 350; // Adjusted as per .car-item width
-
-        if (direction === 'left') {
-            container.scrollBy({
-                left: -scrollAmount,
-                behavior: 'smooth'
-            });
-        } else if (direction === 'right') {
-            container.scrollBy({
-                left: scrollAmount,
-                behavior: 'smooth'
-            });
-        }
-    }
-</script>
-
 </body>
 </html>
+
 
