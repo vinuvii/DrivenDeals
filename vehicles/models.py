@@ -71,6 +71,7 @@ class Vehicle(models.Model):
     engine_capacity = models.DecimalField(max_digits=4, decimal_places=1, null=True)
     engine_type = models.CharField(max_length=10, choices=[('electric', 'Electric'), ('hybrid', 'Hybrid'), ('ice', 'ICE (Internal Combustion Engine)')], null=True)
 
+    # Additional features
     abs_breaks = models.BooleanField(default=False)
     alloy_wheels = models.BooleanField(default=False)
     airbags = models.BooleanField(default=False)

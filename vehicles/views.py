@@ -5,6 +5,9 @@ from django.contrib.auth.decorators import login_required
 from .models import Vehicle
 from .forms import VehicleForm
 from django.urls import reverse
+from django.http import JsonResponse
+from django.views.decorators.http import require_POST
+from .models import Vehicle
 
 def index(request):
     return render(request, 'vehicles/vehicle_listing.html')
@@ -14,13 +17,52 @@ def list_vehicle(request):
     if request.method == 'POST':
         form = VehicleForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
+            vehicle = form.save(commit=False)
+            vehicle.seller = request.user
+            vehicle.save()
             messages.success(request, 'Your vehicle has been listed successfully!')
             return redirect('vehicle_success')  # Redirect to a success page
         else:
             messages.error(request, 'Please correct the error below.')
     else:
         form = VehicleForm()
+    return render(request, 'vehicles/vehicle_listing.html', {'form': form})
+
+@require_POST
+def submit_form(request):
+    if request.method == 'POST':
+        form = VehicleForm(request.POST, request.FILES)
+        if form.is_valid():
+            vehicle = form.save(commit=False)
+            vehicle.seller = request.user
+            vehicle.save()
+            if request.is_ajax():
+                return JsonResponse({'status': 'success'})
+            else:
+                messages.success(request, 'Your vehicle has been listed successfully!')
+                return redirect('vehicle_success')
+        else:
+            if request.is_ajax():
+                return JsonResponse({'status': 'error', 'errors': form.errors})
+            else:
+                messages.error(request, 'Please correct the errors below.')
+                return render(request, 'vehicles/vehicle_listing.html', {'form': form})
+    else:
+        return JsonResponse({'status': 'error', 'errors': 'Invalid request'})
+
+@login_required
+def add_vehicle(request):
+    if request.method == 'POST':
+        form = VehicleForm(request.POST, request.FILES, seller=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect('vehicle_success')  # Replace 'success_url' with the actual URL name or path
+        else:
+            print("Form is invalid")
+            print(form.errors)  # Debug: Print form errors to the console
+    else:
+        form = VehicleForm(seller=request.user)
+
     return render(request, 'vehicles/vehicle_listing.html', {'form': form})
 
 def vehicle_success(request):
