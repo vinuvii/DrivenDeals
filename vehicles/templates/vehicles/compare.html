@@ -1,0 +1,269 @@
+{% extends 'base.html' %}
+
+{% block extra_head %}
+<style>
+    .blog-section {
+        padding: 50px 20px;
+        background-color: #ffffff;
+        color: #333;
+    }
+    .blog-section h1 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    .blog-section p {
+        text-align: justify;
+        margin: 0 auto 20px auto; /* Added margin-bottom for spacing between paragraphs */
+        max-width: 800px;
+    }
+
+    /* Additional styling for comparison table */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+    th, td {
+        padding: 10px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+    th {
+        background-color: #f2f2f2;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h1>Compare Vehicles</h1>
+
+        <!-- Vehicle Selection Form -->
+        <form id="compareForm">
+            <div class="vehicle-select">
+            <div>
+            <label for="vehicle1Select">Select Vehicle 1:</label>
+            <select id="vehicle1Select" name="vehicle1">
+                {% for vehicle in vehicles %}
+                <option value="{{ vehicle.id }}">{{ vehicle.make }} {{ vehicle.model }} {{ vehicle.year }}</option>
+                {% endfor %}
+            </select>
+            </div>
+            <div>
+            <label for="vehicle2Select">Select Vehicle 2:</label>
+            <select id="vehicle2Select" name="vehicle2">
+                {% for vehicle in vehicles %}
+                <option value="{{ vehicle.id }}">{{ vehicle.make }} {{ vehicle.model }} {{ vehicle.year }}</option>
+                {% endfor %}
+            </select>
+            </div>
+            <button type="submit">Compare</button>
+        </form>
+
+        <!-- Comparison Table -->
+        <h2>Comparison Table</h2>
+        <table id="comparisonTable">
+            <thead>
+                <tr>
+                    <th>Feature</th>
+                    <th>Vehicle 1</th>
+                    <th>Vehicle 2</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Make</td>
+                    <td id="vehicle1Make"></td>
+                    <td id="vehicle2Make"></td>
+                </tr>
+                <tr>
+                    <td>Model</td>
+                    <td id="vehicle1Model"></td>
+                    <td id="vehicle2Model"></td>
+                </tr>
+                <tr>
+                    <td>Year</td>
+                    <td id="vehicle1Year"></td>
+                    <td id="vehicle2Year"></td>
+                </tr>
+                <tr>
+                    <td>Body Type</td>
+                    <td id="vehicle1BodyType"></td>
+                    <td id="vehicle2BodyType"></td>
+                </tr>
+                <tr>
+                    <td>No. of Seats</td>
+                    <td id="vehicle1Seats"></td>
+                    <td id="vehicle2Seats"></td>
+                </tr>
+                <tr>
+                    <td>Transmission Type</td>
+                    <td id="vehicle1Transmission"></td>
+                    <td id="vehicle2Transmission"></td>
+                </tr>
+                <tr>
+                    <td>Fuel Type</td>
+                    <td id="vehicle1FuelType"></td>
+                    <td id="vehicle2FuelType"></td>
+                </tr>
+                <tr>
+                    <td>Engine Capacity</td>
+                    <td id="vehicle1EngineCapacity"></td>
+                    <td id="vehicle2EngineCapacity"></td>
+                </tr>
+                <tr>
+                    <td>Engine Type</td>
+                    <td id="vehicle1EngineType"></td>
+                    <td id="vehicle2EngineType"></td>
+                </tr>
+                <tr>
+                    <td>ABS</td>
+                    <td id="vehicle1Abs"></td>
+                    <td id="vehicle2Abs"></td>
+                </tr>
+                <tr>
+                    <td>Alloy Wheels</td>
+                    <td id="vehicle1AlloyWheels"></td>
+                    <td id="vehicle2AlloyWheels"></td>
+                </tr>
+                <tr>
+                    <td>Airbags</td>
+                    <td id="vehicle1Airbags"></td>
+                    <td id="vehicle2Airbags"></td>
+                </tr>
+                <tr>
+                    <td>Air Conditioning</td>
+                    <td id="vehicle1AirConditioning"></td>
+                    <td id="vehicle2AirConditioning"></td>
+                </tr>
+                <tr>
+                    <td>Power Steering</td>
+                    <td id="vehicle1PowerSteering"></td>
+                    <td id="vehicle2PowerSteering"></td>
+                </tr>
+                <tr>
+                    <td>Power Windows</td>
+                    <td id="vehicle1PowerWindows"></td>
+                    <td id="vehicle2PowerWindows"></td>
+                </tr>
+                <tr>
+                    <td>Central Locking</td>
+                    <td id="vehicle1CentralLocking"></td>
+                    <td id="vehicle2CentralLocking"></td>
+                </tr>
+                <tr>
+                    <td>Reverse Camera</td>
+                    <td id="vehicle1ReverseCamera"></td>
+                    <td id="vehicle2ReverseCamera"></td>
+                </tr>
+                <tr>
+                    <td>Leather Seats</td>
+                    <td id="vehicle1LeatherSeats"></td>
+                    <td id="vehicle2LeatherSeats"></td>
+                </tr>
+                <tr>
+                    <td>Sunroof</td>
+                    <td id="vehicle1Sunroof"></td>
+                    <td id="vehicle2Sunroof"></td>
+                </tr>
+                <tr>
+                <td>Image</td>
+                <td id="vehicle1Image"></td>
+                <td id="vehicle2Image"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- JavaScript to fetch vehicle details and populate the page -->
+    <script>
+        // Function to fetch vehicle details and populate the page
+        async function fetchAndCompareVehicles(event) {
+            event.preventDefault(); // Prevent form submission
+
+            const vehicle1Id = document.getElementById('vehicle1Select').value;
+            const vehicle2Id = document.getElementById('vehicle2Select').value;
+
+            try {
+                // Fetch vehicle 1 details
+                const response1 = await fetch(`/api/vehicle_details/${vehicle1Id}`);
+                const vehicle1 = await response1.json();
+
+                // Fetch vehicle 2 details
+                const response2 = await fetch(`/api/vehicle_details/${vehicle2Id}`);
+                const vehicle2 = await response2.json();
+
+                // Populate Comparison Table
+                document.getElementById('vehicle1Make').textContent = vehicle1.make;
+                document.getElementById('vehicle2Make').textContent = vehicle2.make;
+
+                document.getElementById('vehicle1Model').textContent = vehicle1.model;
+                document.getElementById('vehicle2Model').textContent = vehicle2.model;
+
+                document.getElementById('vehicle1Year').textContent = vehicle1.year;
+                document.getElementById('vehicle2Year').textContent = vehicle2.year;
+
+                document.getElementById('vehicle1BodyType').textContent = vehicle1.body_type;
+                document.getElementById('vehicle2BodyType').textContent = vehicle2.body_type;
+
+                document.getElementById('vehicle1Seats').textContent = vehicle1.no_of_seats;
+                document.getElementById('vehicle2Seats').textContent = vehicle2.no_of_seats;
+
+                document.getElementById('vehicle1Transmission').textContent = vehicle1.transmission_type;
+                document.getElementById('vehicle2Transmission').textContent = vehicle2.transmission_type;
+
+                document.getElementById('vehicle1FuelType').textContent = vehicle1.fuel_type;
+                document.getElementById('vehicle2FuelType').textContent = vehicle2.fuel_type;
+
+                document.getElementById('vehicle1EngineCapacity').textContent = vehicle1.engine_capacity;
+                document.getElementById('vehicle2EngineCapacity').textContent = vehicle2.engine_capacity;
+
+                document.getElementById('vehicle1EngineType').textContent = vehicle1.engine_type;
+                document.getElementById('vehicle2EngineType').textContent = vehicle2.engine_type;
+
+                document.getElementById('vehicle1Abs').textContent = vehicle1.abs_breaks ? 'Yes' : 'No';
+                document.getElementById('vehicle2Abs').textContent = vehicle2.abs_breaks ? 'Yes' : 'No';
+
+                document.getElementById('vehicle1AlloyWheels').textContent = vehicle1.alloy_wheels ? 'Yes' : 'No';
+                document.getElementById('vehicle2AlloyWheels').textContent = vehicle2.alloy_wheels ? 'Yes' : 'No';
+
+                document.getElementById('vehicle1Airbags').textContent = vehicle1.airbags ? 'Yes' : 'No';
+                document.getElementById('vehicle2Airbags').textContent = vehicle2.airbags ? 'Yes' : 'No';
+
+                document.getElementById('vehicle1AirConditioning').textContent = vehicle1.air_conditioning ? 'Yes' : 'No';
+                document.getElementById('vehicle2AirConditioning').textContent = vehicle2.air_conditioning ? 'Yes' : 'No';
+
+                document.getElementById('vehicle1PowerSteering').textContent = vehicle1.power_steering ? 'Yes' : 'No';
+                document.getElementById('vehicle2PowerSteering').textContent = vehicle2.power_steering ? 'Yes' : 'No';
+
+                document.getElementById('vehicle1PowerWindows').textContent = vehicle1.power_windows ? 'Yes' : 'No';
+                document.getElementById('vehicle2PowerWindows').textContent = vehicle2.power_windows ? 'Yes' : 'No';
+
+                document.getElementById('vehicle1CentralLocking').textContent = vehicle1.central_locking ? 'Yes' : 'No';
+                document.getElementById('vehicle2CentralLocking').textContent = vehicle2.central_locking ? 'Yes' : 'No';
+
+                document.getElementById('vehicle1ReverseCamera').textContent = vehicle1.reverse_camera ? 'Yes' : 'No';
+                document.getElementById('vehicle2ReverseCamera').textContent = vehicle2.reverse_camera ? 'Yes' : 'No';
+
+                document.getElementById('vehicle1LeatherSeats').textContent = vehicle1.leather_seats ? 'Yes' : 'No';
+                document.getElementById('vehicle2LeatherSeats').textContent = vehicle2.leather_seats ? 'Yes' : 'No';
+
+                document.getElementById('vehicle1Sunroof').textContent = vehicle1.sunroof ? 'Yes' : 'No';
+                document.getElementById('vehicle2Sunroof').textContent = vehicle2.sunroof ? 'Yes' : 'No';
+
+                // Set images (assuming you have image URLs stored in the database)
+                document.getElementById('vehicle1Image').innerHTML = `<img src="${vehicle1.picture.url}" alt="Vehicle 1" class="vehicle-image">`;
+                document.getElementById('vehicle2Image').innerHTML = `<img src="${vehicle2.picture.url}" alt="Vehicle 2" class="vehicle-image">`;
+
+            } catch (error) {
+                console.error('Error fetching vehicle details:', error);
+            }
+        }
+
+        // Event listener for form submission
+        document.getElementById('compareForm').addEventListener('submit', fetchAndCompareVehicles);
+    </script>
+{% endblock %}
+
+
+

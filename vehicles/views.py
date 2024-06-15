@@ -85,3 +85,12 @@ def services(request):
 
 def contact(request):
     return render(request, 'vehicles/contact.html')
+
+def compare(request):
+    # Fetch all vehicles from the database
+    vehicles = Vehicle.objects.all()
+
+    context = {
+        'vehicles': vehicles,
+    }
+    return render(request, 'vehicles/compare.html', context)
