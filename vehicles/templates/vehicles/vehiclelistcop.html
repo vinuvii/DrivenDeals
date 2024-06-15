@@ -1,0 +1,86 @@
+<!-- templates/vehicles/vehicle_listing.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>List Your Vehicle for Sale</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css">
+    <style>
+        body {
+            background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,121,113,1) 35%, rgba(0,212,255,1) 100%);
+            color: #ffffff;
+            font-family: 'Arial', sans-serif;
+        }
+        .container {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            margin-top: 60px;
+            color: #333;
+        }
+        .form-group label {
+            font-weight: bold;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+            transition: all 0.3s ease-in-out;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #004080;
+            transform: scale(1.05);
+        }
+        .btn-primary:focus, .btn-primary:active {
+            outline: none;
+            box-shadow: none;
+        }
+        .form-control, .form-control-file, .form-control:focus {
+            border-color: #007bff;
+            box-shadow: none;
+        }
+        .form-control::placeholder {
+            font-style: italic;
+            color: #6c757d;
+        }
+        .form-group input[type="file"] {
+            font-size: 0.9rem;
+        }
+        .form-title {
+            font-family: 'Arial', sans-serif;
+            font-weight: 700;
+            margin-bottom: 30px;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="form-title">List Your Vehicle for Sale</h1>
+        {% if messages %}
+            <div class="container mt-4">
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+        <form method="post" action="{% url 'list_vehicle' %}" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary btn-block">Submit Listing</button>
+        </form>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
+</body>
+</html>
+
+
+

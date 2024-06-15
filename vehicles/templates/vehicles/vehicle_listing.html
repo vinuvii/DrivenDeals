@@ -1,86 +1,293 @@
-<!-- templates/vehicles/vehicle_listing.html -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>List Your Vehicle for Sale</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css">
-    <style>
-        body {
-            background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,121,113,1) 35%, rgba(0,212,255,1) 100%);
-            color: #ffffff;
-            font-family: 'Arial', sans-serif;
-        }
-        .container {
-            background-color: rgba(255, 255, 255, 0.9);
-            border-radius: 15px;
-            box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.1);
-            padding: 40px;
-            margin-top: 60px;
-            color: #333;
-        }
-        .form-group label {
-            font-weight: bold;
-        }
-        .btn-primary {
-            background-color: #007bff;
-            border-color: #007bff;
-            transition: all 0.3s ease-in-out;
-        }
-        .btn-primary:hover {
-            background-color: #0056b3;
-            border-color: #004080;
-            transform: scale(1.05);
-        }
-        .btn-primary:focus, .btn-primary:active {
-            outline: none;
-            box-shadow: none;
-        }
-        .form-control, .form-control-file, .form-control:focus {
-            border-color: #007bff;
-            box-shadow: none;
-        }
-        .form-control::placeholder {
-            font-style: italic;
-            color: #6c757d;
-        }
-        .form-group input[type="file"] {
-            font-size: 0.9rem;
-        }
-        .form-title {
-            font-family: 'Arial', sans-serif;
-            font-weight: 700;
-            margin-bottom: 30px;
-            text-align: center;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1 class="form-title">List Your Vehicle for Sale</h1>
-        {% if messages %}
-            <div class="container mt-4">
-                {% for message in messages %}
-                    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
-                        {{ message }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                {% endfor %}
-            </div>
-        {% endif %}
-        <form method="post" action="{% url 'list_vehicle' %}" enctype="multipart/form-data">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="btn btn-primary btn-block">Submit Listing</button>
-        </form>
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_head %}
+<style>
+
+    .vehicle-header {
+        width: 100%;
+        height: 300px; /* Adjust height as needed */
+        overflow: hidden;
+        position: relative;
+        margin-top: -150px;
+    }
+
+    .vehicle-header img {
+        width: 100%;
+        height: 100%; /* Ensure the image fills its container */
+        object-fit: cover; /* Ensures the image covers the entire container */
+        position: absolute; /* Position image absolutely within its container */
+        top: 0;
+        left: 0;
+    }
+
+    .vehicle-overlay {
+        font-family: 'Open Sans', 'Titillium Web', 'PT Sans', Arial, sans-serif;
+        position: absolute;
+        top: 180px;
+        left: 180px;
+        color: white;
+        padding: 5px 10px;
+        font-size: 36px;
+        font-weight: bold;
+        z-index: 10; /* Ensure overlay is above the image */
+    }
+
+    /* Next button styles */
+    .nextBtn {
+        margin-top: 1rem;
+    }
+    .max-w-7xl {
+    max-width: 100vw; /* Set maximum width to full viewport width */
+    margin-left: auto; /* Center align content */
+    margin-right: auto; /* Center align content */
+    width: 80%;
+    margin-top:50px
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<div class="vehicle-details">
+    <div class="vehicle-header">
+        <img src="https://www.freewebheaders.com/wp-content/gallery/cars/cache/toyota-gt86-dashboard-car-website-header.jpg-nggid043742-ngg0dyn-1280x375x100-00f0w010c010r110f110r010t010.jpg" alt="Vehicle Details Page">
+        <div class="vehicle-overlay">Vehicle Details Page</div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
-</body>
-</html>
+</div>
+
+<div class="max-w-7xl mx-auto px-4">
+    <!-- Progress Bar -->
+    <div class="mb-10">
+        <div class="relative pt-1">
+            <div class="flex mb-2 items-center justify-between">
+                <div class="text-base font-semibold" id="progress-start">STEP 1</div>
+                <div class="text-base font-semibold" id="progress-end">STEP 5</div>
+            </div>
+            <div class="overflow-hidden h-2 mb-4 text-xs flex rounded bg-gray-200">
+                <div id="progress-bar" style="width:20%" class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-red-600"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="flex space-x-10">
+        <!-- Sidebar Menu -->
+        <div class="bg-white w-1/4 p-5 rounded-md shadow-md">
+            <div id="sidebar" class="space-y-4">
+                <div class="border-l-4 border-red-600 pl-4 py-3 text-red-600 font-bold cursor-pointer" data-step="1">
+                    <i class="fas fa-address-card mr-2"></i> CONTACT DETAILs
+                </div>
+                <div class="border-l-4 border-gray-300 pl-4 py-3 text-gray-600 cursor-pointer" data-step="2">
+                    <i class="fas fa-cogs mr-2"></i> SELECT DETAILS
+                </div>
+                <div class="border-l-4 border-gray-300 pl-4 py-3 text-gray-600 cursor-pointer" data-step="3">
+                    <i class="fas fa-camera mr-2"></i> PHOTOS & VIDEOS
+                </div>
+                <div class="border-l-4 border-gray-300 pl-4 py-3 text-gray-600 cursor-pointer" data-step="4">
+                    <i class="fas fa-car mr-2"></i> ADD YOUR VEHICLE
+                </div>
+                <div class="border-l-4 border-gray-300 pl-4 py-3 text-gray-600 cursor-pointer" data-step="5">
+                    <i class="fas fa-paper-plane mr-2"></i> SUBMIT & PUBLISH
+                </div>
+            </div>
+        </div>
+
+        <!-- Form Section -->
+        <div id="form-content" class="bg-white w-3/4 p-10 rounded-md shadow-md">
+            <!-- Content will be dynamically injected here -->
+        </div>
+    </div>
+</div>
+
+<script>
 
 
+    const stepsContent = {
+        1: `
+            <h2 class="text-2xl font-semibold mb-6">Add Your Vehicle Details</h2>
+            <div class="grid grid-cols-2 gap-6">
+                <!-- Add your vehicle details form here -->
+                <div>
+                    <label for="make" class="block text-sm font-medium text-gray-600">Enter Vehicle Make</label>
+                    <select id="make" class="block w-full mt-1 p-2 bg-gray-50 border border-gray-300 rounded-md">
+                        <option>Any Make</option>
+                        <option>Make 1</option>
+                        <option>Make 2</option>
+                        <option>Make 3</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="model" class="block text-sm font-medium text-gray-600">Enter Vehicle Model</label>
+                    <select id="model" class="block w-full mt-1 p-2 bg-gray-50 border border-gray-300 rounded-md">
+                        <option>Any Model</option>
+                        <option>Model 1</option>
+                        <option>Model 2</option>
+                        <option>Model 3</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="year" class="block text-sm font-medium text-gray-600">Vehicle Manufacturer Year</label>
+                    <select id="year" class="block w-full mt-1 p-2 bg-gray-50 border border-gray-300 rounded-md">
+                        <option>Select Year</option>
+                        <option>2021</option>
+                        <option>2020</option>
+                        <option>2019</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="bodytype" class="block text-sm font-medium text-gray-600">Select Body Type</label>
+                    <select id="bodytype" class="block w-full mt-1 p-2 bg-gray-50 border border-gray-300 rounded-md">
+                        <option>Select Body Type</option>
+                        <option>Sedan</option>
+                        <option>SUV</option>
+                        <option>Hatchback</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="doors" class="block text-sm font-medium text-gray-600">No. of Doors</label>
+                    <select id="doors" class="block w-full mt-1 p-2 bg-gray-50 border border-gray-300 rounded-md">
+                        <option>Select</option>
+                        <option>2</option>
+                        <option>4</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="transmission" class="block text-sm font-medium text-gray-600">Vehicle Transmission</label>
+                    <select id="transmission" class="block w-full mt-1 p-2 bg-gray-50 border border-gray-300 rounded-md">
+                        <option>Select</option>
+                        <option>Automatic</option>
+                        <option>Manual</option>
+                    </select>
+                </div>
+            </div>
+            <div class="mt-6 flex justify-end">
+                <button class="bg-red-600 text-white py-2 px-4 rounded-md" id="next-button">Next</button>
+            </div>
+        `,
+        2: `
+            <h2 class="text-2xl font-semibold mb-6">Select Vehicle Details</h2>
+            <div class="grid grid-cols-2 gap-6">
+                <!-- Select details form here -->
+                <div>
+                    <label for="color" class="block text-sm font-medium text-gray-600">Vehicle Color</label>
+                    <select id="color" class="block w-full mt-1 p-2 bg-gray-50 border border-gray-300 rounded-md">
+                        <option>Select Color</option>
+                        <option>Red</option>
+                        <option>Blue</option>
+                        <option>Black</option>
+                        <option>White</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="mileage" class="block text-sm font-medium text-gray-600">Mileage</label>
+                    <input type="text" id="mileage" class="block w-full mt-1 p-2 bg-gray-50 border border-gray-300 rounded-md" placeholder="Enter Mileage">
+                </div>
+            </div>
+            <div class="mt-6 flex justify-end">
+                <button class="bg-red-600 text-white py-2 px-4 rounded-md" id="next-button">Next</button>
+            </div>
+        `,
+        3: `
+            <h2 class="text-2xl font-semibold
+            <h2 class="text-2xl font-semibold mb-6">Upload Photos & Videos</h2>
+            <div class="grid grid-cols-2 gap-6">
+                <!-- Photos & videos upload form here -->
+                <div>
+                    <label for="photos" class="block text-sm font-medium text-gray-600">Upload Photos</label>
+                    <input type="file" id="photos" class="block w-full mt-1 p-2 bg-gray-50 border border-gray-300 rounded-md" multiple>
+                </div>
+                <div>
+                    <label for="videos" class="block text-sm font-medium text-gray-600">Upload Videos</label>
+                    <input type="file" id="videos" class="block w-full mt-1 p-2 bg-gray-50 border border-gray-300 rounded-md" multiple>
+                </div>
+            </div>
+            <div class="mt-6 flex justify-end">
+                <button class="bg-red-600 text-white py-2 px-4 rounded-md" id="next-button">Next</button>
+            </div>
+        `,
+        4: `
+            <h2 class="text-2xl font-semibold mb-6">Enter Contact Details</h2>
+            <div class="grid grid-cols-2 gap-6">
+                <!-- Contact details form here -->
+                <div>
+                    <label for="name" class="block text-sm font-medium text-gray-600">Full Name</label>
+                    <input type="text" id="name" class="block w-full mt-1 p-2 bg-gray-50 border border-gray-300 rounded-md" placeholder="Enter Full Name">
+                </div>
+                <div>
+                    <label for="email" class="block text-sm font-medium text-gray-600">Email Address</label>
+                    <input type="email" id="email" class="block w-full mt-1 p-2 bg-gray-50 border border-gray-300 rounded-md" placeholder="Enter Email Address">
+                </div>
+                <div>
+                    <label for="phone" class="block text-sm font-medium text-gray-600">Phone Number</label>
+                    <input type="tel" id="phone" class="block w-full mt-1 p-2 bg-gray-50 border border-gray-300 rounded-md" placeholder="Enter Phone Number">
+                </div>
+            </div>
+            <div class="mt-6 flex justify-end">
+                <button class="bg-red-600 text-white py-2 px-4 rounded-md" id="next-button">Next</button>
+            </div>
+        `,
+        5: `
+            <h2 class="text-2xl font-semibold mb-6">Submit & Publish</h2>
+            <div class="grid grid-cols-2 gap-6">
+                <!-- Submit & publish form here -->
+                <div>
+                    <button class="bg-red-600 text-white py-2 px-4 rounded-md">Submit</button>
+                </div>
+            </div>
+        `
+    };
 
+    const sidebar = document.getElementById('sidebar');
+    const formContent = document.getElementById('form-content');
+    const progressBar = document.getElementById('progress-bar');
+
+    sidebar.addEventListener('click', (e) => {
+        if (e.target.closest('[data-step]')) {
+            const step = e.target.closest('[data-step]').dataset.step;
+            updateContent(step);
+        }
+    });
+
+    function updateContent(step) {
+        formContent.innerHTML = stepsContent[step];
+        updateSidebar(step);
+        updateProgressBar(step);
+        attachNextButtonHandler(step);
+    }
+
+    function updateSidebar(step) {
+        const items = sidebar.children;
+        for (let item of items) {
+            if (item.dataset.step == step) {
+                item.classList.add('border-red-600', 'text-red-600', 'font-bold');
+                item.classList.remove('border-gray-300', 'text-gray-600');
+            } else {
+                item.classList.add('border-gray-300', 'text-gray-600');
+                item.classList.remove('border-red-600', 'text-red-600', 'font-bold');
+            }
+        }
+    }
+
+    function updateProgressBar(step) {
+        const percentage = (step / 5) * 100;
+        progressBar.style.width = `${percentage}%`;
+    }
+
+    function attachNextButtonHandler(step) {
+        const nextButton = document.getElementById('next-button');
+        if (nextButton) {
+            nextButton.addEventListener('click', () => {
+                const nextStep = parseInt(step) + 1;
+                if (nextStep <= 5) {
+                    updateContent(nextStep);
+                }
+            });
+        }
+    }
+
+    // Initialize content for step 1
+    updateContent(1);
+</script>
+
+{% endblock %}
