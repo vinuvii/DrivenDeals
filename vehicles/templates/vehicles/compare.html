@@ -71,6 +71,11 @@
                 </tr>
             </thead>
             <tbody>
+                 <tr>
+                    <td>Price</td>
+                    <td id="vehicle1Price"></td>
+                    <td id="vehicle2Price"></td>
+                </tr>
                 <tr>
                     <td>Make</td>
                     <td id="vehicle1Make"></td>
@@ -194,6 +199,9 @@
                 const vehicle2 = await response2.json();
 
                 // Populate Comparison Table
+                document.getElementById('vehicle1Price').textContent = `$${vehicle1.price}`;
+                document.getElementById('vehicle2Price').textContent = `$${vehicle2.price}`;
+
                 document.getElementById('vehicle1Make').textContent = vehicle1.make;
                 document.getElementById('vehicle2Make').textContent = vehicle2.make;
 
