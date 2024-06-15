@@ -85,3 +85,61 @@ def services(request):
 
 def contact(request):
     return render(request, 'vehicles/contact.html')
+
+def compare(request):
+    # Fetch all vehicles from the database
+    vehicles = Vehicle.objects.all()
+
+    context = {
+        'vehicles': vehicles,
+    }
+    return render(request, 'vehicles/compare.html', context)
+
+def filter(request):
+    # Fetch all vehicles initially to populate filter options
+    vehicles = Vehicle.objects.all()
+
+    context = {
+        'vehicles': vehicles
+    }
+    return render(request, 'vehicles/filter.html', context)
+
+def filter_vehicles(request):
+    make = request.GET.get('make')
+    # Add more filters as needed (e.g., model, year, transmission_type)
+
+    # Filtering based on selected criteria
+    filtered_vehicles = Vehicle.objects.all()
+    if make:
+        filtered_vehicles = filtered_vehicles.filter(make=make)
+    # Add more filtering conditions as per other criteria
+
+    # Serialize vehicles and their price (assuming price is a field in Vehicle model)
+    filtered_data = []
+    for vehicle in filtered_vehicles:
+        vehicle_data = {
+            'make': vehicle.make,
+            'model': vehicle.model,
+            'year': vehicle.year,
+            'body_type': vehicle.body_type,
+            'no_of_seats': vehicle.no_of_seats,
+            'transmission_type': vehicle.transmission_type,
+            'fuel_type': vehicle.fuel_type,
+            'engine_capacity': vehicle.engine_capacity,
+            'engine_type': vehicle.engine_type,
+            'abs_breaks': vehicle.abs_breaks,
+            'alloy_wheels': vehicle.alloy_wheels,
+            'airbags': vehicle.airbags,
+            'air_conditioning': vehicle.air_conditioning,
+            'power_steering': vehicle.power_steering,
+            'power_windows': vehicle.power_windows,
+            'central_locking': vehicle.central_locking,
+            'reverse_camera': vehicle.reverse_camera,
+            'leather_seats': vehicle.leather_seats,
+            'sunroof': vehicle.sunroof,
+            'price': vehicle.price  # Include price field
+            # Add more fields as needed
+        }
+        filtered_data.append(vehicle_data)
+
+    return JsonResponse(filtered_data, safe=False)
