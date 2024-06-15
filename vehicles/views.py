@@ -76,3 +76,6 @@ def about(request):
 
 def blog1(request):
     return render(request, 'vehicles/blog1.html')
+
+def blog2(request):
+    return render(request, 'vehicles/blog2.html')
