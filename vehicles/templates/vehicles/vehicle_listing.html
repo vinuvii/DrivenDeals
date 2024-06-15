@@ -1,9 +1,7 @@
 {% extends 'base.html' %}
-{% load static %}
 
 {% block extra_head %}
 <style>
-
     .vehicle-header {
         width: 100%;
         height: 300px; /* Adjust height as needed */
@@ -44,18 +42,95 @@
     width: 80%;
     margin-top:50px
     }
+
+    .edit-profile-btn {
+        display: inline-block;
+        padding: 8px 20px;
+        background-color: white;
+        border: 3px solid #ccc; /* Increased border thickness */
+        color: #333;
+        text-decoration: none;
+        border-radius: 4px;
+        transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+        float: right; /* Align the button to the right */
+        margin-bottom: 20px; /* Increase space below the button */
+        margin-top: 5px; /* Adjust top margin to align properly */
+    }
+
+    .edit-profile-btn:hover {
+        background-color: #ccc;
+        color: white;
+        border-color: #ccc;
+    }
+    .form-container {
+        display: flex;
+        margin-top: 5px; /* Adjust top margin if needed */
+        padding: 20px; /* Add padding to create space around the content */
+        box-sizing: border-box;
+        margin-left: 65px;
+        margin-right: 65px;
+    }
+    .sidebar {
+        background-color: #ffffff;
+        width: 25%;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        margin-right: 20px;
+    }
+    .form-content {
+        background-color: #ffffff;
+        padding: 40px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        width: 75%;
+    }
+    .form-content .step {
+        display: none;
+    }
+    .form-content .step.active {
+        display: block;
+    }
+    .form-content label {
+        display: block;
+        margin-top: 10px;
+        text-align: left;
+    }
+    .form-content input[type="text"],
+    .form-content input[type="number"],
+    .form-content select,
+    .form-content textarea {
+        width: calc(100% - 22px);
+        padding: 10px;
+        margin: 10px 0;
+        border: 1px solid #0D1B2A;
+        border-radius: 5px;
+        background-color: #ffffff;
+        color: #000000;
+        box-sizing: border-box;
+        font-size: 14px;
+    }
+    .form-content button {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        border: none;
+        border-radius: 5px;
+        background-color: #187bcd;
+        color: #FFFFFF;
+        cursor: pointer;
+        font-size: 16px;
+    }
 </style>
 {% endblock %}
 
 {% block content %}
-
 <div class="vehicle-details">
     <div class="vehicle-header">
         <img src="https://www.freewebheaders.com/wp-content/gallery/cars/cache/toyota-gt86-dashboard-car-website-header.jpg-nggid043742-ngg0dyn-1280x375x100-00f0w010c010r110f110r010t010.jpg" alt="Vehicle Details Page">
-        <div class="vehicle-overlay">Vehicle Details Page</div>
+        <div class="vehicle-overlay">Vehicle Listing Page</div>
     </div>
 </div>
-
 <div class="max-w-7xl mx-auto px-4">
     <!-- Progress Bar -->
     <div class="mb-10">
@@ -69,225 +144,227 @@
             </div>
         </div>
     </div>
-
-    <!-- Main Content -->
-    <div class="flex space-x-10">
-        <!-- Sidebar Menu -->
-        <div class="bg-white w-1/4 p-5 rounded-md shadow-md">
-            <div id="sidebar" class="space-y-4">
-                <div class="border-l-4 border-red-600 pl-4 py-3 text-red-600 font-bold cursor-pointer" data-step="1">
-                    <i class="fas fa-address-card mr-2"></i> CONTACT DETAILs
-                </div>
-                <div class="border-l-4 border-gray-300 pl-4 py-3 text-gray-600 cursor-pointer" data-step="2">
-                    <i class="fas fa-cogs mr-2"></i> SELECT DETAILS
-                </div>
-                <div class="border-l-4 border-gray-300 pl-4 py-3 text-gray-600 cursor-pointer" data-step="3">
-                    <i class="fas fa-camera mr-2"></i> PHOTOS & VIDEOS
-                </div>
-                <div class="border-l-4 border-gray-300 pl-4 py-3 text-gray-600 cursor-pointer" data-step="4">
-                    <i class="fas fa-car mr-2"></i> ADD YOUR VEHICLE
-                </div>
-                <div class="border-l-4 border-gray-300 pl-4 py-3 text-gray-600 cursor-pointer" data-step="5">
-                    <i class="fas fa-paper-plane mr-2"></i> SUBMIT & PUBLISH
-                </div>
+</div>
+<div class="form-container">
+    <!-- Sidebar Menu -->
+    <div class="sidebar">
+        <div id="sidebar" class="space-y-4">
+            <div class="border-l-4 border-red-600 pl-4 py-3 text-red-600 font-bold cursor-pointer" data-step="1">
+                <i class="fas fa-address-card mr-2"></i> CONTACT DETAILS
+            </div>
+            <div class="border-l-4 border-gray-300 pl-4 py-3 text-gray-600 cursor-pointer" data-step="2">
+                <i class="fas fa-car mr-2"></i> ADD YOUR VEHICLE
+            </div>
+            <div class="border-l-4 border-gray-300 pl-4 py-3 text-gray-600 cursor-pointer" data-step="3">
+                <i class="fas fa-cogs mr-2"></i> SELECT DETAILS
+            </div>
+            <div class="border-l-4 border-gray-300 pl-4 py-3 text-gray-600 cursor-pointer" data-step="4">
+                <i class="fas fa-camera mr-2"></i> ADD PHOTOS
+            </div>
+            <div class="border-l-4 border-gray-300 pl-4 py-3 text-gray-600 cursor-pointer" data-step="5">
+                <i class="fas fa-paper-plane mr-2"></i> PUBLISH LISTING
             </div>
         </div>
+    </div>
 
-        <!-- Form Section -->
-        <div id="form-content" class="bg-white w-3/4 p-10 rounded-md shadow-md">
-            <!-- Content will be dynamically injected here -->
-        </div>
+    <!-- Form Content -->
+    <div class="form-content">
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <!-- Step 1: Contact Details -->
+            <div class="step active" id="step-1">
+                            <h2 class="text-2xl font-semibold mb-6">Contact Details</h2>
+
+            <div class="grid grid-cols-2 gap-6">
+                <!-- Contact details here -->
+                <div>
+                    <label for="full_name" class="block text-sm font-medium text-gray-600">Full Name</label>
+                    <input type="text" id="full_name" class="block w-full mt-1 p-2 bg-gray-50 border border-gray-300 rounded-md" value="{{ user.first_name }} {{ user.last_name }}" readonly>
+                </div>
+                <div>
+                    <label for="email" class="block text-sm font-medium text-gray-600">Email Address</label>
+                    <input type="email" id="email" class="block w-full mt-1 p-2 bg-gray-50 border border-gray-300 rounded-md" value="{{ user.email }}" readonly>
+                </div>
+                <div>
+                    <label for="phone" class="block text-sm font-medium text-gray-600">Phone Number</label>
+                    <input type="tel" id="phone" class="block w-full mt-1 p-2 bg-gray-50 border border-gray-300 rounded-md" value="{{ user.mobile_number }}" readonly>
+                </div>
+                <div>
+                    <label for="trading_address" class="block text-sm font-medium text-gray-600">Trading Address</label>
+                    <input type="text" id="trading_address" class="block w-full mt-1 p-2 bg-gray-50 border border-gray-300 rounded-md" value="{{ user.trading_address }}" readonly>
+                </div>
+                <div>
+                    <label for="postal_code" class="block text-sm font-medium text-gray-600">Postal Code</label>
+                    <input type="text" id="postal_code" class="block w-full mt-1 p-2 bg-gray-50 border border-gray-300 rounded-md" value="{{ user.postal_code }}" readonly>
+                </div>
+            </div>
+            <div class="mt-6 flex justify-between">
+                <a href="/edit_profile" class="edit-profile-btn">Click To Edit Profile Details</a>
+            </div>
+            <div class="mt-6 flex justify-end">
+                <button class="bg-red-600 text-white py-2 px-4 rounded-md nextBtn">Next</button>
+            </div>
+            </div>
+
+            <!-- Step 2: Add Your Vehicle -->
+            <div class="step" id="step-2">
+                <h2 class="text-2xl font-semibold mb-6">Add Your Vehicle Details</h2>
+                    <label for="id_make">Make:</label>
+                    {{ form.make }}
+
+                    <label for="id_model">Model:</label>
+                    {{ form.model }}
+
+                    <label for="id_year">Year:</label>
+                    {{ form.year }}
+
+                    <label for="id_body_type">Type:</label>
+                    {{ form.body_type }}
+
+                    <label for="id_color">Color:</label>
+                    {{ form.color }}
+
+                    <label for="id_mileage">Mileage:</label>
+                    {{ form.mileage }}
+
+                    <label for="id_price">Price:</label>
+                    {{ form.price }}
+
+                    <label for="transmission_type">Transmission Type:</label>
+                    {{ form.transmission_type }}
+
+                    <label for="id_fuel_type">Fuel Type:</label>
+                    {{ form.fuel_type }}
+
+                    <label for="id_engine_capacity">Engine Capacity:</label>
+                    {{ form.engine_capacity }}
+
+                    <label for="id_engine_type">Engine Type:</label>
+                    {{ form.engine_type }}
+
+                    <label for="id_no_of_seats">No. of Seats:</label>
+                    {{ form.no_of_seats }}
+
+                 </div>
+
+            <!-- Step 3: Select Details -->
+            <div class="step" id="step-3">
+                <h2>Select Details</h2>
+                <label for="abs_breaks">ABS Breaks:</label>
+                {{ form.abs_breaks }}
+
+                <label for="alloy_wheels">Alloy Wheels:</label>
+                {{ form.alloy_wheels }}
+
+                <label for="airbags">Airbags:</label>
+                {{ form.airbags }}
+
+                <label for="air_conditioning">Air Conditioning:</label>
+                {{ form.air_conditioning }}
+
+                <label for="power_steering">Power Steering:</label>
+                {{ form.power_steering }}
+
+                <label for="power_windows">Power Windows:</label>
+                {{ form.power_windows }}
+
+                <label for="central_locking">Central Locking:</label>
+                {{ form.central_locking }}
+
+                <label for="reverse_camera">Reverse Camera:</label>
+                {{ form.reverse_camera }}
+
+                <label for="sunroof">Sunroof:</label>
+                {{ form.sunroof }}
+
+                <label for="leather_seats">Leather Seats:</label>
+                {{ form.leather_seats }}
+            </div>
+
+            <!-- Step 4: Photos & Videos -->
+            <div class="step" id="step-4">
+                <h2>Photos & Videos</h2>
+                <label for="id_picture">Picture:</label>
+                {{ form.picture }}
+
+                <label for="id_picture2">Picture 2:</label>
+                {{ form.picture2 }}
+
+                <label for="id_picture3">Picture 3:</label>
+                {{ form.picture3 }}
+            </div>
+
+            <!-- Step 5: Submit & Publish -->
+            <div class="step" id="step-5">
+                <h2>Submit & Publish</h2>
+                <label for="id_description">Description:</label>
+                {{ form.description }}
+
+                <button type="submit">Save Vehicle</button>
+            </div>
+        </form>
     </div>
 </div>
 
 <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const sidebarItems = document.querySelectorAll('#sidebar div');
+        const steps = document.querySelectorAll('.form-content .step');
+        const progressBar = document.getElementById('progress-bar');
+        const nextButtons = document.querySelectorAll('.nextBtn');
 
+        sidebarItems.forEach(item => {
+            item.addEventListener('click', function() {
+                const step = this.getAttribute('data-step');
+                updateSidebar(step);
+                updateSteps(step);
+                updateProgressBar(step);
+            });
+        });
 
-    const stepsContent = {
-        1: `
-            <h2 class="text-2xl font-semibold mb-6">Add Your Vehicle Details</h2>
-            <div class="grid grid-cols-2 gap-6">
-                <!-- Add your vehicle details form here -->
-                <div>
-                    <label for="make" class="block text-sm font-medium text-gray-600">Enter Vehicle Make</label>
-                    <select id="make" class="block w-full mt-1 p-2 bg-gray-50 border border-gray-300 rounded-md">
-                        <option>Any Make</option>
-                        <option>Make 1</option>
-                        <option>Make 2</option>
-                        <option>Make 3</option>
-                    </select>
-                </div>
-                <div>
-                    <label for="model" class="block text-sm font-medium text-gray-600">Enter Vehicle Model</label>
-                    <select id="model" class="block w-full mt-1 p-2 bg-gray-50 border border-gray-300 rounded-md">
-                        <option>Any Model</option>
-                        <option>Model 1</option>
-                        <option>Model 2</option>
-                        <option>Model 3</option>
-                    </select>
-                </div>
-                <div>
-                    <label for="year" class="block text-sm font-medium text-gray-600">Vehicle Manufacturer Year</label>
-                    <select id="year" class="block w-full mt-1 p-2 bg-gray-50 border border-gray-300 rounded-md">
-                        <option>Select Year</option>
-                        <option>2021</option>
-                        <option>2020</option>
-                        <option>2019</option>
-                    </select>
-                </div>
-                <div>
-                    <label for="bodytype" class="block text-sm font-medium text-gray-600">Select Body Type</label>
-                    <select id="bodytype" class="block w-full mt-1 p-2 bg-gray-50 border border-gray-300 rounded-md">
-                        <option>Select Body Type</option>
-                        <option>Sedan</option>
-                        <option>SUV</option>
-                        <option>Hatchback</option>
-                    </select>
-                </div>
-                <div>
-                    <label for="doors" class="block text-sm font-medium text-gray-600">No. of Doors</label>
-                    <select id="doors" class="block w-full mt-1 p-2 bg-gray-50 border border-gray-300 rounded-md">
-                        <option>Select</option>
-                        <option>2</option>
-                        <option>4</option>
-                    </select>
-                </div>
-                <div>
-                    <label for="transmission" class="block text-sm font-medium text-gray-600">Vehicle Transmission</label>
-                    <select id="transmission" class="block w-full mt-1 p-2 bg-gray-50 border border-gray-300 rounded-md">
-                        <option>Select</option>
-                        <option>Automatic</option>
-                        <option>Manual</option>
-                    </select>
-                </div>
-            </div>
-            <div class="mt-6 flex justify-end">
-                <button class="bg-red-600 text-white py-2 px-4 rounded-md" id="next-button">Next</button>
-            </div>
-        `,
-        2: `
-            <h2 class="text-2xl font-semibold mb-6">Select Vehicle Details</h2>
-            <div class="grid grid-cols-2 gap-6">
-                <!-- Select details form here -->
-                <div>
-                    <label for="color" class="block text-sm font-medium text-gray-600">Vehicle Color</label>
-                    <select id="color" class="block w-full mt-1 p-2 bg-gray-50 border border-gray-300 rounded-md">
-                        <option>Select Color</option>
-                        <option>Red</option>
-                        <option>Blue</option>
-                        <option>Black</option>
-                        <option>White</option>
-                    </select>
-                </div>
-                <div>
-                    <label for="mileage" class="block text-sm font-medium text-gray-600">Mileage</label>
-                    <input type="text" id="mileage" class="block w-full mt-1 p-2 bg-gray-50 border border-gray-300 rounded-md" placeholder="Enter Mileage">
-                </div>
-            </div>
-            <div class="mt-6 flex justify-end">
-                <button class="bg-red-600 text-white py-2 px-4 rounded-md" id="next-button">Next</button>
-            </div>
-        `,
-        3: `
-            <h2 class="text-2xl font-semibold
-            <h2 class="text-2xl font-semibold mb-6">Upload Photos & Videos</h2>
-            <div class="grid grid-cols-2 gap-6">
-                <!-- Photos & videos upload form here -->
-                <div>
-                    <label for="photos" class="block text-sm font-medium text-gray-600">Upload Photos</label>
-                    <input type="file" id="photos" class="block w-full mt-1 p-2 bg-gray-50 border border-gray-300 rounded-md" multiple>
-                </div>
-                <div>
-                    <label for="videos" class="block text-sm font-medium text-gray-600">Upload Videos</label>
-                    <input type="file" id="videos" class="block w-full mt-1 p-2 bg-gray-50 border border-gray-300 rounded-md" multiple>
-                </div>
-            </div>
-            <div class="mt-6 flex justify-end">
-                <button class="bg-red-600 text-white py-2 px-4 rounded-md" id="next-button">Next</button>
-            </div>
-        `,
-        4: `
-            <h2 class="text-2xl font-semibold mb-6">Enter Contact Details</h2>
-            <div class="grid grid-cols-2 gap-6">
-                <!-- Contact details form here -->
-                <div>
-                    <label for="name" class="block text-sm font-medium text-gray-600">Full Name</label>
-                    <input type="text" id="name" class="block w-full mt-1 p-2 bg-gray-50 border border-gray-300 rounded-md" placeholder="Enter Full Name">
-                </div>
-                <div>
-                    <label for="email" class="block text-sm font-medium text-gray-600">Email Address</label>
-                    <input type="email" id="email" class="block w-full mt-1 p-2 bg-gray-50 border border-gray-300 rounded-md" placeholder="Enter Email Address">
-                </div>
-                <div>
-                    <label for="phone" class="block text-sm font-medium text-gray-600">Phone Number</label>
-                    <input type="tel" id="phone" class="block w-full mt-1 p-2 bg-gray-50 border border-gray-300 rounded-md" placeholder="Enter Phone Number">
-                </div>
-            </div>
-            <div class="mt-6 flex justify-end">
-                <button class="bg-red-600 text-white py-2 px-4 rounded-md" id="next-button">Next</button>
-            </div>
-        `,
-        5: `
-            <h2 class="text-2xl font-semibold mb-6">Submit & Publish</h2>
-            <div class="grid grid-cols-2 gap-6">
-                <!-- Submit & publish form here -->
-                <div>
-                    <button class="bg-red-600 text-white py-2 px-4 rounded-md">Submit</button>
-                </div>
-            </div>
-        `
-    };
-
-    const sidebar = document.getElementById('sidebar');
-    const formContent = document.getElementById('form-content');
-    const progressBar = document.getElementById('progress-bar');
-
-    sidebar.addEventListener('click', (e) => {
-        if (e.target.closest('[data-step]')) {
-            const step = e.target.closest('[data-step]').dataset.step;
-            updateContent(step);
-        }
-    });
-
-    function updateContent(step) {
-        formContent.innerHTML = stepsContent[step];
-        updateSidebar(step);
-        updateProgressBar(step);
-        attachNextButtonHandler(step);
-    }
-
-    function updateSidebar(step) {
-        const items = sidebar.children;
-        for (let item of items) {
-            if (item.dataset.step == step) {
-                item.classList.add('border-red-600', 'text-red-600', 'font-bold');
-                item.classList.remove('border-gray-300', 'text-gray-600');
-            } else {
-                item.classList.add('border-gray-300', 'text-gray-600');
-                item.classList.remove('border-red-600', 'text-red-600', 'font-bold');
-            }
-        }
-    }
-
-    function updateProgressBar(step) {
-        const percentage = (step / 5) * 100;
-        progressBar.style.width = `${percentage}%`;
-    }
-
-    function attachNextButtonHandler(step) {
-        const nextButton = document.getElementById('next-button');
-        if (nextButton) {
-            nextButton.addEventListener('click', () => {
-                const nextStep = parseInt(step) + 1;
+        nextButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const currentStep = document.querySelector('.form-content .step.active').id.split('-')[1];
+                const nextStep = parseInt(currentStep) + 1;
                 if (nextStep <= 5) {
-                    updateContent(nextStep);
+                    updateSidebar(nextStep);
+                    updateSteps(nextStep);
+                    updateProgressBar(nextStep);
                 }
             });
-        }
-    }
+        });
 
-    // Initialize content for step 1
-    updateContent(1);
+        function updateSidebar(step) {
+            sidebarItems.forEach(item => {
+                item.classList.remove('border-red-600', 'text-red-600', 'font-bold');
+                item.classList.add('border-gray-300', 'text-gray-600');
+            });
+
+            const currentItem = document.querySelector(`#sidebar div[data-step="${step}"]`);
+            currentItem.classList.remove('border-gray-300', 'text-gray-600');
+            currentItem.classList.add('border-red-600', 'text-red-600', 'font-bold');
+        }
+
+        function updateSteps(step) {
+            steps.forEach(s => {
+                s.classList.remove('active');
+            });
+
+            const currentStep = document.getElementById(`step-${step}`);
+            currentStep.classList.add('active');
+        }
+
+        function updateProgressBar(step) {
+            const percentage = (step / 5) * 100;
+            progressBar.style.width = `${percentage}%`;
+        }
+
+        // Initial setup
+        updateSidebar(1);
+        updateSteps(1);
+        updateProgressBar(1);
+    });
 </script>
 
 {% endblock %}

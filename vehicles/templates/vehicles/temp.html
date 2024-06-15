@@ -1,3 +1,621 @@
+@require_POST
+def submit_form(request):
+    if request.is_ajax():
+        step = request.POST.get('step')
+        # Handle form data based on the current step
+        # Validate and save the data to the database using your Django model
+
+        # Example: Save the data to the database
+        form_data = {
+            'color': request.POST.get('color'),
+            'mileage': request.POST.get('mileage'),
+            'make': request.POST.get('make'),
+            'model': request.POST.get('model'),
+            'year': request.POST.get('year'),
+            'body_type': request.POST.get('body_type'),
+            'no_of_seats': request.POST.get('no_of_seats'),
+            'transmission_type': request.POST.get('transmission_type'),
+            'fuel_type': request.POST.get('fuel_type'),
+            'engine_capacity': request.POST.get('engine_capacity'),
+            'engine_type': request.POST.get('engine_type'),
+            'abs_breaks': request.POST.get('abs_breaks'),
+            'alloy_wheels': request.POST.get('alloy_wheels'),
+            'airbags': request.POST.get('airbags'),
+            'air_conditioning': request.POST.get('air_conditioning'),
+            'power_steering': request.POST.get('power_steering'),
+            'power_windows': request.POST.get('power_windows'),
+            'central_locking': request.POST.get('central_locking'),
+            'reverse_camera': request.POST.get('reverse_camera'),
+            'sunroof': request.POST.get('sunroof'),
+            'leather_seats': request.POST.get('leather_seats'),
+            'picture': request.POST.get('picture'),
+            'picture2': request.POST.get('picture2'),
+            'picture3': request.POST.get('picture3'),
+            'description': request.POST.get('description'),
+            'seller': request.user
+
+        }
+        vehicle_form = VehicleForm(**form_data)
+        vehicle_form.save()
+
+        return JsonResponse({'status': 'success'})
+    else:
+        return JsonResponse({'status': 'error', 'errors': 'Invalid request'})
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_head %}
+<style>
+    .vehicle-header {
+        width: 100%;
+        height: 300px; /* Adjust height as needed */
+        overflow: hidden;
+        position: relative;
+        margin-top: -150px;
+    }
+
+    .vehicle-header img {
+        width: 100%;
+        height: 100%; /* Ensure the image fills its container */
+        object-fit: cover; /* Ensures the image covers the entire container */
+        position: absolute; /* Position image absolutely within its container */
+        top: 0;
+        left: 0;
+    }
+
+    .vehicle-overlay {
+        font-family: 'Open Sans', 'Titillium Web', 'PT Sans', Arial, sans-serif;
+        position: absolute;
+        top: 180px;
+        left: 180px;
+        color: white;
+        padding: 5px 10px;
+        font-size: 36px;
+        font-weight: bold;
+        z-index: 10; /* Ensure overlay is above the image */
+    }
+
+    /* Next button styles */
+    .nextBtn {
+        margin-top: 1rem;
+    }
+    .max-w-7xl {
+    max-width: 100vw; /* Set maximum width to full viewport width */
+    margin-left: auto; /* Center align content */
+    margin-right: auto; /* Center align content */
+    width: 80%;
+    margin-top:50px
+    }
+
+    .edit-profile-btn {
+        display: inline-block;
+        padding: 8px 20px;
+        background-color: white;
+        border: 3px solid #ccc; /* Increased border thickness */
+        color: #333;
+        text-decoration: none;
+        border-radius: 4px;
+        transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+        float: right; /* Align the button to the right */
+        margin-bottom: 20px; /* Increase space below the button */
+        margin-top: 5px; /* Adjust top margin to align properly */
+    }
+
+    .edit-profile-btn:hover {
+        background-color: #ccc;
+        color: white;
+        border-color: #ccc;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<div class="vehicle-details">
+    <div class="vehicle-header">
+        <img src="https://www.freewebheaders.com/wp-content/gallery/cars/cache/toyota-gt86-dashboard-car-website-header.jpg-nggid043742-ngg0dyn-1280x375x100-00f0w010c010r110f110r010t010.jpg" alt="Vehicle Details Page">
+        <div class="vehicle-overlay">Vehicle Details Page</div>
+    </div>
+</div>
+
+<div class="max-w-7xl mx-auto px-4">
+    <!-- Progress Bar -->
+    <div class="mb-10">
+        <div class="relative pt-1">
+            <div class="flex mb-2 items-center justify-between">
+                <div class="text-base font-semibold" id="progress-start">STEP 1</div>
+                <div class="text-base font-semibold" id="progress-end">STEP 5</div>
+            </div>
+            <div class="overflow-hidden h-2 mb-4 text-xs flex rounded bg-gray-200">
+                <div id="progress-bar" style="width:20%" class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-red-600"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="flex space-x-10">
+        <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <!-- Sidebar Menu -->
+        <div class="bg-white w-1/4 p-5 rounded-md shadow-md">
+            <div id="sidebar" class="space-y-4">
+                <div class="border-l-4 border-red-600 pl-4 py-3 text-red-600 font-bold cursor-pointer" data-step="1">
+                    <i class="fas fa-address-card mr-2"></i> CONTACT DETAILS
+                </div>
+                <div class="border-l-4 border-gray-300 pl-4 py-3 text-gray-600 cursor-pointer" data-step="2">
+                    <i class="fas fa-car mr-2"></i> ADD YOUR VEHICLE
+                </div>
+                <div class="border-l-4 border-gray-300 pl-4 py-3 text-gray-600 cursor-pointer" data-step="3">
+                    <i class="fas fa-cogs mr-2"></i> SELECT DETAILS
+                </div>
+                <div class="border-l-4 border-gray-300 pl-4 py-3 text-gray-600 cursor-pointer" data-step="4">
+                    <i class="fas fa-camera mr-2"></i> PHOTOS & VIDEOS
+                </div>
+                <div class="border-l-4 border-gray-300 pl-4 py-3 text-gray-600 cursor-pointer" data-step="5">
+                    <i class="fas fa-paper-plane mr-2"></i> SUBMIT & PUBLISH
+                </div>
+            </div>
+        </form>
+        </div>
+
+        <!-- Form Section -->
+        <div id="form-content" class="bg-white w-3/4 p-10 rounded-md shadow-md">
+            <form id="mainForm" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+                </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    const stepsContent = {
+        1: `
+            <h2 class="text-2xl font-semibold mb-6">Contact Details</h2>
+
+            <div class="grid grid-cols-2 gap-6">
+                <!-- Contact details here -->
+                <div>
+                    <label for="full_name" class="block text-sm font-medium text-gray-600">Full Name</label>
+                    <input type="text" id="full_name" class="block w-full mt-1 p-2 bg-gray-50 border border-gray-300 rounded-md" value="{{ user.first_name }} {{ user.last_name }}" readonly>
+                </div>
+                <div>
+                    <label for="email" class="block text-sm font-medium text-gray-600">Email Address</label>
+                    <input type="email" id="email" class="block w-full mt-1 p-2 bg-gray-50 border border-gray-300 rounded-md" value="{{ user.email }}" readonly>
+                </div>
+                <div>
+                    <label for="phone" class="block text-sm font-medium text-gray-600">Phone Number</label>
+                    <input type="tel" id="phone" class="block w-full mt-1 p-2 bg-gray-50 border border-gray-300 rounded-md" value="{{ user.mobile_number }}" readonly>
+                </div>
+                <div>
+                    <label for="trading_address" class="block text-sm font-medium text-gray-600">Trading Address</label>
+                    <input type="text" id="trading_address" class="block w-full mt-1 p-2 bg-gray-50 border border-gray-300 rounded-md" value="{{ user.trading_address }}" readonly>
+                </div>
+                <div>
+                    <label for="postal_code" class="block text-sm font-medium text-gray-600">Postal Code</label>
+                    <input type="text" id="postal_code" class="block w-full mt-1 p-2 bg-gray-50 border border-gray-300 rounded-md" value="{{ user.postal_code }}" readonly>
+                </div>
+            </div>
+            <div class="mt-6 flex justify-between">
+                <a href="/edit_profile" class="edit-profile-btn">Click To Edit Profile Details</a>
+            </div>
+            <div class="mt-6 flex justify-end">
+                <button class="bg-red-600 text-white py-2 px-4 rounded-md nextBtn">Next</button>
+            </div>
+        `,
+
+        2: `
+            <h2 class="text-2xl font-semibold mb-6">Add Your Vehicle Details</h2>
+            <div class="grid grid-cols-2 gap-6">
+
+                    <div>
+                        <label for="color" class="block text-sm font-medium text-gray-600">Enter Color</label>
+                        <input type="text" id="color" name="color" placeholder="Enter Color" class="block w-full mt-1 p-2 bg-gray-50 border border-gray-300 rounded-md">
+                    </div>
+                    <div>
+                        <label for="mileage" class="block text-sm font-medium text-gray-600">Mileage</label>
+                        <input type="number" id="mileage" name="mileage" placeholder="Enter Mileage" class="block w-full mt-1 p-2 bg-gray-50 border border-gray-300 rounded-md">
+                    </div>
+                    <div>
+                        <label for="price" class="block text-sm font-medium text-gray-600">Price</label>
+                        <input type="number" id="price" name="price" placeholder="Enter Price (LKR)" class="block w-full mt-1 p-2 bg-gray-50 border border-gray-300 rounded-md">
+                    </div>
+                    <div>
+                        <label for="make" class="block text-sm font-medium text-gray-600">Enter Vehicle Manufacturer</label>
+                        <select id="make" name="make" class="block w-full mt-1 p-2 bg-gray-50 border border-gray-300 rounded-md">
+                            <option value="">Select Manufacturer</option>
+                            <option value="Audi">Audi</option>
+                            <option value="BMW">BMW</option>
+                            <option value="Chevrolet">Chevrolet</option>
+                            <option value="Ferrari">Ferrari</option>
+                            <option value="Ford">Ford</option>
+                            <option value="Honda">Honda</option>
+                            <option value="Hyundai">Hyundai</option>
+                            <option value="Jaguar">Jaguar</option>
+                            <option value="Kia">Kia</option>
+                            <option value="Lamborghini">Lamborghini</option>
+                            <option value="Mahindra">Mahindra</option>
+                            <option value="Mazda">Mazda</option>
+                            <option value="McLaren">McLaren</option>
+                            <option value="Mercedes-Benz">Mercedes-Benz</option>
+                            <option value="Mitsubishi">Mitsubishi</option>
+                            <option value="Nissan">Nissan</option>
+                            <option value="Peugeot">Peugeot</option>
+                            <option value="Perodua">Perodua</option>
+                            <option value="Porsche">Porsche</option>
+                            <option value="Renault">Renault</option>
+                            <option value="Rolls-Royce">Rolls-Royce</option>
+                            <option value="Suzuki">Suzuki</option>
+                            <option value="Tata Motors">Tata Motors</option>
+                            <option value="Tesla">Tesla</option>
+                            <option value="Toyota">Toyota</option>
+                            <option value="Volkswagen">Volkswagen</option>
+                            <option value="Volvo">Volvo</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="model" class="block text-sm font-medium text-gray-600">Enter Vehicle Model</label>
+                        <input type="text" id="model" name="model" placeholder="Enter Vehicle Model" class="block w-full mt-1 p-2 bg-gray-50 border border-gray-300 rounded-md">
+                    </div>
+                    <div>
+                        <label for="year" class="block text-sm font-medium text-gray-600">Vehicle Manufacturer Year</label>
+                        <input type="number" id="year" name="year" placeholder="Enter Year" class="block w-full mt-1 p-2 bg-gray-50 border border-gray-300 rounded-md" min="1900" max="2099">
+                    </div>
+
+                        <label for="body_type" class="block text-sm font-medium text-gray-600">Select Body Type</label>
+                        <select id="body_type" name="body_type" placeholder="Select Type" class="block w-full mt-1 p-2 bg-gray-50 border border-gray-300 rounded-md">
+                                <option value="ATV">ATV</option>
+                                <option value="Bicycle">Bicycle</option>
+                                <option value="Bus">Bus</option>
+                                <option value="Car">Car</option>
+                                <option value="Coupe">Coupe</option>
+                                <option value="Electric Vehicle">Electric Vehicle</option>
+                                <option value="Hybrid Vehicle">Hybrid Vehicle</option>
+                                <option value="Limousine">Limousine</option>
+                                <option value="Lorry">Lorry</option>
+                                <option value="Motorbike">Motorbike</option>
+                                <option value="Off-Road Vehicle">Off-Road Vehicle</option>
+                                <option value="SUV">SUV</option>
+                                <option value="Sedan">Sedan</option>
+                                <option value="Three Wheeler">Three Wheeler</option>
+                                <option value="Tractor">Tractor</option>
+                                <option value="Truck">Truck</option>
+                                <option value="Van">Van</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="no_of_seats" class="block text-sm font-medium text-gray-600">No. of Seats</label>
+                        <input type="number" id="no_of_seats" name="no_of_seats" placeholder="Enter Number of Seats" class="block w-full mt-1 p-2 bg-gray-50 border border-gray-300 rounded-md">
+                    </div>
+                    <div>
+                        <label for="transmission_type" class="block text-sm font-medium text-gray-600">Vehicle Transmission</label>
+                        <select id="transmission_type" name="transmission_type" class="block w-full mt-1 p-2 bg-gray-50 border border-gray-300 rounded-md">
+                            <option value="">Select Transmission</option>
+                            <option value="Automatic">Automatic</option>
+                            <option value="Manual">Manual</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="fuel_type" class="block text-sm font-medium text-gray-600">Fuel Type</label>
+                        <select id="fuel_type" name="fuel_type" class="block w-full mt-1 p-2 bg-gray-50 border border-gray-300 rounded-md">
+                            <option value="">Select Fuel Type</option>
+                            <option value="Petrol">Petrol</option>
+                            <option value="Diesel">Diesel</option>
+                            <option value="Electric">Electric</option>
+                            <option value="Hybrid">Hybrid</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="engine_capacity" class="block text-sm font-medium text-gray-600">Engine Capacity</label>
+                        <input type="number" id="engine_capacity" name="engine_capacity" placeholder="Enter Engine Capacity" class="block w-full mt-1 p-2 bg-gray-50 border border-gray-300 rounded-md">
+                    </div>
+                    <div>
+                        <label for="engine_type" class="block text-sm font-medium text-gray-600">Engine Type</label>
+                        <select id="engine_type" name="engine_type" class="block w-full mt-1 p-2 bg-gray-50 border border-gray-300 rounded-md">
+                            <option value="">Select Engine Type</option>
+                            <option value="Diesel">ICE (Internal Combustion Engine)</option>
+                            <option value="Electric">Electric</option>
+                            <option value="Hybrid">Hybrid</option>
+                        </select>
+                    </div>
+
+            </div>
+            <div class="mt-6 flex justify-end">
+                <button class="bg-red-600 text-white py-2 px-4 rounded-md nextBtn">Next</button>
+            </div>
+        `,
+
+        3: `
+            <h2 class="text-2xl font-semibold mb-6">Select Vehicle Details</h2>
+            <div class="grid grid-cols-2 gap-6">
+
+
+                    <label class="block text-sm font-medium text-gray-600">Additional Vehicle Details</label>
+                    <div class="mt-2 grid grid-cols-2 gap-4">
+                    <div class="flex items-center">
+                        <input type="checkbox" id="abs_breaks" name="abs_breaks" class="rounded border-gray-300 text-red-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                        <label for="abs_breaks" class="ml-2 block text-sm text-gray-900">ABS Breaks</label>
+                    </div>
+                    <div class="flex items-center">
+                        <input type="checkbox" id="alloy_wheels" name="alloy_wheels" class="rounded border-gray-300 text-red-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                        <label for="alloy_wheels" class="ml-2 block text-sm text-gray-900">Alloy Wheels</label>
+                    </div>
+                    <div class="flex items-center">
+                        <input type="checkbox" id="airbags" name="airbags" class="rounded border-gray-300 text-red-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                        <label for="airbags" class="ml-2 block text-sm text-gray-900">Airbags</label>
+                    </div>
+                    <div class="flex items-center">
+                        <input type="checkbox" id="air_conditioning" name="air_conditioning" class="rounded border-gray-300 text-red-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                        <label for="air_conditioning" class="ml-2 block text-sm text-gray-900">Air Conditioning</label>
+                    </div>
+                    <div class="flex items-center">
+                        <input type="checkbox" id="power_steering " name="power_steering " class="rounded border-gray-300 text-red-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                        <label for="power_steering " class="ml-2 block text-sm text-gray-900">Power Steering</label>
+                    </div>
+                    <div class="flex items-center">
+                        <input type="checkbox" id="power_windows" name="power_windows" class="rounded border-gray-300 text-red-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                        <label for="power_windows" class="ml-2 block text-sm text-gray-900">Power Windows</label>
+                    </div>
+                    <div class="flex items-center">
+                        <input type="checkbox" id="central_locking" name="central_locking" class="rounded border-gray-300 text-red-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                        <label for="central_locking" class="ml-2 block text-sm text-gray-900">Central Locking</label>
+                    </div>
+                    <div class="flex items-center">
+                        <input type="checkbox" id="reverse_camera" name="reverse_camera" class="rounded border-gray-300 text-red-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                        <label for="reverse_camera" class="ml-2 block text-sm text-gray-900">Reverse Camera</label>
+                    </div>
+                    <div class="flex items-center">
+                        <input type="checkbox" id="sunroof" name="sunroof" class="rounded border-gray-300 text-red-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                        <label for="sunroof" class="ml-2 block text-sm text-gray-900">Sunroof</label>
+                    </div>
+                    <div class="flex items-center">
+                        <input type="checkbox" id="leather_seats" name="leather_seats" class="rounded border-gray-300 text-red-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                        <label for="leather_seats" class="ml-2 block text-sm text-gray-900">Leather Seats</label>
+                    </div>
+
+            </div>
+            <div class="mt-6 flex justify-end">
+                <button class="bg-red-600 text-white py-2 px-4 rounded-md nextBtn">Next</button>
+            </div>
+        `,
+
+        4: `
+            <h2 class="text-2xl font-semibold mb-6">Upload Photos & Videos</h2>
+            <div class="grid grid-cols-2 gap-6">
+                    <div>
+                        <label for="picture" class="block text-sm font-medium text-gray-600">Upload Photo 1</label>
+                        <input type="file" id="picture" name="picture" class="block w-full mt-1 p-2 bg-gray-50 border border-gray-300 rounded-md" multiple>
+                    </div>
+                    <div>
+                        <label for="picture2" class="block text-sm font-medium text-gray-600">Upload Photo 2</label>
+                        <input type="file" id="picture2" name="picture2" class="block w-full mt-1 p-2 bg-gray-50 border border-gray-300 rounded-md" multiple>
+                    </div>
+                    <div>
+                        <label for="picture3" class="block text-sm font-medium text-gray-600">Upload Photo 3</label>
+                        <input type="file" id="picture3" name="picture3" class="block w-full mt-1 p-2 bg-gray-50 border border-gray-300 rounded-md" multiple>
+                    </div>
+
+
+            </div>
+            <div class="mt-6 flex justify-end">
+                <button class="bg-red-600 text-white py-2 px-4 rounded-md nextBtn">Next</button>
+            </div>
+        `,
+
+        5: `
+            <h2 class="text-2xl font-semibold mb-6">Submit & Publish</h2>
+            <div>
+                    <div>
+                        <label for="description" class="block text-sm font-medium text-gray-600">Enter Description</label>
+                        <input type="text" id="description" name="description" placeholder="Enter Description" class="block w-full mt-1 p-2 bg-gray-50 border border-gray-300 rounded-md">
+                    </div>
+
+                    <button type="submit" class="bg-red-600 text-white py-2 px-4 rounded-md">Submit</button>
+
+            </div>
+        `
+    };
+
+
+
+    const sidebar = document.getElementById('sidebar');
+    const formContent = document.getElementById('form-content');
+    const progressBar = document.getElementById('progress-bar');
+
+    sidebar.addEventListener('click', (e) => {
+        if (e.target.closest('[data-step]')) {
+            const step = e.target.closest('[data-step]').dataset.step;
+            updateContent(step);
+        }
+    });
+
+    function updateContent(step) {
+        formContent.innerHTML = stepsContent[step];
+        updateSidebar(step);
+        updateProgressBar(step);
+        attachNextButtonHandler(step);
+        attachFormSubmitHandler(step);
+    }
+
+    function updateSidebar(step) {
+        const items = sidebar.children;
+        for (let item of items) {
+            if (item.dataset.step == step) {
+                item.classList.add('border-red-600', 'text-red-600', 'font-bold');
+                item.classList.remove('border-gray-300', 'text-gray-600');
+            } else {
+                item.classList.add('border-gray-300', 'text-gray-600');
+                item.classList.remove('border-red-600', 'text-red-600', 'font-bold');
+            }
+        }
+    }
+
+    function updateProgressBar(step) {
+        const percentage = (step / 5) * 100;
+        progressBar.style.width = `${percentage}%`;
+    }
+
+    function attachNextButtonHandler(step) {
+        const nextButtons = document.getElementsByClassName('nextBtn');
+        for (let button of nextButtons) {
+            button.addEventListener('click', () => {
+                const nextStep = parseInt(step) + 1;
+                if (nextStep <= 5) {
+                    updateContent(nextStep);
+                }
+            });
+        }
+    }
+
+    function attachFormSubmitHandler(step) {
+    const form = document.getElementById(`step${step}Form`);
+    if (form) {
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(form);
+            formData.append('step', step); // Add the step number to the form data
+
+            const response = await fetch(form.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            });
+
+            const result = await response.json();
+            if (result.status === 'success') {
+                const nextStep = parseInt(step) + 1;
+                if (nextStep <= 5) {
+                    updateContent(nextStep);
+                } else {
+                    alert('Form submitted successfully!');
+                }
+            } else {
+                alert('Form submission failed: ' + JSON.stringify(result.errors));
+            }
+        });
+    }
+}
+
+
+
+
+    // Initialize content for step 1
+    updateContent(1);
+        const yearInput = document.getElementById('year');
+
+</script>
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
