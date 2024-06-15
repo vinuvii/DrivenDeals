@@ -1,0 +1,37 @@
+<!-- templates/blog1.html -->
+{% extends 'base.html' %}
+
+{% block extra_head %}
+<style>
+    .blog-section {
+        padding: 50px 20px;
+        background-color: #f9f9f9;
+        color: #333;
+    }
+    .blog-section h1 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    .blog-section p {
+        text-align: justify;
+        margin: 0 auto;
+        max-width: 800px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="blog-section">
+    <h1>Blog 1</h1>
+    <p>
+        Welcome to our first blog post! Here at DrivenDeals, we aim to provide you with insightful articles and updates on the automotive industry. Stay tuned for more posts that will help you make informed decisions when buying or selling your car.
+    </p>
+    <p>
+        In this post, we'll discuss the latest trends in the car market, offer tips for maintaining your vehicle, and share stories from our satisfied customers. Whether you're a car enthusiast or just looking for practical advice, we've got something for everyone.
+    </p>
+    <p>
+        Thank you for reading, and be sure to check back regularly for new content!
+    </p>
+</div>
+{% endblock %}
+

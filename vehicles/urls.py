@@ -14,4 +14,5 @@ urlpatterns = [
     path('success/', views.vehicle_success, name='vehicle_success'),
     path('submit/', views.list_vehicle, name='submit_listing'),  # Example path for submitting vehicles
     path('about/', views.about, name='about'),
+    path('blog1/', views.blog1, name='blog1'),
 ]

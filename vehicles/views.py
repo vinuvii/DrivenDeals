@@ -73,3 +73,6 @@ def vehicle_listing_view(request):
 
 def about(request):
     return render(request, 'vehicles/about.html')
+
+def blog1(request):
+    return render(request, 'vehicles/blog1.html')
