@@ -70,3 +70,18 @@ def edit_profile_view(request):
 def vehicle_listing_view(request):
     # Logic to fetch data for user's bids if needed
     return render(request, 'vehicles/vehicle_listing.html')
+
+def about(request):
+    return render(request, 'vehicles/about.html')
+
+def blog1(request):
+    return render(request, 'vehicles/blog1.html')
+
+def blog2(request):
+    return render(request, 'vehicles/blog2.html')
+
+def services(request):
+    return render(request, 'vehicles/services.html')
+
+def contact(request):
+    return render(request, 'vehicles/contact.html')

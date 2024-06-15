@@ -1,0 +1,39 @@
+<!-- templates/about.html -->
+{% extends 'base.html' %}
+
+{% block extra_head %}
+<style>
+    .about-section {
+        padding: 50px 20px;
+        background-color: #f1f1f1;
+        color: #333;
+    }
+    .about-section h1 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    .about-section p {
+        text-align: justify;
+        margin: 10px auto; /* Adjust margin to create space between paragraphs */
+        max-width: 800px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="about-section">
+    <h1>About DrivenDeals</h1>
+    <p>
+        Welcome to DrivenDeals, the best car dealer in town! We offer a platform where users can list their vehicles for sale, and customers can search for vehicles and bid with the maximum price they are willing to pay. Our mission is to provide a seamless and efficient marketplace for buying and selling cars, ensuring the best deals for everyone involved.
+    </p>
+    <p>
+        At DrivenDeals, we pride ourselves on our extensive selection of high-quality vehicles and our commitment to customer satisfaction. Whether you are looking to buy your dream car or sell your current vehicle, we are here to help you every step of the way.
+    </p>
+    <p>
+        Our user-friendly platform allows you to easily list your vehicle, providing all the necessary details and photos to attract potential buyers. For buyers, our advanced search and filter options make it easy to find the perfect car that meets your needs and budget.
+    </p>
+    <p>
+        Thank you for choosing DrivenDeals. We look forward to helping you with all your car buying and selling needs!
+    </p>
+</div>
+{% endblock %}
