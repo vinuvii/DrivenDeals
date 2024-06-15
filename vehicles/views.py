@@ -79,3 +79,7 @@ def blog1(request):
 
 def blog2(request):
     return render(request, 'vehicles/blog2.html')
+
+def services(request):
+    return render(request, 'vehicles/services.html')
+
