@@ -12,7 +12,7 @@ class VehicleForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         self.seller = kwargs.pop('seller', None)
         super().__init__(*args, **kwargs)
-        # Example: Customize widgets or add additional attributes if needed
+
         self.fields['make'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Enter make'})
         self.fields['model'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Enter model'})
         self.fields['year'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Enter year'})
