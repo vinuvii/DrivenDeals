@@ -12,6 +12,22 @@ from .models import Vehicle
 def index(request):
     return render(request, 'vehicles/vehicle_listing.html')
 
+@login_required
+def list_vehicle(request):
+    if request.method == 'POST':
+        form = VehicleForm(request.POST, request.FILES)
+        if form.is_valid():
+            vehicle = form.save(commit=False)
+            vehicle.seller = request.user
+            vehicle.save()
+            messages.success(request, 'Your vehicle has been listed successfully!')
+            return redirect('vehicle_success')  # Redirect to a success page
+        else:
+            messages.error(request, 'Please correct the error below.')
+    else:
+        form = VehicleForm()
+    return render(request, 'vehicles/vehicle_listing.html', {'form': form})
+
 @require_POST
 def submit_form(request):
     if request.method == 'POST':
