@@ -15,6 +15,7 @@ from bids.forms import BidForm
 from django.utils import timezone
 from datetime import timedelta
 
+
 def index(request):
     return render(request, 'vehicles/vehicle_listing.html')
 
@@ -293,17 +294,24 @@ def filter_vehicles(request):
 
 
 def all_listings(request):
-    cars = Vehicle.objects.all()
+    # Initial queryset of all vehicles
+    vehicles = Vehicle.objects.all()
 
     # Handling search functionality
     query = request.GET.get('q')
     if query:
-        cars = cars.filter(
+        vehicles = vehicles.filter(
             Q(model__icontains=query) | Q(description__icontains=query)
         )
 
+    # Filter by price range if min_price and max_price are provided in query parameters
+    min_price = request.GET.get('min_price')
+    max_price = request.GET.get('max_price')
+    if min_price and max_price:
+        vehicles = vehicles.filter(price__gte=min_price, price__lte=max_price)
+
     context = {
-        'cars': cars
+        'cars': vehicles,  # Renamed 'vehicles' to 'cars' to match your template variable
     }
     return render(request, 'vehicles/all_listings.html', context)
 

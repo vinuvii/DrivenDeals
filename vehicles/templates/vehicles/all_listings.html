@@ -82,12 +82,12 @@
         margin-bottom: 20px; /* Space below the search form */
         text-align: center;
     }
-    .search-form input[type="text"] {
+    .search-form input[type="text"], .search-form input[type="number"] {
         padding: 10px;
         font-size: 16px;
         border: 2px solid #e74c3c;
         border-radius: 5px;
-        width: 300px;
+        width: 200px;
         margin-right: 10px;
     }
     .search-form button[type="submit"] {
@@ -102,6 +102,16 @@
     .search-form button[type="submit"]:hover {
         background-color: #c0392b; /* Darker shade of red on hover */
     }
+    .clear-filters-button {
+        background-color: #3498db;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 5px;
+        text-decoration: none;
+        display: inline-block;
+        margin-top: 10px;
+        cursor: pointer;
+    }
 </style>
 {% endblock %}
 
@@ -113,7 +123,10 @@
         <!-- Search form specifically for all_listings.html -->
         <form action="{% url 'all_listings' %}" method="GET" class="search-form">
             <input type="text" name="q" placeholder="Search listings...">
+            <input type="number" name="min_price" placeholder="Min Price">
+            <input type="number" name="max_price" placeholder="Max Price">
             <button type="submit">Search</button>
+            <a href="{% url 'all_listings' %}" class="clear-filters-button">Clear Filters</a>
         </form>
 
         <!-- Display filtered or all listings -->
@@ -143,3 +156,5 @@
     </section>
 </main>
 {% endblock %}
+
+
