@@ -15,4 +15,13 @@ urlpatterns = [
     path('list/', views.list_vehicle, name='list_vehicle'),
     path('success/', views.vehicle_success, name='vehicle_success'),
     path('submit/', views.list_vehicle, name='submit_listing'),  # Example path for submitting vehicles
+
+
+    path('about/', views.about, name='about'),
+    path('blog1/', views.blog1, name='blog1'),
+    path('blog2/', views.blog2, name='blog2'),
+    path('services/', views.services, name='services'),
+    path('contact/', views.contact, name='contact'),
+    path('compare/', views.compare, name='compare'),
+    path('filter/', views.filter, name='filter'),
 ]

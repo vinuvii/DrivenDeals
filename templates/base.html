@@ -207,28 +207,28 @@
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">COMPARE</a>
+                        <a class="nav-link" href="{% url 'compare' %}">COMPARE</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">ABOUT</a>
+                        <a class="nav-link" href="{% url 'about' %}">ABOUT</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">SERVICES</a>
+                        <a class="nav-link" href="{% url 'services' %}">SERVICES</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownBlog" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             BLOG
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdownBlog">
-                            <li><a class="dropdown-item" href="#">Blog 1</a></li>
-                            <li><a class="dropdown-item" href="#">Blog 2</a></li>
+                            <li><a class="dropdown-item" href="{% url 'blog1' %}">Blog 1</a></li>
+                            <li><a class="dropdown-item" href="{% url 'blog2' %}">Blog 2</a></li>
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">SHOP</a>
+                        <a class="nav-link" href="{% url 'filter' %}">FILTER</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">CONTACT</a>
+                        <a class="nav-link" href="{% url 'contact' %}">CONTACT</a>
                     </li>
                 </ul>
                 <a class="btn btn-primary list-vehicle-btn" href="{% url 'vehicle_listing' %}">

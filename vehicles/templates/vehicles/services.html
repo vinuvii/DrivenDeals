@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block extra_head %}
+<style>
+    .services-section {
+        padding: 50px 20px;
+        background-color: #ffffff;
+        color: #333;
+    }
+    .services-section h1 {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+    .services-section .service {
+        margin-bottom: 20px;
+    }
+    .services-section .service h2 {
+        font-size: 24px;
+        color: #de483d;
+    }
+    .services-section .service p {
+        text-align: justify;
+        margin: 0 auto 15px auto; /* Added margin-bottom for spacing between paragraphs */
+        max-width: 800px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="services-section">
+    <h1>Our Services</h1>
+    <div class="service">
+        <h2>Vehicle Listings</h2>
+        <p>
+            We offer a comprehensive platform for listing your vehicles for sale. Our user-friendly interface makes it easy to upload photos, add descriptions, and set prices, ensuring your listings attract potential buyers quickly.
+        </p>
+    </div>
+    <div class="service">
+        <h2>Vehicle Inspections</h2>
+        <p>
+            Our professional vehicle inspection services provide a thorough evaluation of any car you are interested in buying or selling. We check all critical components, ensuring the vehicle's condition and safety.
+        </p>
+    </div>
+    <div class="service">
+        <h2>Maintenance Tips</h2>
+        <p>
+            We offer expert tips and advice on maintaining your vehicle. From regular oil changes to tire maintenance, our tips help you keep your car in top condition and running smoothly.
+        </p>
+    </div>
+    <div class="service">
+        <h2>Customer Support</h2>
+        <p>
+            Our dedicated customer support team is available to assist you with any questions or issues you may encounter. Whether you need help with your listings or advice on buying a car, we are here to help.
+        </p>
+    </div>
+</div>
+{% endblock %}
