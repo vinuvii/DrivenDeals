@@ -108,6 +108,7 @@ def vehicle_detail(request, vehicle_id):
 
     return render(request, 'vehicles/vehicle_details.html', context)
 
+
 def update_expired_bids():
     """
     Update bid statuses for expired bids.
@@ -129,7 +130,9 @@ def update_expired_bids():
                 else:
                     vehicle_bid.bid_status = Bid.BID_STATUS_REJECTED
                 vehicle_bid.save()
-                
+
+
+
 def home(request):
     cars = Vehicle.objects.all()
     update_expired_bids()

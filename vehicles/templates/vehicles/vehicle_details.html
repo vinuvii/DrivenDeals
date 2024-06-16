@@ -603,7 +603,7 @@
                     {% for image in vehicle.additional_images.all %}
                         <img src="{{ image.url }}" alt="{{ vehicle.model }}" onclick="displayImage('{{ image.url }}')">
                     {% endfor %}
-                    <!-- Display additional images -->
+                    <img src="{{ vehicle.picture.url }}" alt="Additional Image 1" onclick="displayImage('{{ vehicle.picture.url }}')">
                     <img src="{{ vehicle.picture2.url }}" alt="Additional Image 1" onclick="displayImage('{{ vehicle.picture2.url }}')">
                     <img src="{{ vehicle.picture3.url }}" alt="Additional Image 2" onclick="displayImage('{{ vehicle.picture3.url }}')">
                 </div>
