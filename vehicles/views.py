@@ -38,6 +38,32 @@ def vehicle_success(request):
     return render(request, 'vehicles/vehicle_success.html')
 
 
+def update_bids_table(vehicle):
+    auction_ended = timezone.now() > vehicle.posted_date + timedelta(days=7)
+
+    if auction_ended:
+        # Update bid statuses
+        bids = Bid.objects.filter(vehicle=vehicle)
+        for bid in bids:
+            bid.update_bid_status()
+
+def update_bids_table(vehicle):
+    auction_ended = timezone.now() > vehicle.posted_date + timedelta(days=7)
+
+    if auction_ended:
+        # Determine the winning bid
+        highest_bid = Bid.objects.filter(vehicle=vehicle).order_by('-amount').first()
+
+        if highest_bid:
+            # Update bid statuses
+            bids = Bid.objects.filter(vehicle=vehicle)
+            for bid in bids:
+                if bid == highest_bid:
+                    bid.bid_status = Bid.BID_STATUS_ACCEPTED
+                else:
+                    bid.bid_status = Bid.BID_STATUS_REJECTED
+                bid.save()
+
 def vehicle_detail(request, vehicle_id):
     vehicle = get_object_or_404(Vehicle, pk=vehicle_id)
     highest_bid = Bid.objects.filter(vehicle=vehicle).order_by('-amount').first()
@@ -69,6 +95,10 @@ def vehicle_detail(request, vehicle_id):
                 bid.user = request.user
                 bid.vehicle = vehicle
                 bid.save()
+
+                if auction_ended:
+                    update_bids_table(vehicle)
+
                 return redirect('vehicle_detail', vehicle_id=vehicle.id)
             else:
                 context['form'] = form
@@ -78,8 +108,35 @@ def vehicle_detail(request, vehicle_id):
 
     return render(request, 'vehicles/vehicle_details.html', context)
 
+def update_expired_bids():
+    """
+    Update bid statuses for expired bids.
+    For each vehicle, classify bids, mark the highest bid as accepted, and others as rejected.
+    """
+    # Get all bids with expired expiry_date
+    expired_bids = Bid.objects.filter(expiry_date__lte=timezone.now())
+
+    for bid in expired_bids:
+        # Get all bids for the current vehicle
+        vehicle_bids = Bid.objects.filter(vehicle=bid.vehicle).order_by('-amount')
+
+        if vehicle_bids.exists():
+            highest_bid = vehicle_bids.first()  # Highest bid is the first bid in descending order by amount
+
+            for vehicle_bid in vehicle_bids:
+                if vehicle_bid == highest_bid:
+                    vehicle_bid.bid_status = Bid.BID_STATUS_ACCEPTED
+                else:
+                    vehicle_bid.bid_status = Bid.BID_STATUS_REJECTED
+                vehicle_bid.save()
+                
 def home(request):
-    cars = Vehicle.objects.all()  # Assuming you have a Vehicle model
+    cars = Vehicle.objects.all()
+    update_expired_bids()
+    context = {
+        'cars': cars,
+        # Add more context data as needed
+    }
     return render(request, 'vehicles/home.html', {'cars': cars})
 
 

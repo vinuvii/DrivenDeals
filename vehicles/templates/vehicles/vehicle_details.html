@@ -617,6 +617,21 @@
                 <p>Email: {{ vehicle.seller.email }}</p>
                 <p>Contact Number: {{ vehicle.seller.mobile_number }}</p>
             </div>
+            <div>
+                <div>
+                    <h3>Highest Bid: {{ highest_bid }}</h3>
+                    {% if highest_bid %}
+                        <ul>
+                            {% for bid in vehicle.bid_set.all %}
+                                <li>
+                                    Amount: {{ bid.amount }} - Status: {{ bid.get_bid_status_display }}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p>No bids yet</p>
+                    {% endif %}
+                </div>
             {% if auction_ended %}
                 <button class="btn btn-outline-secondary btn-custom" disabled>Auction Ended</button>
             {% else %}
@@ -667,6 +682,8 @@
                     </div>
                     <div class="max-bid-section">
                         <p class="max-bid-label">Or Enter Your Maximum Bid:</p>
+
+
                         <form method="post" action="{% url 'vehicle_detail' vehicle.id %}">
                             {% csrf_token %}
                             <div class="max-bid-input">

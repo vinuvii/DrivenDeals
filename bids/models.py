@@ -1,6 +1,5 @@
 from django.db import models
 from django.utils import timezone
-from django.contrib.auth.models import User
 from vehicles.models import Vehicle
 from django.conf import settings
 
@@ -45,3 +44,6 @@ class Bid(models.Model):
 
     def __str__(self):
         return f"Bid for {self.vehicle} by {self.user}"
+
+    class Meta:
+        ordering = ['-amount']
