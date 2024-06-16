@@ -604,22 +604,18 @@
                         <img src="{{ image.url }}" alt="{{ vehicle.model }}" onclick="displayImage('{{ image.url }}')">
                     {% endfor %}
                     <!-- Display additional images -->
-                    <img src="https://th.bing.com/th/id/OIP.qNJ-3o_aLdtFRswCO9VLOgHaEK?w=217&h=180&c=7&r=0&o=5&dpr=1.3&pid=1.7" alt="Additional Image 1" onclick="displayImage('https://th.bing.com/th/id/OIP.qNJ-3o_aLdtFRswCO9VLOgHaEK?w=217&h=180&c=7&r=0&o=5&dpr=1.3&pid=1.7')">
-                    <img src="https://th.bing.com/th/id/OIP.9AA9ELQUr6WsoCJ2WcVcEwHaEK?w=217&h=180&c=7&r=0&o=5&dpr=1.3&pid=1.7" alt="Additional Image 2" onclick="displayImage('https://th.bing.com/th/id/OIP.9AA9ELQUr6WsoCJ2WcVcEwHaEK?w=217&h=180&c=7&r=0&o=5&dpr=1.3&pid=1.7')">
+                    <img src="{{ vehicle.picture2.url }}" alt="Additional Image 1" onclick="displayImage('{{ vehicle.picture2.url }}')">
+                    <img src="{{ vehicle.picture3.url }}" alt="Additional Image 2" onclick="displayImage('{{ vehicle.picture3.url }}')">
                 </div>
             </div>
         </div>
         <div class="col-md-5">
             <div class="seller-card">
-                {% if is_authenticated %}
-                    <p>User is authenticated</p>
-                {% else %}
-                    <p>User is not authenticated</p>
-                {% endif %}
-                <h5>Seller Name</h5>
-                <p>Seller Location</p>
-                <p>Seller Email</p>
-                <p>Seller Phone Number</p>
+                <h3>Seller Details: </h3>
+                <h5>Name: {{ vehicle.seller.first_name }} {{ vehicle.seller.last_name }}</h5>
+                <p>Trading Address: {{ vehicle.seller.trading_address }}</p>
+                <p>Email: {{ vehicle.seller.email }}</p>
+                <p>Contact Number: {{ vehicle.seller.mobile_number }}</p>
             </div>
             <button class="btn btn-primary btn-custom" id="placeBidButton">Place Bid</button>
             <button class="btn btn-outline-secondary btn-custom" id="addToWatchListButton">Add To Watch List</button>
@@ -666,12 +662,15 @@
                     </div>
                     <div class="max-bid-section">
                         <p class="max-bid-label">Or Enter Your Maximum Bid:</p>
-                        <div class="max-bid-input">
-                            <span class="max-bid-currency">LKR</span>
-                            <input type="number" placeholder="Enter Your Maximum Bid" class="form-control">
-                        </div>
-                    </div>
-                    <button class="btn btn-primary btn-block mb-3" id="placeBidModalButton">Place Bid</button>
+                        <form method="post" action="{% url 'vehicle_detail' vehicle.id %}">
+                            {% csrf_token %}
+                            <div class="max-bid-input">
+                                <span class="max-bid-currency">LKR</span>
+                                {{ form.amount }}
+                            </div>
+
+                            <button class="btn btn-primary btn-block mb-3" id="placeBidModalButton">Place Bid</button>
+                        </form>
                     <p class="terms mt-3">
                         By placing a bid, you express consent to share your contact information with the seller and authorizing the seller to contact you regarding this vehicle. And if this bid wins, you are purchasing this item and legally required to make a payment before THE DATE. The item will be sent once payment is completed.
                     </p>
