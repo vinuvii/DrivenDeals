@@ -9,7 +9,9 @@ from django.http import JsonResponse
 from django.views.decorators.http import require_POST
 from .models import Vehicle
 from django.db.models import Q
-
+from vehicles.models import Vehicle
+from bids.models import Bid
+from bids.forms import BidForm
 
 def index(request):
     return render(request, 'vehicles/vehicle_listing.html')
@@ -33,6 +35,7 @@ def list_vehicle(request):
 def vehicle_success(request):
     return render(request, 'vehicles/vehicle_success.html')
 
+
 def vehicle_detail(request, vehicle_id):
     vehicle = get_object_or_404(Vehicle, pk=vehicle_id)
 
@@ -41,10 +44,25 @@ def vehicle_detail(request, vehicle_id):
         'vehicle': vehicle,
     }
 
-    if request.method == 'POST' and not request.user.is_authenticated:
-        # If it's a POST request and user is not authenticated, redirect to login
-        login_url = reverse('login')  # Assuming 'login' is your login URL name
-        return redirect(f"{login_url}?next={request.path}")
+    if request.method == 'POST':
+        if not request.user.is_authenticated:
+            # If it's a POST request and the user is not authenticated, redirect to login
+            login_url = reverse('login')  # Assuming 'login' is your login URL name
+            return redirect(f"{login_url}?next={request.path}")
+        else:
+            # Handle the bid submission
+            form = BidForm(request.POST)
+            if form.is_valid():
+                bid = form.save(commit=False)
+                bid.user = request.user
+                bid.vehicle = vehicle
+                bid.save()
+                return redirect('vehicle_detail', vehicle_id=vehicle.id)
+            else:
+                context['form'] = form
+    else:
+        # Create an empty form for GET requests
+        context['form'] = BidForm()
 
     return render(request, 'vehicles/vehicle_details.html', context)
 

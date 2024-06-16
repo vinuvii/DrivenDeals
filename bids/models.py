@@ -2,13 +2,13 @@ from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
 from vehicles.models import Vehicle
-from user.models import UserProfile
+from django.conf import settings
 
 class Bid(models.Model):
-    car = models.ForeignKey(Vehicle, related_name='bids', on_delete=models.CASCADE)
-    bidder = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
-    bid_amount = models.DecimalField(max_digits=10, decimal_places=2)
-    created_at = models.DateTimeField(auto_now_add=True)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    vehicle = models.ForeignKey(Vehicle, on_delete=models.CASCADE)
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    timestamp = models.DateTimeField(auto_now_add=True)
 
     BID_STATUS_CHOICES = [
         ('PENDING', 'Pending'),
