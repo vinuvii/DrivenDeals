@@ -31,12 +31,17 @@
     th {
         background-color: #f2f2f2;
     }
+    .car-listings-heading {
+        font-size: 36px;
+        text-align: center;
+        margin-bottom: 20px; /* Space below the heading */
+    }
 </style>
 {% endblock %}
 
 {% block content %}
     <div class="container">
-        <h1>Compare Vehicles</h1>
+        <h1 class="car-listings-heading">Compare Vehicles</h1>
 
         <!-- Vehicle Selection Form -->
         <form id="compareForm">
@@ -61,7 +66,7 @@
         </form>
 
         <!-- Comparison Table -->
-        <h2>Comparison Table</h2>
+        <h2 style="font-size: 36px;">Comparison Table</h2>
         <table id="comparisonTable">
             <thead>
                 <tr>

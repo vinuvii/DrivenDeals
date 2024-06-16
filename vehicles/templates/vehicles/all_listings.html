@@ -1,0 +1,145 @@
+{% extends 'base.html' %}
+{% load humanize %}
+
+{% block extra_head %}
+<style>
+    .car-list-container {
+        padding: 20px;
+    }
+    .car-item {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        padding: 20px;
+        background-color: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        margin-bottom: 20px;
+        position: relative;
+    }
+    .car-item img {
+        width: 200px;
+        height: 150px;
+        border-radius: 10px;
+        object-fit: cover;
+        margin-right: 20px;
+    }
+    .car-details {
+        flex: 1;
+        min-width: 250px;
+    }
+    .car-details h3 {
+        font-size: 22px;
+        margin-bottom: 10px;
+    }
+    .car-details p {
+        margin-bottom: 10px;
+        color: #666;
+        word-wrap: break-word; /* Ensure long words are wrapped */
+    }
+    .car-price {
+        background-color: #e74c3c;
+        color: white;
+        padding: 5px 10px; /* Reduced padding */
+        font-size: 20px; /* Reduced font size */
+        font-weight: bold;
+        text-align: right;
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        border-radius: 5px;
+    }
+    .car-item a {
+        text-decoration: none;
+        color: inherit;
+        position: relative;
+    }
+    .car-item:hover {
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+    .view-details-button, .watchlist-button {
+        background-color: #e74c3c;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 5px;
+        text-decoration: none;
+        display: inline-block;
+        margin-top: 10px;
+    }
+    .watchlist-button {
+        background-color: #e74c3c;
+        color: white;
+        margin-left: 10px; /* Space between buttons */
+    }
+    .car-listings-heading {
+        font-size: 36px;
+        text-align: center;
+        margin-bottom: 20px; /* Space below the heading */
+    }
+
+    /* Styling for search form */
+    .search-form {
+        margin-bottom: 20px; /* Space below the search form */
+        text-align: center;
+    }
+    .search-form input[type="text"] {
+        padding: 10px;
+        font-size: 16px;
+        border: 2px solid #e74c3c;
+        border-radius: 5px;
+        width: 300px;
+        margin-right: 10px;
+    }
+    .search-form button[type="submit"] {
+        padding: 10px 20px;
+        font-size: 16px;
+        background-color: #e74c3c;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    .search-form button[type="submit"]:hover {
+        background-color: #c0392b; /* Darker shade of red on hover */
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<main>
+    <section class="car-list-container">
+        <h1 class="car-listings-heading">All Listings</h1>
+
+        <!-- Search form specifically for all_listings.html -->
+        <form action="{% url 'all_listings' %}" method="GET" class="search-form">
+            <input type="text" name="q" placeholder="Search listings...">
+            <button type="submit">Search</button>
+        </form>
+
+        <!-- Display filtered or all listings -->
+        {% if cars %}
+            {% for car in cars %}
+            <div class="car-item">
+                <img src="{{ car.picture.url }}" alt="{{ car.model }}">
+                <div class="car-details">
+                    <h3>{{ car.model }}</h3>
+                    <p>{{ car.description }}</p>
+                    <p>Registered {{ car.year }} · {{ car.color }} · {{ car.transmission }} · {{ car.fuel_type }}</p>
+                    <p><i class="fas fa-tachometer-alt"></i> {{ car.mileage|intcomma }} KM</p>
+                    <a href="{% url 'vehicle_detail' car.id %}" class="view-details-button">View Details</a>
+                    <form action="{% url 'add_to_watchlist' car.id %}" method="post" style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="watchlist-button">Add to Watchlist</button>
+                    </form>
+                </div>
+                <div class="car-price">
+                    LKR {{ car.price|intcomma }}
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <p>No cars found.</p>
+        {% endif %}
+    </section>
+</main>
+{% endblock %}

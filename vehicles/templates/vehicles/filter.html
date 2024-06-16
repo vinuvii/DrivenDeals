@@ -4,13 +4,17 @@
 
 {% block extra_head %}
 <style>
-    /* Add any custom styles here */
+        .car-listings-heading {
+        font-size: 36px;
+        text-align: center;
+        margin-bottom: 20px; /* Space below the heading */
+    }
 </style>
 {% endblock %}
 
 {% block content %}
 <div class="container">
-    <h1>Filter Vehicles</h1>
+    <h1 class="car-listings-heading">Filter Vehicles</h1>
 
     <!-- Filters Section -->
     <form id="filterForm">

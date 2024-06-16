@@ -24,4 +24,6 @@ urlpatterns = [
     path('contact/', views.contact, name='contact'),
     path('compare/', views.compare, name='compare'),
     path('filter/', views.filter, name='filter'),
+    path('all-listings/', views.all_listings, name='all_listings'),
+    path('all_listings/search/', views.search_listings, name='search_listings'),
 ]
