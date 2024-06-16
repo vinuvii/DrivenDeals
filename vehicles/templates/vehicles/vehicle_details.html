@@ -639,7 +639,8 @@ html, body {
   }
 
     .vehicle-features {
-        margin-top: 20px; /* Adds space above the features section */
+        margin-top: 20px;
+        margin-left: 20px;
     }
 
 
@@ -657,6 +658,30 @@ html, body {
         margin-right: 10px;
         color: #de483d;
         font-size: 16px;
+    }
+    .vehicle-features h3 {
+    font-size: 1.75rem; /* Increase font size */
+    font-weight: bold; /* Make the text bold */
+    margin-bottom: 20px; /* Adds space below the heading */
+    color: #333; /* Sets a dark color for the heading text */
+    margin-top: 20px;
+    }
+
+    .vehicle-description {
+        margin-top: 20px; /* Adds space above the description section */
+    }
+
+    /* Styling for the description text */
+    .vehicle-description .description-text p {
+        text-align: justify; /* Justify the text */
+        font-size: 16px; /* Example font size */
+        line-height: 1.6; /* Example line height */
+    }
+
+    /* Optional: Adjusting margins or padding for better spacing */
+    .vehicle-description .description-text {
+        margin-top: 10px; /* Example margin top */
+        margin-bottom: 20px; /* Example margin bottom */
     }
 
 
@@ -853,6 +878,12 @@ html, body {
                 </div>
             </div>
         </div>
+        <h3>Description</h3>
+        <div class="feature-list">
+            <div class="description-text">
+                <p>{{ vehicle.description }}</p>
+            </div>
+        </div>
     </div>
 
 
@@ -893,17 +924,6 @@ html, body {
 
 </div>
 
-
-
-
-
-
-
-    <div class="row mt-3">
-        <div class="col-md-12">
-            <p>{{ vehicle.description }}</p>
-        </div>
-    </div>
 
     {% if not auction_ended %}
     <div class="modal fade" id="placeBidModal" tabindex="-1" role="dialog" aria-labelledby="placeBidModalLabel" aria-hidden="true">
