@@ -8,6 +8,8 @@ from django.urls import reverse
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
 from .models import Vehicle
+from django.db.models import Q
+
 
 def index(request):
     return render(request, 'vehicles/vehicle_listing.html')
@@ -198,3 +200,28 @@ def filter_vehicles(request):
         filtered_data.append(vehicle_data)
 
     return JsonResponse(filtered_data, safe=False)
+
+
+def all_listings(request):
+    cars = Vehicle.objects.all()
+
+    # Handling search functionality
+    query = request.GET.get('q')
+    if query:
+        cars = cars.filter(
+            Q(model__icontains=query) | Q(description__icontains=query)
+        )
+
+    context = {
+        'cars': cars
+    }
+    return render(request, 'vehicles/all_listings.html', context)
+
+def search_listings(request):
+    query = request.GET.get('q')
+    all_listings = Listing.objects.filter(title__icontains=query)  # Adjust filtering as per your Listing model fields
+
+    context = {
+        'all_listings': all_listings
+    }
+    return render(request, 'vehicles/all_listings.html', context)
