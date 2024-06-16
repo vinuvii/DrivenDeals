@@ -21,9 +21,9 @@ class Bid(models.Model):
     expiry_date = models.DateTimeField()
 
     def save(self, *args, **kwargs):
-        if not self.id and self.car:
-            self.expiry_date = self.car.posted_date + timezone.timedelta(weeks=1)
+        if not self.id and self.vehicle:
+            self.expiry_date = self.vehicle.posted_date + timezone.timedelta(weeks=1)
         super().save(*args, **kwargs)
 
     def __str__(self):
-        return f"Bid for {self.car} by {self.bidder}"
+        return f"Bid for {self.vehicle} by {self.user}"
