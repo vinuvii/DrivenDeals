@@ -617,7 +617,11 @@
                 <p>Email: {{ vehicle.seller.email }}</p>
                 <p>Contact Number: {{ vehicle.seller.mobile_number }}</p>
             </div>
-            <button class="btn btn-primary btn-custom" id="placeBidButton">Place Bid</button>
+            {% if auction_ended %}
+                <button class="btn btn-outline-secondary btn-custom" disabled>Auction Ended</button>
+            {% else %}
+                <button class="btn btn-primary btn-custom" id="placeBidButton">Place Bid</button>
+            {% endif %}
             <button class="btn btn-outline-secondary btn-custom" id="addToWatchListButton">Add To Watch List</button>
         </div>
     </div>
@@ -628,6 +632,7 @@
         </div>
     </div>
 
+    {% if not auction_ended %}
     <div class="modal fade" id="placeBidModal" tabindex="-1" role="dialog" aria-labelledby="placeBidModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-background"></div>
@@ -678,6 +683,7 @@
             </div>
         </div>
     </div>
+    {% endif %}
 </div>
 
 <script>

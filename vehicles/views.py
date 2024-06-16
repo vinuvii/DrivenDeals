@@ -12,6 +12,8 @@ from django.db.models import Q
 from vehicles.models import Vehicle
 from bids.models import Bid
 from bids.forms import BidForm
+from django.utils import timezone
+from datetime import timedelta
 
 def index(request):
     return render(request, 'vehicles/vehicle_listing.html')
@@ -43,11 +45,15 @@ def vehicle_detail(request, vehicle_id):
 
     bid_increments = [highest_bid_amount + i * 50000 for i in range(1, 4)]
 
+    auction_ended = timezone.now() > vehicle.posted_date + timedelta(days=7)
+
     context = {
         'is_authenticated': request.user.is_authenticated,
         'vehicle': vehicle,
         'highest_bid': highest_bid_amount,
         'bid_increments': bid_increments,
+        'auction_ended': auction_ended,
+        'form': BidForm(),
     }
 
     if request.method == 'POST':
