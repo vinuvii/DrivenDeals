@@ -4,12 +4,45 @@
 
 {% block extra_head %}
 <style>
-        .car-listings-heading {
+    .car-listings-heading {
         font-size: 36px;
         text-align: center;
         margin-bottom: 20px; /* Space below the heading */
     }
+    /* Style for form elements */
+    .form-group {
+        margin-bottom: 15px;
+    }
+    label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+    select, input[type="text"] {
+        width: 100%;
+        padding: 10px;
+        font-size: 16px;
+        border: 2px solid #e74c3c;
+        border-radius: 5px;
+    }
+    /* Style for filter button */
+    button[type="submit"] {
+        padding: 12px 24px;
+        font-size: 18px;
+        background-color: #e74c3c;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+    button[type="submit"]:hover {
+        background-color: #c0392b; /* Darker shade of red on hover */
+    }
 </style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.1/css/ion.rangeSlider.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.1/js/ion.rangeSlider.min.js"></script>
 {% endblock %}
 
 {% block content %}
@@ -26,11 +59,6 @@
                 <option value="Honda">Honda</option>
                 <!-- Add more options dynamically if needed -->
             </select>
-        </div>
-
-        <div class="form-group">
-            <label for="modelInput">Model:</label>
-            <input type="text" id="modelInput" name="model">
         </div>
 
         <div class="form-group">
@@ -52,7 +80,17 @@
                 <!-- Add more options dynamically if needed -->
             </select>
         </div>
-
+        <div class="form-group">
+            <label for="colorSelect">Color:</label>
+            <select id="colorSelect" name="color">
+                <option value="">Any</option>
+                <option value="2">Black</option>
+                <option value="4">Blue</option>
+                <option value="2">Red</option>
+                <option value="4">Gray</option>
+                <!-- Add more options dynamically if needed -->
+            </select>
+        </div>
         <div class="form-group">
             <label for="seatsSelect">Number of Seats:</label>
             <select id="seatsSelect" name="seats">
@@ -171,74 +209,74 @@
         </div>
 
         <div class="form-group">
-            <label for="leatherSeatsCheckbox">Leather Seats:</label>
-            <select id="leatherSeatsCheckbox" name="leather_seats">
-                <option value="">Any</option>
-                <option value="true">Yes</option>
-                <option value="false">No</option>
-            </select>
-        </div>
-
-        <div class="form-group">
-            <label for="sunroofCheckbox">Sunroof:</label>
-            <select id="sunroofCheckbox" name="sunroof">
-                <option value="">Any</option>
-                <option value="true">Yes</option>
-                <option value="false">No</option>
-            </select>
-        </div>
-
-        <div class="form-group">
             <label for="priceRange">Price Range:</label>
-            <input type="text" id="priceRange" name="price">
+            <input type="text" id="priceRangeSlider" name="price" />
         </div>
 
         <button type="submit">Apply Filters</button>
     </form>
 
-    <div id="vehicleContainer">
-        <!-- Filtered vehicle results will be displayed here -->
-    </div>
-
-    <script>
-        document.getElementById('filterForm').addEventListener('submit', async function(event) {
-            event.preventDefault(); // Prevent default form submission
-
-            const formData = new FormData(this); // Get form data
-
-            try {
-                // Send a POST request to your backend endpoint
-                const response = await fetch('/api/filter-vehicles/', {
-                    method: 'POST',
-                    body: formData
-                });
-
-                if (!response.ok) {
-                    throw new Error('Failed to fetch vehicle data.');
-                }
-
-                const vehicles = await response.json(); // Parse JSON response
-
-                // Update the UI with filtered vehicle data
-                const vehicleContainer = document.getElementById('vehicleContainer');
-
-                if (vehicles.length > 0) {
-                    let html = '<ul>';
-                    vehicles.forEach(vehicle => {
-                        html += `<li>${vehicle.make} ${vehicle.model} (${vehicle.year})</li>`;
-                        // Add other details as per your requirement
-                    });
-                    html += '</ul>';
-                    vehicleContainer.innerHTML = html;
-                } else {
-                    vehicleContainer.innerHTML = '<p>No vehicles found as per filter.</p>';
-                }
-            } catch (error) {
-                console.error('Error fetching vehicle data:', error);
-            }
-        });
-    </script>
+    <div id="vehicleContainer"></div>
 </div>
+
+<script>
+    $(document).ready(function () {
+        $("#priceRangeSlider").ionRangeSlider({
+            type: "double",
+            min: 0,
+            max: 100000000,
+            from: 0,
+            to: 100000000,
+            grid: true,
+            prefix: "LKR ",
+            onStart: function (data) {
+                // Display initial values
+                $("#priceRangeSlider").next().html("LKR " + data.from_pretty + " - LKR " + data.to_pretty);
+            },
+            onChange: function (data) {
+                // Update displayed values as user interacts
+                $("#priceRangeSlider").next().html("LKR " + data.from_pretty + " - LKR " + data.to_pretty);
+            },
+        });
+    });
+
+    document.getElementById('filterForm').addEventListener('submit', async function(event) {
+        event.preventDefault(); // Prevent default form submission
+
+        const formData = new FormData(this); // Get form data
+
+        try {
+            // Send a POST request to your backend endpoint
+            const response = await fetch('/api/filter-vehicles/', {
+                method: 'POST',
+                body: formData
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to fetch vehicle data.');
+            }
+
+            const vehicles = await response.json(); // Parse JSON response
+
+            // Update the UI with filtered vehicle data
+            const vehicleContainer = document.getElementById('vehicleContainer');
+
+            if (vehicles.length > 0) {
+                let html = '<ul>';
+                vehicles.forEach(vehicle => {
+                    html += `<li>${vehicle.make} ${vehicle.model} (${vehicle.year})</li>`;
+                    // Add other details as per your requirement
+                });
+                html += '</ul>';
+                vehicleContainer.innerHTML = html;
+            } else {
+                vehicleContainer.innerHTML = '<p>No vehicles found as per filter.</p>';
+            }
+        } catch (error) {
+            console.error('Error fetching vehicle data:', error);
+        }
+    });
+</script>
 {% endblock %}
 
 
