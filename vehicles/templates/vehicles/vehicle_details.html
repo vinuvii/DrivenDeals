@@ -599,14 +599,20 @@
                 <div class="vehicle-gallery">
                     <img id="main-image" src="{{ vehicle.picture.url }}" class="img-fluid" alt="{{ vehicle.model }}">
                 </div>
-                <div class="thumbnail-images">
-                    {% for image in vehicle.additional_images.all %}
-                        <img src="{{ image.url }}" alt="{{ vehicle.model }}" onclick="displayImage('{{ image.url }}')">
-                    {% endfor %}
-                    <img src="{{ vehicle.picture.url }}" alt="Additional Image 1" onclick="displayImage('{{ vehicle.picture.url }}')">
-                    <img src="{{ vehicle.picture2.url }}" alt="Additional Image 1" onclick="displayImage('{{ vehicle.picture2.url }}')">
-                    <img src="{{ vehicle.picture3.url }}" alt="Additional Image 2" onclick="displayImage('{{ vehicle.picture3.url }}')">
-                </div>
+        <div class="thumbnail-images">
+            <img src="{{ vehicle.picture.url }}" alt="{{ vehicle.model }}" onclick="displayImage('{{ vehicle.picture.url }}')">
+
+            {% if vehicle.picture2 %}
+                <img src="{{ vehicle.picture2.url }}" alt="Additional Image 1" onclick="displayImage('{{ vehicle.picture2.url }}')">
+            {% endif %}
+            {% if vehicle.picture3 %}
+                <img src="{{ vehicle.picture3.url }}" alt="Additional Image 2" onclick="displayImage('{{ vehicle.picture3.url }}')">
+            {% endif %}
+
+            {% for image in vehicle.additional_images.all %}
+                <img src="{{ image.url }}" alt="{{ vehicle.model }}" onclick="displayImage('{{ image.url }}')">
+            {% endfor %}
+        </div>
             </div>
         </div>
         <div class="col-md-5">
