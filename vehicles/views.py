@@ -38,10 +38,16 @@ def vehicle_success(request):
 
 def vehicle_detail(request, vehicle_id):
     vehicle = get_object_or_404(Vehicle, pk=vehicle_id)
+    highest_bid = Bid.objects.filter(vehicle=vehicle).order_by('-amount').first()
+    highest_bid_amount = highest_bid.amount if highest_bid else vehicle.price
+
+    bid_increments = [highest_bid_amount + i * 50000 for i in range(1, 4)]
 
     context = {
         'is_authenticated': request.user.is_authenticated,
         'vehicle': vehicle,
+        'highest_bid': highest_bid_amount,
+        'bid_increments': bid_increments,
     }
 
     if request.method == 'POST':

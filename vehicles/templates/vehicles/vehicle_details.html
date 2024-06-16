@@ -584,7 +584,7 @@
             </div>
             <div class="col-md-3">
                 <div class="vehicle-details-section__head-price">
-                    <div class="vehicle-details-section__head-price-num">LKR {{ vehicle.price }}</div>
+                    <div class="vehicle-details-section__head-price-num">LKR {{ highest_bid }}</div>
                     <p>Last Bid Price</p>
                 </div>
             </div>
@@ -640,7 +640,7 @@
                 </div>
                 <div class="modal-body">
                     <p class="vehicle-name"><b>{{ vehicle.model }} {{ vehicle.year }}</b></p>
-                    <p class="vehicle-price">LKR {{ vehicle.price }}</p>
+                    <p class="vehicle-price">LKR {{ highest_bid }}</p>
                     <p class="item-description">Read the item description or contact seller for shipping information.</p>
                     <div class="info-row">
                         <p class="reserve-status">RESERVE NOT YET MET.</p>
@@ -656,9 +656,9 @@
                         </div>
                     </div>
                     <div class="bid-values">
-                        <button class="bid-value">Value1</button>
-                        <button class="bid-value">Value2</button>
-                        <button class="bid-value">Value3</button>
+                        {% for bid_value in bid_increments %}
+                            <button class="bid-value" type="button" onclick="setBidValue({{ bid_value }})">LKR {{ bid_value }}</button>
+                        {% endfor %}
                     </div>
                     <div class="max-bid-section">
                         <p class="max-bid-label">Or Enter Your Maximum Bid:</p>
@@ -703,7 +703,9 @@
             window.location.href = loginUrl;
         }
     }
+        function setBidValue(value) {
+        document.getElementById('id_amount').value = value;
+    }
 </script>
 
 {% endblock %}
-
