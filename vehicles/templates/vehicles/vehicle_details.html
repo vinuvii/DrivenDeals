@@ -3,6 +3,9 @@
 
 {% block extra_head %}
 <style>
+html, body {
+    overflow-x: hidden;
+}
     .vehicle-header {
         width: 100%;
         height: 300px; /* Adjust height as needed */
@@ -34,11 +37,15 @@
 
     .vehicle-details-section {
         background-color: #f9f9f9;
-        padding: 40px 0;
+        padding: 60px 60px;
     }
 
     .vehicle-details-section__head-title {
         position: relative;
+        font-size: 45px;
+        font-weight: bold;
+        text-transform: uppercase;
+        font-family: 'Open Sans', 'Titillium Web', 'PT Sans', Arial, sans-serif;
     }
 
     .vehicle-details-section__head-title::before {
@@ -77,41 +84,54 @@
         color: #666;
         margin-top: 5px;
     }
+    #vehicle-details-container {
+        background-color: #f9f9f9;
+        padding: 20px;
 
-    .vehicle-card {
+    }
+  #vehicle-details-container .vehicle-card {
         background-color: #ffffff;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Adjusted shadow */
+        border: 1px solid rgba(0, 0, 0, 0.1); /* Darker border */
         border-radius: 8px;
         overflow: hidden;
         margin-bottom: 20px;
         padding: 20px; /* Added padding */
         max-width: 800px; /* Adjusted max-width to control size */
+        max-height: 800px; /* Adjusted max-height */
         margin: 0 auto; /* Center the vehicle-card */
+        position: relative;
     }
 
-    .vehicle-gallery {
+
+    #vehicle-details-container .vehicle-gallery {
         width: 100%;
         height: auto;
         position: relative;
         overflow: hidden;
     }
 
-    .vehicle-gallery img {
+    #vehicle-details-container .vehicle-gallery img {
         width: 100%;
         height: auto;
         object-fit: cover;
         border-radius: 5px;
         cursor: pointer;
+        max-width: 760px; /* Adjusted max-width to control size */
+        min-width: 760px;
+        max-height: 550px;
+        min-height: 550px;
     }
 
-    .thumbnail-images {
+    #vehicle-details-container .thumbnail-images {
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
         padding: 10px;
+        margin-top: 25px;
     }
 
-    .thumbnail-images img {
+    #vehicle-details-container .thumbnail-images img {
         width: 180px; /* Thumbnail width */
         height: 150px; /* Thumbnail height */
         object-fit: cover;
@@ -120,10 +140,51 @@
         cursor: pointer;
     }
 
-    .thumbnail-images img:hover {
+    #vehicle-details-container .thumbnail-images img:hover {
         opacity: 0.7; /* Reduce opacity on hover */
     }
 
+    #vehicle-details-container .vehicle-description-card  {
+        padding-top: 0; /* Adjust padding-top if needed */
+        padding-bottom: 0; /* Adjust padding-bottom if needed */
+        margin-top: 0px; /* Adjust margin-top if needed */
+        margin-bottom: 20px; /* Example: Set margin-bottom to create space between sections */
+        width: 550px; /* Adjust the width as needed */
+        margin-right: 20px;
+        background-color: #de483d;
+        border-radius: 8px;
+    }
+
+
+    #vehicle-details-container .vehicle-description-card .card-header {
+        background-color: #de483d;
+        padding-top: 20px;
+    }
+
+
+    #vehicle-details-container .vehicle-description-card .card-title  {
+        color: #ffffff;
+        font-size: 1.25rem;
+        font-weight: bold;
+    }
+
+    #vehicle-details-container .vehicle-description-card .card-body {
+        padding: 0;
+    }
+
+    #vehicle-details-container .vehicle-description-card .table {
+        background-color: #de483d;
+        margin-bottom: 0;
+        border: 1px solid #f0b1af;
+    }
+
+    .vehicle-description-card .table tbody tr:nth-child(even) {
+        background-color: #f7c6c5; /* Lighter shade of #de483d */
+    }
+
+    .vehicle-description-card .table tbody tr:nth-child(odd) {
+        background-color: #f0b1af; /* Slightly lighter shade of #de483d */
+    }
     .seller-details {
         background-color: #f8f9fa;
         padding: 20px;
@@ -132,37 +193,6 @@
         margin-bottom: 20px;
     }
 
-    .seller-details h2 {
-        margin-top: 0;
-        font-weight: bold;
-    }
-
-    .seller-details p {
-        margin-bottom: 5px;
-    }
-
-    .seller-card {
-        background-color: #ffffff;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        border-radius: 8px;
-        padding: 20px;
-        margin-bottom: 20px;
-    }
-
-    .seller-card h2 {
-        font-size: 24px;
-        margin-top: 0;
-        margin-bottom: 15px;
-        font-weight: bold;
-        color: #000; /* Ensure seller card title color is black */
-        font-family: 'Open Sans', 'Titillium Web', 'PT Sans', Arial, sans-serif; /* Apply desired font */
-    }
-
-    .seller-card p {
-        margin-bottom: 5px;
-        color: #000; /* Ensure seller card text color is black */
-        font-family: 'Open Sans', 'Titillium Web', 'PT Sans', Arial, sans-serif; /* Apply desired font */
-    }
 
     .modal-background {
         position: absolute;
@@ -560,6 +590,76 @@
         height: 42px; /* Same height for consistency */
         font-family: 'Open Sans', 'Titillium Web', 'PT Sans', Arial, sans-serif; /* Apply desired font */
     }
+
+  .seller-description-card {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: #f0f0f0;
+    border: 8px solid #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .seller-description-card .card-header {
+    background-color: #f0f0f0;
+    padding: 10px 20px;
+    border: 2px solid #de483d;
+  }
+
+  .seller-description-card .card-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin: 0;
+  }
+
+  .seller-description-card .card-body {
+    padding: 20px 20px; /* Added padding to the card body */
+  }
+
+  .seller-description-card p {
+    margin-bottom: 5px; /* Increased margin-bottom for better spacing */
+    margin-left: 10px;
+    padding: 3px;
+    margin-top: 10px;
+
+  }
+
+  .seller-description-card p:last-child {
+    margin-bottom: 0;
+  }
+
+  .seller-description-card a {
+    color: #007bff; /* Blue color */
+    text-decoration: underline;
+  }
+
+  .seller-description-card a:hover {
+    text-decoration: none;
+  }
+
+    .vehicle-features {
+        margin-top: 20px; /* Adds space above the features section */
+    }
+
+
+    .vehicle-features ul {
+        list-style-type: none;
+        padding-left: 0;
+    }
+
+    .vehicle-features li {
+        margin-bottom: 12px;
+        line-height: 1.8;
+    }
+
+    .vehicle-features .fa-check-circle {
+        margin-right: 10px;
+        color: #de483d;
+        font-size: 16px;
+    }
+
+
 </style>
 {% endblock %}
 
@@ -577,7 +677,7 @@
             <div class="col-md-9">
                 <div class="vehicle-details-section__head">
                     <div class="vehicle-details-section__head-title">
-                        <h1>{{ vehicle.model }}</h1>
+                        <h1>{{ vehicle.make }} - {{ vehicle.model }}</h1>
                         <h3>{{ vehicle.year }}</h3>
                     </div>
                 </div>
@@ -585,44 +685,182 @@
             <div class="col-md-3">
                 <div class="vehicle-details-section__head-price">
                     <div class="vehicle-details-section__head-price-num">LKR {{ highest_bid }}</div>
-                    <p>Last Bid Price</p>
+                    <p>Winning Bid Price</p>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<div class="container">
-    <div class="row">
-        <div class="col-md-7">
-            <div class="vehicle-card">
-                <div class="vehicle-gallery">
-                    <img id="main-image" src="{{ vehicle.picture.url }}" class="img-fluid" alt="{{ vehicle.model }}">
-                </div>
-        <div class="thumbnail-images">
+
+<div id="vehicle-details-container" class="container">
+  <div class="row">
+    <div class="col-md-7">
+        <div class="vehicle-card">
+          <div class="vehicle-gallery">
+              <img id="main-image" src="{{ vehicle.picture.url }}" class="img-fluid" alt="{{ vehicle.model }}">
+          </div>
+          <div class="thumbnail-images">
             <img src="{{ vehicle.picture.url }}" alt="{{ vehicle.model }}" onclick="displayImage('{{ vehicle.picture.url }}')">
-
-            {% if vehicle.picture2 %}
-                <img src="{{ vehicle.picture2.url }}" alt="Additional Image 1" onclick="displayImage('{{ vehicle.picture2.url }}')">
-            {% endif %}
-            {% if vehicle.picture3 %}
-                <img src="{{ vehicle.picture3.url }}" alt="Additional Image 2" onclick="displayImage('{{ vehicle.picture3.url }}')">
-            {% endif %}
-
-            {% for image in vehicle.additional_images.all %}
-                <img src="{{ image.url }}" alt="{{ vehicle.model }}" onclick="displayImage('{{ image.url }}')">
-            {% endfor %}
+                        {% if vehicle.picture2 %}
+                            <img src="{{ vehicle.picture2.url }}" alt="Additional Image 1" onclick="displayImage('{{ vehicle.picture2.url }}')">
+                        {% endif %}
+                        {% if vehicle.picture3 %}
+                            <img src="{{ vehicle.picture3.url }}" alt="Additional Image 2" onclick="displayImage('{{ vehicle.picture3.url }}')">
+                        {% endif %}
+                        {% for image in vehicle.additional_images.all %}
+                            <img src="{{ image.url }}" alt="{{ vehicle.model }}" onclick="displayImage('{{ image.url }}')">
+                        {% endfor %}
+          </div>
         </div>
+    </div>
+
+    <div class="col-md-5">
+      <div class="vehicle-description-card">
+          <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Description</h5>
+                </div>
+              <div class="card-body">
+                <table class="table table-striped">
+                                <tbody>
+                                    <tr>
+                                        <th>Manufacturer</th>
+                                        <td>{{ vehicle.make }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Model</th>
+                                        <td>{{ vehicle.model }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Year</th>
+                                        <td>{{ vehicle.year }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Color</th>
+                                        <td>{{ vehicle.color }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Mileage</th>
+                                        <td>{{ vehicle.mileage }} km</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Fuel Type</th>
+                                        <td>{{ vehicle.fuel_type | capfirst}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Body Type</th>
+                                        <td>{{ vehicle.body_type | capfirst}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Engine Capacity</th>
+                                        <td>{{ vehicle.engine_capacity }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Engine Type</th>
+                                        <td>{{ vehicle.engine_type | capfirst}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Transmission Type</th>
+                                        <td>{{ vehicle.transmission_type | capfirst}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Number of Seats</th>
+                                        <td>{{ vehicle.no_of_seats }}</td>
+                                    </tr>
+                                </tbody>
+                </table>
+              </div>
+          </div>
+      </div>
+
+        <div class="vehicle-description-card">
+          <div class="seller-description-card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Seller Details</h5>
+                </div>
+                    <p><strong>Name: </strong>{{ vehicle.seller.first_name }} {{ vehicle.seller.last_name }}</p>
+                    <p><strong>Trading Address: </strong>{{ vehicle.seller.trading_address }}</p>
+                    <p><strong>Email: </strong>{{ vehicle.seller.email }}</p>
+                    <p><strong>Contact Number: </strong>{{ vehicle.seller.mobile_number }}</p>
+                    <p><strong>Click To Check Seller's Other Listings: </strong><a href="listings.html">Click Here</a></p>
+          </div>
+        </div>
+    </div>
+  </div>
+<div class="row vehicle-features">
+    <div class="col-md-7">
+        <h3>Features</h3>
+        <div class="feature-list">
+            <div class="row">
+                <div class="col-sm-6">
+                    <ul>
+                        <li>
+                            {% if vehicle.abs_breaks %}
+                                <i class="fas fa-check-circle"></i> ABS Breaks
+                            {% endif %}
+                        </li>
+                        <li>
+                            {% if vehicle.alloy_wheels %}
+                                <i class="fas fa-check-circle"></i> Alloy Wheels
+                            {% endif %}
+                        </li>
+                        <li>
+                            {% if vehicle.airbags %}
+                                <i class="fas fa-check-circle"></i> Airbags
+                            {% endif %}
+                        </li>
+                        <li>
+                            {% if vehicle.air_conditioning %}
+                                <i class="fas fa-check-circle"></i> Air Conditioning
+                            {% endif %}
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-sm-6">
+                    <ul>
+                        <li>
+                            {% if vehicle.power_steering %}
+                                <i class="fas fa-check-circle"></i> Power Steering
+                            {% endif %}
+                        </li>
+                        <li>
+                            {% if vehicle.power_windows %}
+                                <i class="fas fa-check-circle"></i> Power Windows
+                            {% endif %}
+                        </li>
+                        <li>
+                            {% if vehicle.central_locking %}
+                                <i class="fas fa-check-circle"></i> Central Locking
+                            {% endif %}
+                        </li>
+                        <li>
+                            {% if vehicle.reverse_camera %}
+                                <i class="fas fa-check-circle"></i> Reverse Camera
+                            {% endif %}
+                        </li>
+                        <li>
+                            {% if vehicle.sunroof %}
+                                <i class="fas fa-check-circle"></i> Sunroof
+                            {% endif %}
+                        </li>
+                        <li>
+                            {% if vehicle.leather_seats %}
+                                <i class="fas fa-check-circle"></i> Leather Seats
+                            {% endif %}
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
+    </div>
+
+
+
+
+    <div class="col-md-5">
         <div class="col-md-5">
-            <div class="seller-card">
-                <h3>Seller Details: </h3>
-                <h5>Name: {{ vehicle.seller.first_name }} {{ vehicle.seller.last_name }}</h5>
-                <p>Trading Address: {{ vehicle.seller.trading_address }}</p>
-                <p>Email: {{ vehicle.seller.email }}</p>
-                <p>Contact Number: {{ vehicle.seller.mobile_number }}</p>
-            </div>
+
             <div>
                 <div>
                     <h3>Highest Bid: {{ highest_bid }}</h3>
@@ -646,6 +884,20 @@
             <button class="btn btn-outline-secondary btn-custom" id="addToWatchListButton">Add To Watch List</button>
         </div>
     </div>
+
+      </div>
+
+
+
+  </div>
+
+</div>
+
+
+
+
+
+
 
     <div class="row mt-3">
         <div class="col-md-12">
@@ -708,7 +960,8 @@
     </div>
     {% endif %}
 </div>
-
+    </div>
+</div>
 <script>
     function displayImage(imageUrl) {
         document.getElementById('main-image').src = imageUrl;

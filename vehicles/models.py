@@ -64,12 +64,12 @@ class Vehicle(models.Model):
     year = models.PositiveIntegerField()
     body_type = models.CharField(max_length=100, choices=BODYTYPE_CHOICES, null=True)
     no_of_seats = models.PositiveIntegerField(default=0)
-    transmission_type = models.CharField(max_length=10, choices=[('auto', 'Automatic'), ('manual', 'Manual')], null=True)
+    transmission_type = models.CharField(max_length=10, choices=[('Automatic', 'Automatic'), ('Manual', 'Manual')], null=True)
     fuel_type = models.CharField(max_length=20,
                                  choices=[('petrol', 'Petrol'), ('diesel', 'Diesel'), ('electric', 'Electric'),
                                           ('hybrid', 'Hybrid')], null=True)
     engine_capacity = models.DecimalField(max_digits=4, decimal_places=1, null=True)
-    engine_type = models.CharField(max_length=10, choices=[('electric', 'Electric'), ('hybrid', 'Hybrid'), ('ice', 'ICE (Internal Combustion Engine)')], null=True)
+    engine_type = models.CharField(max_length=32, choices=[('Electric', 'Electric'), ('Hybrid', 'Hybrid'), ('Internal Combustion Engine', 'ICE (Internal Combustion Engine)')], null=True)
 
     # Additional features
     abs_breaks = models.BooleanField(default=False)
