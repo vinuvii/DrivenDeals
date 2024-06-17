@@ -5,6 +5,7 @@ from django.dispatch import receiver
 from django.db.models.signals import post_save
 from django.contrib.auth.models import AbstractUser
 from django import forms
+from vehicles.models import Vehicle
 
 class User(AbstractUser):
     username = models.CharField(max_length=100, unique=True)
@@ -52,12 +53,13 @@ class Listing(models.Model):
     def get_absolute_url(self):
         return reverse('listing_detail', kwargs={'pk': self.pk})
 
-class WatchlistItem(models.Model):
+class Watchlist(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    item_id = models.IntegerField()  # Assuming item_id is an integer field representing the ID of the watched item
+    vehicle = models.ForeignKey(Vehicle, on_delete=models.CASCADE)
+    added_on = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        unique_together = ('user', 'item_id')
+        unique_together = ('user', 'vehicle')
 
 class UserProfileForm(forms.ModelForm):
     class Meta:

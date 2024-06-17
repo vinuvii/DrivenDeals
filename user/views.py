@@ -6,13 +6,16 @@ from .models import UserProfile
 from django.contrib import messages
 from django.contrib.auth import logout
 from django.contrib.auth import views as auth_views
+from django.contrib.auth.decorators import login_required
 from .models import UserProfile, Listing
-from .models import WatchlistItem
+from .models import Watchlist
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.models import User
 from .forms import UserLoginForm, UserRegistrationForm
 from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse_lazy
+from vehicles.models import Vehicle
+from django.contrib.auth.decorators import login_required
 
 def index(request):
     return render(request, 'user/profile.html')
@@ -24,31 +27,34 @@ def profile(request):
 
 @login_required
 def edit_profile(request):
+    user_profile = get_object_or_404(UserProfile, user=request.user)
     if request.method == 'POST':
-        form = ProfileForm(request.POST, instance=request.user.profile)
+        form = UserProfileForm(request.POST, instance=user_profile)
         if form.is_valid():
             form.save()
             return redirect('profile')
     else:
-        form = ProfileForm(instance=request.user.profile)
-    return render(request, 'edit_profile.html', {'form': form})
+        form = UserProfileForm(instance=user_profile)
+    return render(request, 'user/edit_profile.html', {'form': form})
 
 
 @login_required
-def watchlist(request):
-    watchlist_items = WatchlistItem.objects.filter(user=request.user)
-    return render(request, 'user/watchlist.html', {'watchlist_items': watchlist_items})
+def add_to_watchlist(request, vehicle_id):
+    vehicle = get_object_or_404(Vehicle, id=vehicle_id)
+    Watchlist.objects.get_or_create(user=request.user, vehicle=vehicle)
+    return redirect('my_watchlist')
 
 @login_required
-def add_to_watchlist(request, item_id):
-    watchlist_item = WatchlistItem(user=request.user, item_id=item_id)
-    watchlist_item.save()
-    return redirect('watchlist')
+def remove_from_watchlist(request, vehicle_id):
+    vehicle = get_object_or_404(Vehicle, id=vehicle_id)
+    Watchlist.objects.filter(user=request.user, vehicle=vehicle).delete()
+    return redirect('my_watchlist')
 
 @login_required
-def remove_from_watchlist(request, item_id):
-    WatchlistItem.objects.filter(user=request.user, item_id=item_id).delete()
-    return redirect('watchlist')
+def my_watchlist(request):
+    watchlist_items = Watchlist.objects.filter(user=request.user).select_related('vehicle')
+    context = {'listings': [item.vehicle for item in watchlist_items]}
+    return render(request, 'user/watchlist.html', context)
 
 @login_required
 def my_listings(request):

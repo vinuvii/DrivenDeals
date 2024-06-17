@@ -4,15 +4,31 @@ from .models import UserProfile
 from django.contrib.auth.models import User
 
 class UserProfileForm(forms.ModelForm):
+    first_name = forms.CharField(max_length=100)
+    last_name = forms.CharField(max_length=100)
+    email = forms.EmailField()
+
     class Meta:
         model = UserProfile
-        fields = ['email_address', 'mobile_number', 'postal_code', 'trading_address']
+        fields = ['mobile_number', 'postal_code', 'trading_address']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Populate the user fields from the related User instance
+        if self.instance and self.instance.user:
+            self.fields['first_name'].initial = self.instance.user.first_name
+            self.fields['last_name'].initial = self.instance.user.last_name
+            self.fields['email'].initial = self.instance.user.email
 
     def save(self, commit=True):
-        instance = super().save(commit=False)
+        user = self.instance.user
+        user.first_name = self.cleaned_data['first_name']
+        user.last_name = self.cleaned_data['last_name']
+        user.email = self.cleaned_data['email']
         if commit:
-            instance.save()
-        return instance
+            user.save()
+            self.instance.save()
+        return self.instance
 
 
 class UserLoginForm(forms.Form):
