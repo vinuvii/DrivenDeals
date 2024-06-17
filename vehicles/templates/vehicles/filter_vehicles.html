@@ -1,52 +1,50 @@
 {% extends "base.html" %}
 
 {% block extra_head %}
-    <!-- Add any additional head content for filter_vehicles.html here if necessary -->
-    <style>
-        .filter-form {
-            margin: 20px 0;
-        }
-        .filter-form .form-group {
-            margin-bottom: 15px;
-        }
-        .filter-form .btn-primary {
-            margin-top: 20px;
-        }
-        .card {
-            margin-bottom: 20px;
-        }
-        .car-listings-heading {
-            font-size: 36px;
-            text-align: center;
-            margin-bottom: 20px; /* Space below the heading */
-        }
-        .filter-button {
-            padding: 10px 20px;
-            font-size: 16px;
-            background-color: #e74c3c;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .clear-filters-button {
-            background-color: #3498db;
-            color: white;
-            padding: 10px 20px;
-            border-radius: 5px;
-            text-decoration: none;
-            display: inline-block;
-            margin-top: 10px;
-            cursor: pointer;
-        }
-
-        .no-vehicles {
-            text-align: center;
-            font-size: 18px;
-            margin-top: 20px;
-        }
-    </style>
+<!-- Add any additional head content for filter_vehicles.html here if necessary -->
+<style>
+    .filter-form {
+        margin: 20px 0;
+    }
+    .filter-form .form-group {
+        margin-bottom: 15px;
+    }
+    .filter-form .btn-primary {
+        margin-top: 20px;
+    }
+    .card {
+        margin-bottom: 20px;
+    }
+    .car-listings-heading {
+        font-size: 36px;
+        text-align: center;
+        margin-bottom: 20px; /* Space below the heading */
+    }
+    .filter-button {
+        padding: 10px 20px;
+        font-size: 16px;
+        background-color: #e74c3c;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    .clear-filters-button {
+        background-color: #3498db;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 5px;
+        text-decoration: none;
+        display: inline-block;
+        margin-top: 10px;
+        cursor: pointer;
+    }
+    .no-vehicles {
+        text-align: center;
+        font-size: 18px;
+        margin-top: 20px;
+    }
+</style>
 {% endblock %}
 
 {% block content %}
@@ -184,34 +182,36 @@
         <button type="submit" class="filter-button">Filter</button>
         <a href="{% url 'filter_vehicles' %}" class="clear-filters-button">Clear Filters</a>
     </form>
-
     {% if vehicles %}
-    <h2 class="car-listings-heading">Results</h2>
-    <div class="row">
-        {% for vehicle in vehicles %}
-            <div class="col-md-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ vehicle.make }} {{ vehicle.model }}</h5>
-                        <p class="card-text">Year: {{ vehicle.year }}</p>
-                        <p class="card-text">Price: ${{ vehicle.price }}</p>
-                        <p class="card-text">Mileage: {{ vehicle.mileage }} km</p>
-                        <p class="card-text">Color: {{ vehicle.color }}</p>
-                        <!-- Add more fields as needed -->
+        <h2 class="car-listings-heading">Results</h2>
+        <div class="row">
+            {% for vehicle in vehicles %}
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <a href="{% url 'vehicle_detail' vehicle.id %}" style="text-decoration: none; color: inherit;">
+                                <h5 class="card-title">{{ vehicle.make }} {{ vehicle.model }}</h5>
+                                <p class="card-text">Year: {{ vehicle.year }}</p>
+                                <p class="card-text">Price: ${{ vehicle.price }}</p>
+                                <p class="card-text">Mileage: {{ vehicle.mileage }} km</p>
+                                <p class="card-text">Color: {{ vehicle.color }}</p>
+                                <!-- Add more fields as needed -->
+                            </a>
+                        </div>
                     </div>
                 </div>
-            </div>
-        {% endfor %}
-    </div>
+            {% endfor %}
+        </div>
     {% else %}
-    <p class="no-vehicles">No vehicles found matching the filters.</p>
+        <p class="no-vehicles">No vehicles found matching the filters.</p>
     {% endif %}
 </div>
 {% endblock %}
 
 {% block extra_scripts %}
-    <!-- Add any additional scripts for filter_vehicles.html here if necessary -->
+<!-- Add any additional scripts for filter_vehicles.html here if necessary -->
 {% endblock %}
+
 
 
 
