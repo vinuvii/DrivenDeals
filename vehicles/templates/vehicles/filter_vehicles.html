@@ -16,9 +16,35 @@
             margin-bottom: 20px;
         }
         .car-listings-heading {
-        font-size: 36px;
-        text-align: center;
-        margin-bottom: 20px; /* Space below the heading */
+            font-size: 36px;
+            text-align: center;
+            margin-bottom: 20px; /* Space below the heading */
+        }
+        .filter-button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .clear-filters-button {
+            background-color: #3498db;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+
+        .no-vehicles {
+            text-align: center;
+            font-size: 18px;
+            margin-top: 20px;
         }
     </style>
 {% endblock %}
@@ -155,8 +181,11 @@
                 </div>
             </div>
         </div>
-        <button type="submit" class="btn btn-primary">Filter</button>
+        <button type="submit" class="filter-button">Filter</button>
+        <a href="{% url 'filter_vehicles' %}" class="clear-filters-button">Clear Filters</a>
     </form>
+
+    {% if vehicles %}
     <h2 class="car-listings-heading">Results</h2>
     <div class="row">
         {% for vehicle in vehicles %}
@@ -174,12 +203,16 @@
             </div>
         {% endfor %}
     </div>
+    {% else %}
+    <p class="no-vehicles">No vehicles found matching the filters.</p>
+    {% endif %}
 </div>
 {% endblock %}
 
 {% block extra_scripts %}
     <!-- Add any additional scripts for filter_vehicles.html here if necessary -->
 {% endblock %}
+
 
 
 

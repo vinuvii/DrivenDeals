@@ -1,12 +1,24 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>My Bids</h1>
+<style>
+    /* CSS for styling */
+    .my-bids-heading {
+        font-size: 36px;
+        text-align: center;
+        margin-bottom: 20px; /* Space below the heading */
+    }
+    .bid-item {
+        margin-bottom: 20px; /* Space between each bid item */
+    }
+</style>
+
+<h1 class="my-bids-heading">My Bids</h1>
 
 {% if bids %}
     <ul>
         {% for bid in bids %}
-            <li>
+            <li class="bid-item">
                 <strong>Bid for {{ bid.vehicle.make }} {{ bid.vehicle.model }} ({{ bid.vehicle.year }})</strong><br>
                 Amount: {{ bid.amount }}<br>
                 Status: {{ bid.get_bid_status_display }}<br>
@@ -19,3 +31,4 @@
 {% endif %}
 
 {% endblock %}
+
