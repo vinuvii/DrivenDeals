@@ -24,14 +24,15 @@ def profile(request):
 
 @login_required
 def edit_profile(request):
+    user_profile = get_object_or_404(UserProfile, user=request.user)
     if request.method == 'POST':
-        form = ProfileForm(request.POST, instance=request.user.profile)
+        form = UserProfileForm(request.POST, instance=user_profile)
         if form.is_valid():
             form.save()
             return redirect('profile')
     else:
-        form = ProfileForm(instance=request.user.profile)
-    return render(request, 'edit_profile.html', {'form': form})
+        form = UserProfileForm(instance=user_profile)
+    return render(request, 'user/edit_profile.html', {'form': form})
 
 
 @login_required

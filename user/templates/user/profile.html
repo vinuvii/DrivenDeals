@@ -80,16 +80,24 @@
             <p id="email">{{ user_profile.user.email }}</p>
         </div>
         <div class="form-group">
+            <label for="first_name"><strong>First Name:</strong></label>
+            <p id="first_name">{{ user_profile.user.first_name }}</p>
+        </div>
+        <div class="form-group">
+            <label for="last_name"><strong>Last Name:</strong></label>
+            <p id="last_name">{{ user_profile.user.last_name }}</p>
+        </div>
+        <div class="form-group">
             <label for="mobile"><strong>Mobile Number:</strong></label>
-            <p id="mobile">{{ user_profile.mobile_number }}</p>
+            <p id="mobile">{{ user_profile.user.mobile_number }}</p>
         </div>
         <div class="form-group">
             <label for="postal_code"><strong>Postal Code:</strong></label>
-            <p id="postal_code">{{ user_profile.postal_code }}</p>
+            <p id="postal_code">{{ user_profile.user.postal_code }}</p>
         </div>
         <div class="form-group">
             <label for="trading_address"><strong>Trading Address:</strong></label>
-            <p id="trading_address">{{ user_profile.trading_address }}</p>
+            <p id="trading_address">{{ user_profile.user.trading_address }}</p>
         </div>
         <div class="btn-block-container">
             <a href="{% url 'edit_profile' %}" class="btn btn-primary">Edit Profile</a>
