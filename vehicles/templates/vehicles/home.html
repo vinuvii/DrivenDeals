@@ -84,6 +84,11 @@
             text-overflow: ellipsis;
             white-space: nowrap;
         }
+        .car-listings-heading {
+        font-size: 36px;
+        text-align: center;
+        margin-bottom: 20px; /* Space below the heading */
+    }
 
 
 </style>
@@ -100,7 +105,7 @@
 
 <main>
     <section class="featured-cars">
-        <h2>Featured Cars</h2>
+        <h2 class="car-listings-heading">Featured Cars</h2>
         <div class="car-list-container">
             <div class="car-list">
                 {% for car in cars %}
