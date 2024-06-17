@@ -133,3 +133,7 @@ class VehicleFilterForm(forms.Form):
     reverse_camera = forms.BooleanField(required=False, widget=forms.CheckboxInput(attrs={'class': 'form-check-input'}))
     sunroof = forms.BooleanField(required=False, widget=forms.CheckboxInput(attrs={'class': 'form-check-input'}))
     leather_seats = forms.BooleanField(required=False, widget=forms.CheckboxInput(attrs={'class': 'form-check-input'}))
+
+class VehicleComparisonForm(forms.Form):
+    vehicle1 = forms.ModelChoiceField(queryset=Vehicle.objects.all(), label='Select Vehicle 1')
+    vehicle2 = forms.ModelChoiceField(queryset=Vehicle.objects.all(), label='Select Vehicle 2')

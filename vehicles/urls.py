@@ -23,8 +23,9 @@ urlpatterns = [
     path('blog2/', views.blog2, name='blog2'),
     path('services/', views.services, name='services'),
     path('contact/', views.contact, name='contact'),
-    path('compare/', views.compare, name='compare'),
+    path('compare/', views.compare_vehicles, name='compare_vehicles'),
     path('filter/', filter_vehicles, name='filter_vehicles'),
     path('all-listings/', views.all_listings, name='all_listings'),
     path('all_listings/search/', views.search_listings, name='search_listings'),
+
 ]

@@ -15,6 +15,7 @@ from bids.forms import BidForm
 from django.utils import timezone
 from datetime import timedelta
 from .forms import VehicleFilterForm
+from .forms import VehicleComparisonForm
 
 def index(request):
     return render(request, 'vehicles/vehicle_listing.html')
@@ -346,3 +347,29 @@ def search_listings(request):
         'all_listings': all_listings
     }
     return render(request, 'vehicles/all_listings.html', context)
+
+
+def compare_vehicles(request):
+    form = VehicleComparisonForm(request.POST or None)
+    compared_data = None
+    vehicle1 = vehicle2 = None
+
+    if request.method == 'POST' and form.is_valid():
+        vehicle1 = form.cleaned_data['vehicle1']
+        vehicle2 = form.cleaned_data['vehicle2']
+
+        # Prepare data for comparison
+        compared_data = []
+        for field in vehicle1._meta.fields:
+            field_name = field.verbose_name.capitalize()
+            value1 = getattr(vehicle1, field.name)
+            value2 = getattr(vehicle2, field.name)
+            compared_data.append((field_name, value1, value2))
+
+    context = {
+        'form': form,
+        'vehicle1': vehicle1,
+        'vehicle2': vehicle2,
+        'compared_data': compared_data,
+    }
+    return render(request, 'vehicles/compare_vehicles.html', context)
