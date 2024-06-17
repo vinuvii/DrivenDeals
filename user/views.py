@@ -16,6 +16,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse_lazy
 from vehicles.models import Vehicle
 from django.contrib.auth.decorators import login_required
+from .models import UserWatchlistItem
 
 def index(request):
     return render(request, 'user/profile.html')
@@ -37,6 +38,11 @@ def edit_profile(request):
         form = UserProfileForm(instance=user_profile)
     return render(request, 'user/edit_profile.html', {'form': form})
 
+@login_required
+def my_watchlist(request):
+    watchlist_items = UserWatchlistItem.objects.filter(user=request.user).select_related('vehicle')
+    context = {'listings': [item.vehicle for item in watchlist_items]}
+    return render(request, 'user/watchlist.html', context)
 
 @login_required
 def add_to_watchlist(request, vehicle_id):
@@ -54,7 +60,7 @@ def remove_from_watchlist(request, vehicle_id):
 def my_watchlist(request):
     watchlist_items = Watchlist.objects.filter(user=request.user).select_related('vehicle')
     context = {'listings': [item.vehicle for item in watchlist_items]}
-    return render(request, 'user/watchlist.html', context)
+    return render(request, 'watchlist.html', context)
 
 @login_required
 def my_listings(request):
