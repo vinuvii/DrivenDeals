@@ -1,6 +1,8 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout as auth_logout
+
+from bids.models import Bid
 from .forms import UserProfileForm
 from .models import UserProfile
 from django.contrib import messages
@@ -144,21 +146,31 @@ def login_view(request):
     return render(request, 'user/login.html', {'form': form, 'error_message': error_message, 'next': next_url})
 
 
-# @login_required
-# def user_vehicle_list(request):
-#     user_id = request.user.id
-#     debug_info = []  # List to collect debug information
-#
-#     try:
-#         vehicles = Vehicle.objects.filter(seller_id=user_id)
-#         debug_info.append(f"Fetched vehicles: {list(vehicles)}")
-#         debug_info.append(f"Logged in user id: {user_id}")
-#     except Vehicle.DoesNotExist:
-#         debug_info.append("No vehicles found for user")
-#         vehicles = []
-#
-#     context = {
-#         'vehicles': vehicles,
-#         'debug_info': debug_info  # Pass debug information to template
-#     }
-#     return render(request, 'users/my_listings.html', context)
+@login_required
+def my_listings_view(request):
+    user_id = request.user.id
+    debug_info = []  # List to collect debug information
+
+    try:
+        vehicles = Vehicle.objects.filter(seller_id=user_id)
+        debug_info.append(f"Fetched vehicles: {list(vehicles)}")
+        debug_info.append(f"Logged in user id: {user_id}")
+    except Vehicle.DoesNotExist:
+        debug_info.append("No vehicles found for user")
+        vehicles = []
+
+    context = {
+        'vehicles': vehicles,
+        'debug_info': debug_info
+    }
+    return render(request, 'user/my_listings.html', context)
+
+@login_required
+def my_bids_view(request):
+    user = request.user
+    bids = Bid.objects.filter(user=user)
+
+    context = {
+        'bids': bids
+    }
+    return render(request, 'user/my_bids.html', context)

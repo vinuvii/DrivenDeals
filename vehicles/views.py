@@ -150,34 +150,7 @@ def watchlist_view(request):
     # Logic to fetch data for watchlist if needed
     return render(request, 'user/watchlist.html')
 
-@login_required
-def my_listings_view(request):
-    user_id = request.user.id
-    debug_info = []  # List to collect debug information
 
-    try:
-        vehicles = Vehicle.objects.filter(seller_id=user_id)
-        debug_info.append(f"Fetched vehicles: {list(vehicles)}")
-        debug_info.append(f"Logged in user id: {user_id}")
-    except Vehicle.DoesNotExist:
-        debug_info.append("No vehicles found for user")
-        vehicles = []
-
-    context = {
-        'vehicles': vehicles,
-        'debug_info': debug_info
-    }
-    return render(request, 'user/my_listings.html', context)
-
-@login_required
-def my_bids_view(request):
-    user = request.user
-    bids = Bid.objects.filter(user=user)
-
-    context = {
-        'bids': bids
-    }
-    return render(request, 'user/my_bids.html', context)
 
 @login_required
 def edit_profile_view(request):
