@@ -171,8 +171,13 @@ def my_listings_view(request):
 
 @login_required
 def my_bids_view(request):
-    # Logic to fetch data for user's bids if needed
-    return render(request, 'user/my_bids.html')
+    user = request.user
+    bids = Bid.objects.filter(user=user)
+
+    context = {
+        'bids': bids
+    }
+    return render(request, 'user/my_bids.html', context)
 
 @login_required
 def edit_profile_view(request):
