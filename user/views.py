@@ -40,35 +40,29 @@ def edit_profile(request):
         form = UserProfileForm(instance=user_profile)
     return render(request, 'user/edit_profile.html', {'form': form})
 
-@login_required
-def my_watchlist(request):
-    watchlist_items = UserWatchlistItem.objects.filter(user=request.user).select_related('vehicle')
-    context = {'listings': [item.vehicle for item in watchlist_items]}
-    return render(request, 'user/watchlist.html', context)
-
-@login_required
-def add_to_watchlist(request, vehicle_id):
-    vehicle = get_object_or_404(Vehicle, id=vehicle_id)
-    Watchlist.objects.get_or_create(user=request.user, vehicle=vehicle)
-    return redirect('my_watchlist')
-
-@login_required
-def remove_from_watchlist(request, vehicle_id):
-    vehicle = get_object_or_404(Vehicle, id=vehicle_id)
-    Watchlist.objects.filter(user=request.user, vehicle=vehicle).delete()
-    return redirect('my_watchlist')
-
-@login_required
-def my_watchlist(request):
-    watchlist_items = Watchlist.objects.filter(user=request.user).select_related('vehicle')
-    context = {'listings': [item.vehicle for item in watchlist_items]}
-    return render(request, 'watchlist.html', context)
-
 # @login_required
-# def my_listings(request):
-#     user_profile = get_object_or_404(UserProfile, user=request.user)
-#     listings = Listing.objects.filter(user=request.user)  # Fetch the user's listings
-#     return render(request, 'user/my_listings.html', {'listings': listings})
+# def my_watchlist(request):
+#     watchlist_items = UserWatchlistItem.objects.filter(user=request.user).select_related('vehicle')
+#     context = {'listings': [item.vehicle for item in watchlist_items]}
+#     return render(request, 'user/watchlist.html', context)
+#
+# @login_required
+# def add_to_watchlist(request, vehicle_id):
+#     vehicle = get_object_or_404(Vehicle, id=vehicle_id)
+#     Watchlist.objects.get_or_create(user=request.user, vehicle=vehicle)
+#     return redirect('my_watchlist')
+#
+# @login_required
+# def remove_from_watchlist(request, vehicle_id):
+#     vehicle = get_object_or_404(Vehicle, id=vehicle_id)
+#     Watchlist.objects.filter(user=request.user, vehicle=vehicle).delete()
+#       return redirect('my_watchlist')
+#
+# @login_required
+# def my_watchlist(request):
+#     watchlist_items = Watchlist.objects.filter(user=request.user).select_related('vehicle')
+#     context = {'listings': [item.vehicle for item in watchlist_items]}
+#     return render(request, 'watchlist.html', context)
 
 @login_required
 def my_bids(request):
@@ -174,3 +168,53 @@ def my_bids_view(request):
         'bids': bids
     }
     return render(request, 'user/my_bids.html', context)
+
+
+
+from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
+from django.views.decorators.http import require_POST
+from .models import Watchlist
+from vehicles.models import Vehicle
+from .forms import UserProfileForm
+from django.contrib import messages
+from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth import views as auth_views
+from bids.models import Bid
+from .models import UserProfile
+
+@login_required
+@require_POST
+def add_to_watchlist(request, vehicle_id):
+    vehicle = get_object_or_404(Vehicle, id=vehicle_id)
+    Watchlist.objects.get_or_create(user=request.user, vehicle=vehicle)
+    return redirect('watchlist')
+
+
+@login_required
+@require_POST
+def remove_from_watchlist(request, vehicle_id):
+    vehicle = get_object_or_404(Vehicle, id=vehicle_id)
+    watchlist_item = Watchlist.objects.filter(user=request.user, vehicle=vehicle)
+
+    if watchlist_item.exists():
+        watchlist_item.delete()
+        # Return JSON response indicating successful removal
+        return JsonResponse({'removed': True})
+    else:
+        # Return JSON response indicating failure (though this should not normally happen if proper checks are in place)
+        return JsonResponse({'removed': False, 'error': 'Item not found in watchlist'}, status=404)
+
+@login_required
+@require_POST
+def toggle_watchlist(request, vehicle_id):
+    vehicle = get_object_or_404(Vehicle, id=vehicle_id)
+    watchlist_item, created = Watchlist.objects.get_or_create(user=request.user, vehicle=vehicle)
+
+    if not created:
+        watchlist_item.delete()
+        return JsonResponse({'added': False})
+    else:
+        return JsonResponse({'added': True})
+

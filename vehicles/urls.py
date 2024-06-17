@@ -2,6 +2,7 @@ from django.urls import path
 from . import views
 from .views import filter_vehicles
 
+
 urlpatterns = [
     path('', views.home, name='home'),
     #path('signup/', views.signup_view, name='signup'),

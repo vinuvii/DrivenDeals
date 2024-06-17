@@ -2,6 +2,8 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 from django.contrib import messages  # Import messages
 from django.contrib.auth.decorators import login_required
+
+from user.models import Watchlist
 from .models import Vehicle
 from .forms import VehicleForm
 from django.urls import reverse
@@ -147,9 +149,11 @@ def home(request):
 
 @login_required
 def watchlist_view(request):
-    # Logic to fetch data for watchlist if needed
-    return render(request, 'user/watchlist.html')
-
+    watchlist_items = Watchlist.objects.filter(user=request.user).select_related('vehicle')
+    context = {
+        'watchlist_items': watchlist_items
+    }
+    return render(request, 'user/watchlist.html', context)
 
 
 @login_required

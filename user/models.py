@@ -54,16 +54,13 @@ class Listing(models.Model):
     def get_absolute_url(self):
         return reverse('listing_detail', kwargs={'pk': self.pk})
 
+
 class Watchlist(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     vehicle = models.ForeignKey(Vehicle, on_delete=models.CASCADE)
-    added_at = models.DateTimeField(auto_now_add=True)
-
-    class Meta:
-        unique_together = ('user', 'vehicle')
 
     def __str__(self):
-        return f"{self.user.username} - {self.vehicle.make} {self.vehicle.model}"
+        return f"{self.user.id} is watching {self.vehicle.id} {self.vehicle.model}"
 
 class UserWatchlistItem(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
