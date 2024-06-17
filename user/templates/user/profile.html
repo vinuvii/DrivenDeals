@@ -16,6 +16,7 @@
             background-color: #797979;
             color: #FFFFFF;
             font-family: Arial, sans-serif;
+            overflow: hidden; /* Prevents body scrolling */
         }
         .container {
             background-color: #adadad;
@@ -25,6 +26,8 @@
             width: 100%;
             max-width: 600px;
             text-align: center;
+            overflow-y: auto; /* Adds vertical scrollbar if content overflows */
+            max-height: 100vh; /* Limits container height to viewport height */
         }
         h1 {
             margin-bottom: 20px;
@@ -119,6 +122,7 @@
     </script>
 </body>
 </html>
+
 
 
 
