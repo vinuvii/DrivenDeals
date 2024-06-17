@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block extra_head %}
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        form select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background-color: #f8f9fa;
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+        form button {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 4px;
+            background-color: #de483d;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        form button:hover {
+            background-color: #c02f24;
+        }
+        .car-listings-heading {
+        font-size: 36px;
+        text-align: center;
+        margin-bottom: 20px; /* Space below the heading */
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div class="container content">
+        <h1 class="car-listings-heading">Compare Vehicles</h1>
+
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Compare</button>
+        </form>
+
+        {% if compared_data %}
+        <hr>
+        <h2 class="car-listings-heading">Comparison Results</h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Attribute</th>
+                    <th>{{ vehicle1 }}</th>
+                    <th>{{ vehicle2 }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for field_name, value1, value2 in compared_data %}
+                <tr>
+                    <td>{{ field_name }}</td>
+                    <td>{{ value1 }}</td>
+                    <td>{{ value2 }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
+    </div>
+{% endblock %}
+

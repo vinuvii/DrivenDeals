@@ -14,7 +14,8 @@ from bids.models import Bid
 from bids.forms import BidForm
 from django.utils import timezone
 from datetime import timedelta
-
+from .forms import VehicleFilterForm
+from .forms import VehicleComparisonForm
 
 def index(request):
     return render(request, 'vehicles/vehicle_listing.html')
@@ -250,47 +251,70 @@ def filter(request):
     context = {
         'vehicles': vehicles
     }
-    return render(request, 'vehicles/filter.html', context)
+    return render(request, 'vehicles/filter_vehicles.html', context)
+
+
 
 def filter_vehicles(request):
-    make = request.GET.get('make')
-    # Add more filters as needed (e.g., model, year, transmission_type)
+    form = VehicleFilterForm(request.GET)
+    vehicles = Vehicle.objects.all()
 
-    # Filtering based on selected criteria
-    filtered_vehicles = Vehicle.objects.all()
-    if make:
-        filtered_vehicles = filtered_vehicles.filter(make=make)
-    # Add more filtering conditions as per other criteria
+    if form.is_valid():
+        if form.cleaned_data['make']:
+            vehicles = vehicles.filter(make=form.cleaned_data['make'])
+        if form.cleaned_data['year_min'] is not None:
+            vehicles = vehicles.filter(year__gte=form.cleaned_data['year_min'])
+        if form.cleaned_data['year_max'] is not None:
+            vehicles = vehicles.filter(year__lte=form.cleaned_data['year_max'])
+        if form.cleaned_data['body_type']:
+            vehicles = vehicles.filter(body_type=form.cleaned_data['body_type'])
+        if form.cleaned_data['color']:
+            vehicles = vehicles.filter(color__icontains=form.cleaned_data['color'])
 
-    # Serialize vehicles and their price (assuming price is a field in Vehicle model)
-    filtered_data = []
-    for vehicle in filtered_vehicles:
-        vehicle_data = {
-            'make': vehicle.make,
-            'model': vehicle.model,
-            'year': vehicle.year,
-            'body_type': vehicle.body_type,
-            'no_of_seats': vehicle.no_of_seats,
-            'transmission_type': vehicle.transmission_type,
-            'fuel_type': vehicle.fuel_type,
-            'engine_capacity': vehicle.engine_capacity,
-            'engine_type': vehicle.engine_type,
-            'abs_breaks': vehicle.abs_breaks,
-            'alloy_wheels': vehicle.alloy_wheels,
-            'airbags': vehicle.airbags,
-            'air_conditioning': vehicle.air_conditioning,
-            'power_steering': vehicle.power_steering,
-            'power_windows': vehicle.power_windows,
-            'central_locking': vehicle.central_locking,
-            'reverse_camera': vehicle.reverse_camera,
-            'leather_seats': vehicle.leather_seats,
-            'sunroof': vehicle.sunroof,
-            'price': vehicle.price  # Include price field
-            # Add more fields as needed
-        }
-        filtered_data.append(vehicle_data)
+        if form.cleaned_data['price_min'] is not None:
+            vehicles = vehicles.filter(price__gte=form.cleaned_data['price_min'])
+        if form.cleaned_data['price_max'] is not None:
+            vehicles = vehicles.filter(price__lte=form.cleaned_data['price_max'])
 
-    return JsonResponse(filtered_data, safe=False)
+        if form.cleaned_data['mileage_min'] is not None:
+            vehicles = vehicles.filter(mileage__gte=form.cleaned_data['mileage_min'])
+        if form.cleaned_data['mileage_max'] is not None:
+            vehicles = vehicles.filter(mileage__lte=form.cleaned_data['mileage_max'])
+
+        if form.cleaned_data['engine_capacity_min'] is not None:
+            vehicles = vehicles.filter(engine_capacity__gte=form.cleaned_data['engine_capacity_min'])
+        if form.cleaned_data['engine_capacity_max'] is not None:
+            vehicles = vehicles.filter(engine_capacity__lte=form.cleaned_data['engine_capacity_max'])
+
+        if form.cleaned_data['transmission_type']:
+            vehicles = vehicles.filter(transmission_type=form.cleaned_data['transmission_type'])
+        if form.cleaned_data['fuel_type']:
+            vehicles = vehicles.filter(fuel_type=form.cleaned_data['fuel_type'])
+        if form.cleaned_data['engine_type']:
+            vehicles = vehicles.filter(engine_type=form.cleaned_data['engine_type'])
+
+        if form.cleaned_data['abs_breaks']:
+            vehicles = vehicles.filter(abs_breaks=form.cleaned_data['abs_breaks'])
+        if form.cleaned_data['alloy_wheels']:
+            vehicles = vehicles.filter(alloy_wheels=form.cleaned_data['alloy_wheels'])
+        if form.cleaned_data['airbags']:
+            vehicles = vehicles.filter(airbags=form.cleaned_data['airbags'])
+        if form.cleaned_data['air_conditioning']:
+            vehicles = vehicles.filter(air_conditioning=form.cleaned_data['air_conditioning'])
+        if form.cleaned_data['power_steering']:
+            vehicles = vehicles.filter(power_steering=form.cleaned_data['power_steering'])
+        if form.cleaned_data['power_windows']:
+            vehicles = vehicles.filter(power_windows=form.cleaned_data['power_windows'])
+        if form.cleaned_data['central_locking']:
+            vehicles = vehicles.filter(central_locking=form.cleaned_data['central_locking'])
+        if form.cleaned_data['reverse_camera']:
+            vehicles = vehicles.filter(reverse_camera=form.cleaned_data['reverse_camera'])
+        if form.cleaned_data['sunroof']:
+            vehicles = vehicles.filter(sunroof=form.cleaned_data['sunroof'])
+        if form.cleaned_data['leather_seats']:
+            vehicles = vehicles.filter(leather_seats=form.cleaned_data['leather_seats'])
+
+    return render(request, 'vehicles/filter_vehicles.html', {'form': form, 'vehicles': vehicles})
 
 
 def all_listings(request):
@@ -323,3 +347,29 @@ def search_listings(request):
         'all_listings': all_listings
     }
     return render(request, 'vehicles/all_listings.html', context)
+
+
+def compare_vehicles(request):
+    form = VehicleComparisonForm(request.POST or None)
+    compared_data = None
+    vehicle1 = vehicle2 = None
+
+    if request.method == 'POST' and form.is_valid():
+        vehicle1 = form.cleaned_data['vehicle1']
+        vehicle2 = form.cleaned_data['vehicle2']
+
+        # Prepare data for comparison
+        compared_data = []
+        for field in vehicle1._meta.fields:
+            field_name = field.verbose_name.capitalize()
+            value1 = getattr(vehicle1, field.name)
+            value2 = getattr(vehicle2, field.name)
+            compared_data.append((field_name, value1, value2))
+
+    context = {
+        'form': form,
+        'vehicle1': vehicle1,
+        'vehicle2': vehicle2,
+        'compared_data': compared_data,
+    }
+    return render(request, 'vehicles/compare_vehicles.html', context)
