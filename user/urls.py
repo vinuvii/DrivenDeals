@@ -3,6 +3,9 @@ from . import views
 from .views import add_to_watchlist, remove_from_watchlist, my_watchlist
 
 urlpatterns = [
+    path('my_listings/', views.my_listings_view, name='my_listings'),
+    path('my_bids/', views.my_bids_view, name='my_bids'),
+
     path('login/', views.login_view, name='login'),
     path('signup/', views.signup_view, name='signup'),
     path('logout/', views.logout_view, name='logout'),
@@ -14,8 +17,8 @@ urlpatterns = [
     path('add_to_watchlist/<int:vehicle_id>/', add_to_watchlist, name='add_to_watchlist'),
     path('remove_from_watchlist/<int:vehicle_id>/', remove_from_watchlist, name='remove_from_watchlist'),
     path('my_watchlist/', my_watchlist, name='my_watchlist'),
-    path('my-listings/', views.my_listings, name='my_listings'),
-    path('my-bids/', views.my_bids, name='my_bids'),
+    #path('my-listings/', views.my_listings, name='my_listings'),
+    #path('my-bids/', views.my_bids, name='my_bids'),
     path('logout/confirmation/', views.logout_confirmation, name='logout_confirmation'),
     path('logout/', views.logout_view, name='logout'),
     path('login/', views.custom_login, name='login'),

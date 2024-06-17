@@ -8,8 +8,7 @@ urlpatterns = [
     path('submit-form/', views.submit_form, name='submit_form'),
     path('vehicle-listing/', views.add_vehicle, name='vehicle_listing'),
     path('watchlist/', views.watchlist_view, name='watchlist'),
-    path('my_listings/', views.my_listings_view, name='my_listings'),
-    path('my_bids/', views.my_bids_view, name='my_bids'),
+
     path('edit_profile/', views.edit_profile_view, name='edit_profile'),
     path('index/', views.index, name='index'),  # Example path for index
     path('vehicle_detail/<int:vehicle_id>/', views.vehicle_detail, name='vehicle_detail'),

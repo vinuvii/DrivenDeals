@@ -150,15 +150,7 @@ def watchlist_view(request):
     # Logic to fetch data for watchlist if needed
     return render(request, 'user/watchlist.html')
 
-@login_required
-def my_listings_view(request):
-    # Logic to fetch data for user's listings if needed
-    return render(request, 'user/my_listings.html')
 
-@login_required
-def my_bids_view(request):
-    # Logic to fetch data for user's bids if needed
-    return render(request, 'user/my_bids.html')
 
 @login_required
 def edit_profile_view(request):
