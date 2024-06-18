@@ -805,7 +805,7 @@
                 </button>
             {% endif %}
 
-                {% if auction_ended %}
+            {% if auction_ended %}
                 <button class="btn btn-outline-secondary btn-custom" id="auctionEndedButton" disabled>Auction Ended</button>
             {% else %}
                 <button class="btn btn-primary btn-custom" id="placeBidButton">Place Bid</button>
@@ -984,10 +984,9 @@
         </div>
     </div>
 
+        <div class="vehicle-description-card">
+          <div class="seller-description-card">
 
-
-
-    <div class="col-md-5">
         <div class="col-md-5">
 
             <div>
@@ -1006,26 +1005,15 @@
                     {% endif %}
                 </div>
             {% if auction_ended %}
-                <button class="btn btn-outline-secondary btn-custom" disabled>Auction Ended</button>
+                <button class="btn btn-outline-secondary btn-custom" id="auctionEndedButton" disabled>Auction Ended</button>
             {% else %}
                 <button class="btn btn-primary btn-custom" id="placeBidButton">Place Bid</button>
             {% endif %}
-            {% if user.is_authenticated %}
-                <button class="btn btn-outline-secondary btn-custom" id="watchlistButton"
-                    data-vehicle-id="{{ vehicle.id }}">
-                    {% if vehicle in user.watchlist_set.all %}
-                        <i class="fas fa-check"></i> Added to Watchlist
-                    {% else %}
-                        <i class="far fa-star"></i> Add to Watchlist
-                    {% endif %}
-                </button>
-            {% endif %}
+
         </div>
     </div>
 
       </div>
-
-
 
   </div>
 
