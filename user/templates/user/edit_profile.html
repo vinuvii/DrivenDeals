@@ -17,7 +17,7 @@
         font-size: 16px;
     }
     .form-control {
-        width: 80%;
+        width: 100%;
         padding: 10px;
         margin-bottom: 10px;
         border: 1px solid #ccc;
@@ -45,49 +45,72 @@
         margin-bottom: 20px;
         color: #333;
     }
+    /* Additional styles for readonly mode */
+    .form-control[readonly] {
+        background-color: #f0f0f0;
+    }
 </style>
 {% endblock %}
 
 {% block content %}
-    <h1 class="car-listings-heading">Edit Profile</h1>
-    <form method="post" action="{% url 'edit_profile' %}">
-        {% csrf_token %}
-        <div class="form-group">
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username" value="{{ user_profile.user.username }}" class="form-control" readonly>
-        </div>
-        <div class="form-group">
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" value="{{ form.email.value }}" class="form-control">
-        </div>
-        <div class="form-group">
-            <label for="first_name">First Name:</label>
-            <input type="text" id="first_name" name="first_name" value="{{ form.first_name.value }}" class="form-control">
-        </div>
-        <div class="form-group">
-            <label for="last_name">Last Name:</label>
-            <input type="text" id="last_name" name="last_name" value="{{ form.last_name.value }}" class="form-control">
-        </div>
-        <div class="form-group">
-            <label for="mobile_number">Mobile Number:</label>
-            <input type="text" id="mobile_number" name="mobile_number" value="{{ form.mobile_number.value }}" class="form-control">
-        </div>
-        <div class="form-group">
-            <label for="postal_code">Postal Code:</label>
-            <input type="text" id="postal_code" name="postal_code" value="{{ form.postal_code.value }}" class="form-control">
-        </div>
-        <div class="form-group">
-            <label for="trading_address">Trading Address:</label>
-            <input type="text" id="trading_address" name="trading_address" value="{{ form.trading_address.value }}" class="form-control">
-        </div>
-        <button type="submit" class="btn btn-primary">Save Changes</button>
-        <a href="{% url 'profile' %}" class="btn btn-secondary">Back to Profile</a>
-    </form>
-{% endblock %}
+<h1 class="car-listings-heading">Edit Profile</h1>
 
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+    <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="true">Profile</button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <a class="nav-link" id="watchlist-tab" href="{% url 'watchlist' %}" role="tab" aria-controls="watchlist" aria-selected="false">Watchlist</a>
+    </li>
+    <li class="nav-item" role="presentation">
+        <a class="nav-link" id="my-listings-tab" href="{% url 'my_listings' %}" role="tab" aria-controls="my-listings" aria-selected="false">My Listings</a>
+    </li>
+    <li class="nav-item" role="presentation">
+        <a class="nav-link" id="my-bids-tab" href="{% url 'my_bids' %}" role="tab" aria-controls="my-bids" aria-selected="false">My Bids</a>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="logout-tab" onclick="confirmLogout()" role="tab" aria-controls="logout" aria-selected="false">Log Out</button>
+    </li>
+</ul>
+<div class="tab-content" id="myTabContent">
+    <div class="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+        <div class="card mt-4">
 
-
-
-
-
-
+            <div class="card-body">
+                <button id="edit-toggle-btn" class="btn btn-secondary mt-3">Edit Profile</button>
+                <form id="profile-edit-form" method="post" action="{% url 'edit_profile' %}">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="username">Username:</label>
+                        <input type="text" id="username" name="username" value="{{ user.username }}" class="form-control" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" name="email" value="{{ user.email }}" class="form-control" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="first_name">First Name:</label>
+                        <input type="text" id="first_name" name="first_name" value="{{ user.first_name }}" class="form-control" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="last_name">Last Name:</label>
+                        <input type="text" id="last_name" name="last_name" value="{{ user.last_name }}" class="form-control" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="mobile_number">Mobile Number:</label>
+                        <input type="text" id="mobile_number" name="mobile_number" value="{{ user.mobile_number }}" class="form-control" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="postal_code">Postal Code:</label>
+                        <input type="text" id="postal_code" name="postal_code" value="{{ user.postal_code }}" class="form-control" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="trading_address">Trading Address:</label>
+                        <input type="text" id="trading_address" name="trading_address" value="{{ user.trading_address }}" class="form-control" readonly>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="display: none;">Save Changes</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
