@@ -1,15 +1,12 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
-from django.contrib import messages  # Import messages
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-
 from user.models import Watchlist
-from .models import Vehicle
 from .forms import VehicleForm
 from django.urls import reverse
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
-from .models import Vehicle
 from django.db.models import Q
 from vehicles.models import Vehicle
 from bids.models import Bid
@@ -40,7 +37,6 @@ def list_vehicle(request):
 
 def vehicle_success(request):
     return render(request, 'vehicles/vehicle_success.html')
-
 
 def update_bids_table(vehicle):
     auction_ended = timezone.now() > vehicle.posted_date + timedelta(days=7)
@@ -114,11 +110,7 @@ def vehicle_detail(request, vehicle_id):
 
 
 def update_expired_bids():
-    """
-    Update bid statuses for expired bids.
-    For each vehicle, classify bids, mark the highest bid as accepted, and others as rejected.
-    """
-    # Get all bids with expired expiry_date
+
     expired_bids = Bid.objects.filter(expiry_date__lte=timezone.now())
 
     for bid in expired_bids:
@@ -155,12 +147,6 @@ def watchlist_view(request):
     }
     return render(request, 'user/watchlist.html', context)
 
-#
-# @login_required
-# def edit_profile_view(request):
-#     # Logic to fetch data for user's bids if needed
-#     return render(request, 'user/edit_profile.html')
-
 @login_required
 def vehicle_listing_view(request):
     # Logic to fetch data for user's bids if needed
@@ -190,12 +176,6 @@ def submit_form(request):
     else:
         return JsonResponse({'status': 'error', 'errors': 'Invalid request'})
 
-
-from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required
-from .forms import VehicleForm
-
-
 @login_required
 def add_vehicle(request):
     if request.method == 'POST':
@@ -210,11 +190,6 @@ def add_vehicle(request):
         form = VehicleForm(seller=request.user)
 
     return render(request, 'vehicles/vehicle_listing.html', {'form': form})
-
-
-
-
-
 
 def about(request):
     return render(request, 'vehicles/about.html')
@@ -248,8 +223,6 @@ def filter(request):
         'vehicles': vehicles
     }
     return render(request, 'vehicles/filter_vehicles.html', context)
-
-
 
 def filter_vehicles(request):
     form = VehicleFilterForm(request.GET)

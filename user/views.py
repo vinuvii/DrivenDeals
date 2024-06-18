@@ -12,33 +12,14 @@ from django.contrib.auth import logout as auth_logout
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from .models import Listing
-#from .models import UserProfile
 from .models import Watchlist
 from django.contrib.auth.models import User
 from .forms import UserLoginForm, UserRegistrationForm
 from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse_lazy
-#from .models import UserWatchlistItem
 
 def index(request):
     return render(request, 'user/profile.html')
-
-# @login_required
-# def profile(request):
-#     user_profile = get_object_or_404(UserProfile, user=request.user)
-#     return render(request, 'user/profile.html', {'user_profile': user_profile})
-
-# @login_required
-# def edit_profile(request):
-#     user_profile = get_object_or_404(UserProfile, user=request.user)
-#     if request.method == 'POST':
-#         form = UserProfileForm(request.POST, instance=user_profile)
-#         if form.is_valid():
-#             form.save()
-#             return redirect('profile')
-#     else:
-#         form = UserProfileForm(instance=user_profile)
-#     return render(request, 'user/edit_profile.html', {'form': form})
 
 @login_required
 def my_bids(request):
@@ -162,22 +143,15 @@ def toggle_watchlist(request, vehicle_id):
     else:
         return JsonResponse({'added': True})
 
-
 @login_required
 def edit_profile_view(request):
-    user = request.user  # Assuming user is logged in
+    user = request.user
     if request.method == 'POST':
         form = UserProfileForm(request.POST, instance=user)
         if form.is_valid():
             form.save()
-            return redirect('edit_profile')  # Redirect to profile page after successful save
+            return redirect('edit_profile')
     else:
         form = UserProfileForm(instance=user)
 
     return render(request, 'user/edit_profile.html', {'form': form})
-
-#
-# @login_required
-# def edit_profile_view(request):
-#     # Logic to fetch data for user's bids if needed
-#     return render(request, 'user/edit_profile.html')
