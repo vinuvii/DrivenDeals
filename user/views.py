@@ -228,3 +228,10 @@ def toggle_watchlist(request, vehicle_id):
     else:
         return JsonResponse({'added': True})
 
+def home_view(request):
+    # your home view logic
+    return render(request, 'home.html', {})
+
+
+
+
