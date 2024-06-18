@@ -12,7 +12,7 @@ urlpatterns = [
     path('redirect-to-login/', views.redirect_to_login, name='redirect_to_login'),
 
     path('', views.index, name='index'),
-    path('profile/', views.profile, name='profile'),
+    #path('profile/', views.profile, name='profile'),
 
     path('add_to_watchlist/<int:vehicle_id>/', views.add_to_watchlist, name='add_to_watchlist'),
     path('remove_from_watchlist/<int:vehicle_id>/', views.remove_from_watchlist, name='remove_from_watchlist'),
@@ -24,5 +24,6 @@ urlpatterns = [
     path('login/', views.custom_login, name='login'),
     #path('register/', views.register, name='register'),
     path('listing/<int:pk>/', views.listing_detail, name='listing_detail'),
-    path('edit_profile/', views.edit_profile, name='edit_profile'),
+    #path('edit_profile/', views.edit_profile, name='edit_profile'),
+    path('edit_profile/', views.edit_profile_view, name='edit_profile'),
 ]

@@ -155,11 +155,11 @@ def watchlist_view(request):
     }
     return render(request, 'user/watchlist.html', context)
 
-
-@login_required
-def edit_profile_view(request):
-    # Logic to fetch data for user's bids if needed
-    return render(request, 'user/edit_profile.html')
+#
+# @login_required
+# def edit_profile_view(request):
+#     # Logic to fetch data for user's bids if needed
+#     return render(request, 'user/edit_profile.html')
 
 @login_required
 def vehicle_listing_view(request):

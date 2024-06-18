@@ -10,7 +10,7 @@ urlpatterns = [
     path('vehicle-listing/', views.add_vehicle, name='vehicle_listing'),
     path('watchlist/', views.watchlist_view, name='watchlist'),
 
-    path('edit_profile/', views.edit_profile_view, name='edit_profile'),
+    #path('edit_profile/', views.edit_profile_view, name='edit_profile'),
     path('index/', views.index, name='index'),  # Example path for index
     path('vehicle_detail/<int:vehicle_id>/', views.vehicle_detail, name='vehicle_detail'),
     path('list/', views.list_vehicle, name='list_vehicle'),
