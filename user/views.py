@@ -28,17 +28,19 @@ def profile(request):
     user_profile = get_object_or_404(UserProfile, user=request.user)
     return render(request, 'user/profile.html', {'user_profile': user_profile})
 
+
 @login_required
 def edit_profile(request):
-    user_profile = get_object_or_404(UserProfile, user=request.user)
     if request.method == 'POST':
-        form = UserProfileForm(request.POST, instance=user_profile)
+        form = ProfileForm(request.POST, instance=request.user.profile)
         if form.is_valid():
             form.save()
-            return redirect('profile')
+            messages.success(request, 'Your profile has been successfully updated.')
+            return redirect('profile')  # Change 'profile' to the name of your profile URL
     else:
-        form = UserProfileForm(instance=user_profile)
-    return render(request, 'user/edit_profile.html', {'form': form})
+        form = ProfileForm(instance=request.user.profile)
+
+    return render(request, 'edit_profile.html', {'form': form})
 
 # @login_required
 # def my_watchlist(request):
