@@ -81,7 +81,7 @@
         {% if error_message %}
             <p class="error-message">{{ error_message }}</p>
         {% endif %}
-        <p>Don't have an account? <a href="{% url 'signup' %}">Sign Up</a></p>
+        <p>Don't have an account? <a href="{% url 'signup' %}?next={{ next }}">Sign Up</a></p>
         <form method="post">
             {% csrf_token %}
             <input type="hidden" name="next" value="{{ next }}" />
