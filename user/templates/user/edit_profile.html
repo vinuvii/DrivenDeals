@@ -114,3 +114,51 @@
         </div>
     </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
+<script>
+    function confirmLogout() {
+        const result = confirm("Are you sure you want to logout?");
+        if (result) {
+            window.location.href = "{% url 'logout' %}";
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const editToggleBtn = document.getElementById('edit-toggle-btn');
+        const form = document.getElementById('profile-edit-form');
+        const formInputs = form.querySelectorAll('input[type="text"], input[type="email"]');
+        const submitBtn = form.querySelector('button[type="submit"]');
+        let isEditing = false;
+
+        editToggleBtn.addEventListener('click', function() {
+            isEditing = !isEditing;
+
+            if (isEditing) {
+                editToggleBtn.setAttribute('disabled', 'disabled');
+                submitBtn.style.display = 'inline-block';
+
+                // Enable editing
+                formInputs.forEach(function(input) {
+                    input.removeAttribute('readonly');
+                    input.classList.remove('form-control-readonly');
+                });
+            }
+        });
+
+        submitBtn.addEventListener('click', function() {
+            // After clicking save, revert to non-editable state
+            isEditing = false;
+            editToggleBtn.removeAttribute('disabled');
+            submitBtn.style.display = 'none';
+
+            // Disable editing
+            formInputs.forEach(function(input) {
+                input.setAttribute('readonly', 'readonly');
+                input.classList.add('form-control-readonly');
+            });
+        });
+    });
+</script>
+{% endblock %}
