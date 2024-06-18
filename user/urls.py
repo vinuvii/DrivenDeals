@@ -12,6 +12,7 @@ urlpatterns = [
     path('redirect-to-login/', views.redirect_to_login, name='redirect_to_login'),
 
     path('', views.index, name='index'),
+    path('', views.home_view, name='home'),
     path('profile/', views.profile, name='profile'),
 
     path('add_to_watchlist/<int:vehicle_id>/', views.add_to_watchlist, name='add_to_watchlist'),

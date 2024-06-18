@@ -83,3 +83,5 @@ class UserRegistrationForm(CustomUserCreationForm):
         'placeholder': 'Trading Address',
         'class': 'form-control'
     }))
+
+

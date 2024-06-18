@@ -45,22 +45,11 @@
         margin-bottom: 20px;
         color: #333;
     }
-    .alert {
-        padding: 10px;
-        background-color: #4caf50;
-        color: white;
-        margin-bottom: 15px;
-    }
 </style>
 {% endblock %}
 
 {% block content %}
     <h1 class="car-listings-heading">Edit Profile</h1>
-    {% if messages %}
-        {% for message in messages %}
-            <div class="alert">{{ message }}</div>
-        {% endfor %}
-    {% endif %}
     <form method="post" action="{% url 'edit_profile' %}">
         {% csrf_token %}
         <div class="form-group">
@@ -95,6 +84,7 @@
         <a href="{% url 'profile' %}" class="btn btn-secondary">Back to Profile</a>
     </form>
 {% endblock %}
+
 
 
 

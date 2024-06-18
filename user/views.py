@@ -90,7 +90,7 @@ def signup_view(request):
             user = form.save()
             login(request, user)
             messages.success(request, 'Registration successful!')
-            return redirect('login')
+            return redirect('home')
     else:
         form = UserRegistrationForm()
     return render(request, 'user/signup.html', {'form': form})
@@ -219,4 +219,11 @@ def toggle_watchlist(request, vehicle_id):
         return JsonResponse({'added': False})
     else:
         return JsonResponse({'added': True})
+
+def home_view(request):
+    # your home view logic
+    return render(request, 'home.html', {})
+
+
+
 
