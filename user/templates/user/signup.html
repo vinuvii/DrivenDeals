@@ -73,8 +73,13 @@
             <button type="submit" class="btn btn-primary">Register</button>
         </form>
         <div class="terms">
-            <p>By registering, you agree to our <a href="#">Privacy Policy</a> and <a href="#">Terms of Use</a>.</p>
-        </div>
+        <p>By registering, you agree to our <a href="#">Privacy Policy</a> and <a href="#">Terms of Use</a>.</p>
+        <p>Already have an account? <a href="{% url 'login' %}?next={{ next }}">Log In</a></p>
+        <p>Next URL: {{ next }}</p>
+        {% if error_message %}
+        <p class="error-message">{{ error_message }}</p>
+        {% endif %}
+    </div>
     </div>
 </body>
 {% endblock %}
