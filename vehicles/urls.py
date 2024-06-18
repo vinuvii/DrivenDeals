@@ -5,17 +5,15 @@ from .views import filter_vehicles
 
 urlpatterns = [
     path('', views.home, name='home'),
-    #path('signup/', views.signup_view, name='signup'),
     path('submit-form/', views.submit_form, name='submit_form'),
     path('vehicle-listing/', views.add_vehicle, name='vehicle_listing'),
     path('watchlist/', views.watchlist_view, name='watchlist'),
 
-    path('edit_profile/', views.edit_profile_view, name='edit_profile'),
-    path('index/', views.index, name='index'),  # Example path for index
+    path('index/', views.index, name='index'),
     path('vehicle_detail/<int:vehicle_id>/', views.vehicle_detail, name='vehicle_detail'),
     path('list/', views.list_vehicle, name='list_vehicle'),
     path('success/', views.vehicle_success, name='vehicle_success'),
-    path('submit/', views.list_vehicle, name='submit_listing'),  # Example path for submitting vehicles
+    path('submit/', views.list_vehicle, name='submit_listing'),
 
 
     path('about/', views.about, name='about'),
