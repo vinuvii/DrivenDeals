@@ -39,7 +39,10 @@ def vehicle_success(request):
     return render(request, 'vehicles/vehicle_success.html')
 
 def update_bids_table(vehicle):
-    auction_ended = timezone.now() > vehicle.posted_date + timedelta(days=7)
+    if vehicle.first_bid_date:
+        auction_ended = timezone.now() > vehicle.first_bid_date + timedelta(days=vehicle.auction_duration_days)
+    else:
+        auction_ended = False
 
     if auction_ended:
         # Update bid statuses
@@ -48,7 +51,10 @@ def update_bids_table(vehicle):
             bid.update_bid_status()
 
 def update_bids_table(vehicle):
-    auction_ended = timezone.now() > vehicle.posted_date + timedelta(days=7)
+    if vehicle.first_bid_date:
+        auction_ended = timezone.now() > vehicle.first_bid_date + timedelta(days=vehicle.auction_duration_days)
+    else:
+        auction_ended = False
 
     if auction_ended:
         # Determine the winning bid
@@ -71,8 +77,13 @@ def vehicle_detail(request, vehicle_id):
 
     bid_increments = [highest_bid_amount + i * 50000 for i in range(1, 4)]
 
-    auction_ended = timezone.now() > vehicle.posted_date + timedelta(days=7)
+    if vehicle.first_bid_date:
+        auction_ended = timezone.now() > vehicle.first_bid_date + timedelta(days=vehicle.auction_duration_days)
+    else:
+        auction_ended = False
+
     total_bids = Bid.objects.filter(vehicle=vehicle).count()
+
     # Check if the vehicle is in the user's watchlist
     is_in_watchlist = False
     if request.user.is_authenticated:
@@ -101,14 +112,31 @@ def vehicle_detail(request, vehicle_id):
                 bid = form.save(commit=False)
                 bid.user = request.user
                 bid.vehicle = vehicle
-                bid.save()
+                # Ensure expiry_date is set before saving
+                if not bid.expiry_date:
+                    if vehicle.first_bid_date:
+                        bid.expiry_date = vehicle.first_bid_date + timedelta(days=vehicle.auction_duration_days)
+                    else:
+                        bid.expiry_date = timezone.now() + timedelta(days=vehicle.auction_duration_days)
 
-                if auction_ended:
-                    update_bids_table(vehicle)
+                if total_bids == 0 or (total_bids > 0 and not auction_ended and timezone.now() < bid.expiry_date):
+                    bid.save()
 
-                return redirect('vehicle_detail', vehicle_id=vehicle.id)
-            else:
-                context['form'] = form
+                    # Update first_bid_date if it's the first bid
+                    if not vehicle.first_bid_date:
+                        vehicle.first_bid_date = timezone.now()
+                        vehicle.save()
+
+                    if auction_ended:
+                        update_bids_table(vehicle)
+
+                    return redirect('vehicle_detail', vehicle_id=vehicle.id)
+                else:
+                    # Handle case where auction has ended or expiry date passed
+                    # You can add an error message to the form or display it in the template
+                    form.add_error(None, "Bidding is not allowed at this time.")
+
+            context['form'] = form
     else:
         # Create an empty form for GET requests
         context['form'] = BidForm()

@@ -25,9 +25,14 @@ class Bid(models.Model):
     expiry_date = models.DateTimeField()
 
     def save(self, *args, **kwargs):
-        if not self.id and self.vehicle:
-            # Set expiry date to one week from vehicle's posted date
-            self.expiry_date = self.vehicle.posted_date + timezone.timedelta(weeks=1)
+        if not self.id:
+            if self.vehicle:
+                if not self.expiry_date:
+                    if self.vehicle.first_bid_date:
+                        self.expiry_date = self.vehicle.first_bid_date + timezone.timedelta(days=self.vehicle.auction_duration_days)
+                    else:
+                        # Handle case where first_bid_date is None (no bids yet)
+                        self.expiry_date = timezone.now() + timezone.timedelta(days=self.vehicle.auction_duration_days)
         super().save(*args, **kwargs)
 
     def update_bid_status(self):
