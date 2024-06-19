@@ -14,6 +14,23 @@
 </style>
 
 <h1 class="my-bids-heading">My Bids</h1>
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+    <li class="nav-item" role="presentation">
+        <a class="nav-link" id="profile-tab" href="{% url 'edit_profile' %}" role="tab" aria-controls="profile" aria-selected="false">Profile</a>
+    </li>
+    <li class="nav-item" role="presentation">
+        <a class="nav-link" id="watchlist-tab" href="{% url 'watchlist' %}" role="tab" aria-controls="watchlist" aria-selected="true">Watchlist</a>
+    </li>
+    <li class="nav-item" role="presentation">
+        <a class="nav-link" id="my-listings-tab" href="{% url 'my_listings' %}" role="tab" aria-controls="my-listings" aria-selected="false">My Listings</a>
+    </li>
+    <li class="nav-item" role="presentation">
+        <a class="nav-link  active" id="my-bids-tab" href="{% url 'my_bids' %}" role="tab" aria-controls="my-bids" aria-selected="false">My Bids</a>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="logout-tab" onclick="confirmLogout()" role="tab" aria-controls="logout" aria-selected="false">Log Out</button>
+    </li>
+</ul>
 
 {% if bids %}
     <ul>
@@ -25,6 +42,16 @@
                 Expiry Date: {{ bid.expiry_date }}<br>
             </li>
         {% endfor %}
+                <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
+<script>
+    function confirmLogout() {
+        const result = confirm("Are you sure you want to logout?");
+        if (result) {
+            window.location.href = "{% url 'logout' %}";
+        }
+    }
+    </script>
     </ul>
 {% else %}
     <p>You have no bids.</p>

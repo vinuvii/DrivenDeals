@@ -7,33 +7,84 @@
         padding: 50px 20px;
         background-color: #f1f1f1;
         color: #333;
+        position: relative;
+        overflow: hidden; /* Ensure child elements do not overflow */
+    }
+    .about-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url('https://www.seat.com/content/dam/public/seat-website/myco/2425/carworlds/leon/overview/version-view/leon-fr/seat-leon-5d-fr-trim-desire-red-colour-alloy-wheels.png') no-repeat center center/cover;
+        opacity: 0; /* Start with full transparency */
+        transform: scale(1.2); /* Start with a slight zoom */
+        transition: opacity 1.5s ease-in-out, transform 1.5s ease-in-out; /* Transition for opacity and transform */
+        z-index: 0;
+    }
+    .about-section.visible::before {
+        opacity: 0.1; /* End with light opacity */
+        transform: scale(1); /* End with original size */
+    }
+    .about-section .content {
+        position: relative;
+        z-index: 1;
+        transform: translateY(50px); /* Start position for the slide-up effect */
+        opacity: 0; /* Start with full transparency */
+        transition: transform 1s ease-in-out, opacity 1s ease-in-out; /* Transition for both transform and opacity */
+    }
+    .about-section.visible .content {
+        transform: translateY(0); /* End position for the slide-up effect */
+        opacity: 1; /* End with full opacity */
     }
     .about-section h1 {
         text-align: center;
         margin-bottom: 20px;
+        font-size: 36px;
     }
     .about-section p {
         text-align: justify;
-        margin: 10px auto; /* Adjust margin to create space between paragraphs */
+        margin: 10px auto;
         max-width: 800px;
     }
 </style>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const aboutSection = document.querySelector('.about-section');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    aboutSection.classList.add('visible');
+                }
+            });
+        });
+        observer.observe(aboutSection);
+    });
+</script>
 {% endblock %}
 
 {% block content %}
 <div class="about-section">
-    <h1 style="font-size: 36px;">About DrivenDeals</h1>
-    <p>
-        Welcome to DrivenDeals, the best car dealer in town! We offer a platform where users can list their vehicles for sale, and customers can search for vehicles and bid with the maximum price they are willing to pay. Our mission is to provide a seamless and efficient marketplace for buying and selling cars, ensuring the best deals for everyone involved.
-    </p>
-    <p>
-        At DrivenDeals, we pride ourselves on our extensive selection of high-quality vehicles and our commitment to customer satisfaction. Whether you are looking to buy your dream car or sell your current vehicle, we are here to help you every step of the way.
-    </p>
-    <p>
-        Our user-friendly platform allows you to easily list your vehicle, providing all the necessary details and photos to attract potential buyers. For buyers, our advanced search and filter options make it easy to find the perfect car that meets your needs and budget.
-    </p>
-    <p>
-        Thank you for choosing DrivenDeals. We look forward to helping you with all your car buying and selling needs!
-    </p>
+    <div class="content">
+        <h1>About DrivenDeals</h1>
+        <p>
+            Welcome to DrivenDeals, the best car dealer in town! We offer a platform where users can list their vehicles for sale, and customers can search for vehicles and bid with the maximum price they are willing to pay. Our mission is to provide a seamless and efficient marketplace for buying and selling cars, ensuring the best deals for everyone involved.
+        </p>
+        <p>
+            At DrivenDeals, we pride ourselves on our extensive selection of high-quality vehicles and our commitment to customer satisfaction. Whether you are looking to buy your dream car or sell your current vehicle, we are here to help you every step of the way.
+        </p>
+        <p>
+            Our user-friendly platform allows you to easily list your vehicle, providing all the necessary details and photos to attract potential buyers. For buyers, our advanced search and filter options make it easy to find the perfect car that meets your needs and budget.
+        </p>
+        <p>
+            Thank you for choosing DrivenDeals. We look forward to helping you with all your car buying and selling needs!
+        </p>
+
+        
+
+
+    </div>
 </div>
 {% endblock %}
+
