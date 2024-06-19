@@ -72,7 +72,7 @@ def vehicle_detail(request, vehicle_id):
     bid_increments = [highest_bid_amount + i * 50000 for i in range(1, 4)]
 
     auction_ended = timezone.now() > vehicle.posted_date + timedelta(days=7)
-
+    total_bids = Bid.objects.filter(vehicle=vehicle).count()
     # Check if the vehicle is in the user's watchlist
     is_in_watchlist = False
     if request.user.is_authenticated:
@@ -86,6 +86,7 @@ def vehicle_detail(request, vehicle_id):
         'auction_ended': auction_ended,
         'form': BidForm(),
         'is_in_watchlist': is_in_watchlist,
+        'total_bids': total_bids,
     }
 
     if request.method == 'POST':
