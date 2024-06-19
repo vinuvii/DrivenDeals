@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
-
+{% load humanize %}
 {% block extra_head %}
 <style>
     html, body {
@@ -791,7 +791,7 @@
             </div>
             <div class="col-md-3">
                 <div class="vehicle-details-section__head-price">
-                    <div class="vehicle-details-section__head-price-num">LKR {{ highest_bid }}</div>
+                    <div class="vehicle-details-section__head-price-num">LKR {{ highest_bid|intcomma }}</div>
                     <p>Winning Bid Price</p>
                 </div>
                 <button class="btn btn-outline-secondary btn-custom" id="watchlistButton"
@@ -1012,69 +1012,61 @@
     </div>
 
       </div>
-
+</div>
   </div>
-
+</div>
 </div>
 
-
-    {% if not auction_ended %}
-    <div class="modal fade" id="placeBidModal" tabindex="-1" role="dialog" aria-labelledby="placeBidModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-background"></div>
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title"><b>Place Your Bid</b></h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+<div class="modal fade" id="placeBidModal" tabindex="-1" role="dialog" aria-labelledby="placeBidModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title"><b>Place Your Bid</b></h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p class="vehicle-name"><b>{{ vehicle.model }} {{ vehicle.year }}</b></p>
+                <p class="vehicle-price">LKR {{ highest_bid|intcomma }}</p>
+                <p class="item-description">Read the item description or contact seller for more information.</p>
+                <div class="info-row">
+                    <p class="reserve-status">RESERVE NOT YET MET.</p>
+                    <p class="bids-total">BIDS IN TOTAL FOR VEHICLE: {{ total_bids }}</p>
                 </div>
-                <div class="modal-body">
-                    <p class="vehicle-name"><b>{{ vehicle.model }} {{ vehicle.year }}</b></p>
-                    <p class="vehicle-price">LKR {{ highest_bid }}</p>
-                    <p class="item-description">Read the item description or contact seller for shipping information.</p>
-                    <div class="info-row">
-                        <p class="reserve-status">RESERVE NOT YET MET.</p>
-                        <p class="bids-total">BIDS IN TOTAL FOR VEHICLE</p>
+                <div class="time-remaining">
+                    <span>6</span> : <span>23</span> : <span>36</span> : <span>49</span>
+                    <div class="time-labels">
+                        <span>DAYS</span>
+                        <span>HOURS</span>
+                        <span>MINUTES</span>
+                        <span>SECONDS</span>
                     </div>
-                    <div class="time-remaining">
-                        <span>6</span> : <span>23</span> : <span>36</span> : <span>49</span>
-                        <div class="time-labels">
-                            <span>DAYS</span>
-                            <span>HOURS</span>
-                            <span>MINUTES</span>
-                            <span>SECONDS</span>
+                </div>
+                <div class="bid-values">
+                    {% for bid_value in bid_increments %}
+                        <button class="bid-value" type="button" onclick="setBidValue({{ bid_value }})">LKR {{ bid_value|intcomma }}</button>
+                    {% endfor %}
+                </div>
+                <div class="max-bid-section">
+                    <p class="max-bid-label">Or Enter Your Maximum Bid:</p>
+                    <form method="post" action="{% url 'vehicle_detail' vehicle.id %}" id="bidForm">
+                        {% csrf_token %}
+                        <div class="max-bid-input">
+                            <span class="max-bid-currency">LKR</span>
+                            {{ form.amount }}
                         </div>
-                    </div>
-                    <div class="bid-values">
-                        {% for bid_value in bid_increments %}
-                            <button class="bid-value" type="button" onclick="setBidValue({{ bid_value }})">LKR {{ bid_value }}</button>
-                        {% endfor %}
-                    </div>
-                    <div class="max-bid-section">
-                        <p class="max-bid-label">Or Enter Your Maximum Bid:</p>
-
-
-                        <form method="post" action="{% url 'vehicle_detail' vehicle.id %}">
-                            {% csrf_token %}
-                            <div class="max-bid-input">
-                                <span class="max-bid-currency">LKR</span>
-                                {{ form.amount }}
-                            </div>
-
-                            <button class="btn btn-primary btn-block mb-3" id="placeBidModalButton">Place Bid</button>
-                        </form>
+                        <button class="btn btn-primary btn-block mb-3" id="placeBidModalButton">Place Bid</button>
+                    </form>
                     <p class="terms mt-3">
-                        By placing a bid, you express consent to share your contact information with the seller and authorizing the seller to contact you regarding this vehicle. And if this bid wins, you are purchasing this item and legally required to make a payment before THE DATE. The item will be sent once payment is completed.
+                        By placing a bid, you express consent to share your contact information with the seller and authorize the seller to contact you regarding this vehicle. If this bid wins, you are purchasing this item and legally required to make a payment before THE DATE. The item will be sent once payment is completed.
                     </p>
                 </div>
             </div>
         </div>
     </div>
-    {% endif %}
 </div>
-    </div>
-</div>
+
 <script>
     function displayImage(imageUrl) {
         document.getElementById('main-image').src = imageUrl;
@@ -1086,17 +1078,17 @@
 
         var watchlistButton = document.getElementById('watchlistButton');
         watchlistButton.addEventListener('click', handleWatchlistClick);
+
+        var bidForm = document.getElementById('bidForm');
+        bidForm.addEventListener('submit', validateBid);
     });
 
     function handlePlaceBidClick() {
-        // Pass the is_authenticated value from the server to JavaScript
         var isAuthenticated = '{{ user.is_authenticated|yesno:"True,False" }}';
 
         if (isAuthenticated === 'True') {
-            // Show the "Place Bid" modal
             $('#placeBidModal').modal('show');
         } else {
-            // Redirect to the login page with the next parameter
             var loginUrl = '{% url "login" %}?next={{ request.path }}';
             window.location.href = loginUrl;
         }
@@ -1136,6 +1128,18 @@
     function setBidValue(value) {
         document.getElementById('id_amount').value = value;
     }
+
+    function validateBid(event) {
+        var highestBid = {{ highest_bid }};
+        var bidInput = document.getElementById('id_amount');
+        var bidValue = parseFloat(bidInput.value.replace(/,/g, ''));
+
+        if (bidValue <= highestBid) {
+            alert('Please enter a bid higher than the current highest bid.');
+            event.preventDefault();
+        }
+    }
 </script>
+
 
 {% endblock %}
