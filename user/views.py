@@ -38,16 +38,24 @@ def listing_detail(request, pk):
     return render(request, 'user/listing_detail.html', {'listing': listing})
 
 def signup_view(request):
+    error_message = None
+    next_url = request.POST.get('next') or request.GET.get('next', '')
+
     if request.method == 'POST':
         form = UserRegistrationForm(request.POST)
         if form.is_valid():
             user = form.save()
             login(request, user)
             messages.success(request, 'Registration successful!')
-            return redirect('login')
+            if next_url:
+                return redirect(next_url)
+            return redirect('home')
+        else:
+            error_message = 'Please enter a valid email and password'
+
     else:
         form = UserRegistrationForm()
-    return render(request, 'user/signup.html', {'form': form})
+    return render(request, 'user/signup.html', {'form': form, 'error_message': error_message, 'next': next_url})
 
 def logout_view(request):
     logout(request)
