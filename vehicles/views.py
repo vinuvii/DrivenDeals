@@ -73,6 +73,11 @@ def vehicle_detail(request, vehicle_id):
 
     auction_ended = timezone.now() > vehicle.posted_date + timedelta(days=7)
 
+    # Check if the vehicle is in the user's watchlist
+    is_in_watchlist = False
+    if request.user.is_authenticated:
+        is_in_watchlist = Watchlist.objects.filter(user=request.user, vehicle=vehicle).exists()
+
     context = {
         'is_authenticated': request.user.is_authenticated,
         'vehicle': vehicle,
@@ -80,6 +85,7 @@ def vehicle_detail(request, vehicle_id):
         'bid_increments': bid_increments,
         'auction_ended': auction_ended,
         'form': BidForm(),
+        'is_in_watchlist': is_in_watchlist,
     }
 
     if request.method == 'POST':
@@ -107,7 +113,6 @@ def vehicle_detail(request, vehicle_id):
         context['form'] = BidForm()
 
     return render(request, 'vehicles/vehicle_details.html', context)
-
 
 def update_expired_bids():
 
