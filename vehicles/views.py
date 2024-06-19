@@ -73,6 +73,7 @@ def vehicle_detail(request, vehicle_id):
 
     auction_ended = timezone.now() > vehicle.posted_date + timedelta(days=7)
     total_bids = Bid.objects.filter(vehicle=vehicle).count()
+
     # Check if the vehicle is in the user's watchlist
     is_in_watchlist = False
     if request.user.is_authenticated:
@@ -101,7 +102,19 @@ def vehicle_detail(request, vehicle_id):
                 bid = form.save(commit=False)
                 bid.user = request.user
                 bid.vehicle = vehicle
+                # Ensure expiry_date is set before saving
+                if not bid.expiry_date:
+                    if vehicle.first_bid_date:
+                        bid.expiry_date = vehicle.first_bid_date + timedelta(days=vehicle.auction_duration_days)
+                    else:
+                        bid.expiry_date = timezone.now() + timedelta(days=vehicle.auction_duration_days)
+
                 bid.save()
+
+                # Update first_bid_date if it's the first bid
+                if not vehicle.first_bid_date:
+                    vehicle.first_bid_date = timezone.now()
+                    vehicle.save()
 
                 if auction_ended:
                     update_bids_table(vehicle)

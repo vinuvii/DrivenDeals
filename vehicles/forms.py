@@ -39,6 +39,7 @@ class VehicleForm(forms.ModelForm):
         self.fields['picture2'].widget.attrs.update({'class': 'form-control-file'})
         self.fields['picture3'].widget.attrs.update({'class': 'form-control-file'})
         self.fields['description'].widget.attrs.update({'class': 'form-control', 'rows': 4, 'placeholder': 'Enter description'})
+        self.fields['auction_duration_days'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Enter Auction Duration Days'})
 
     def save(self, commit=True):
         instance = super().save(commit=False)
