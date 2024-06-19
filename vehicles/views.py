@@ -317,7 +317,6 @@ def search_listings(request):
     }
     return render(request, 'vehicles/all_listings.html', context)
 
-
 def compare_vehicles(request):
     form = VehicleComparisonForm(request.POST or None)
     compared_data = None
@@ -328,12 +327,20 @@ def compare_vehicles(request):
         vehicle2 = form.cleaned_data['vehicle2']
 
         # Prepare data for comparison
+        excluded_fields = ['id', 'picture', 'picture2', 'picture3', 'description', 'posted_date']
         compared_data = []
         for field in vehicle1._meta.fields:
-            field_name = field.verbose_name.capitalize()
-            value1 = getattr(vehicle1, field.name)
-            value2 = getattr(vehicle2, field.name)
-            compared_data.append((field_name, value1, value2))
+            if field.name not in excluded_fields:
+                field_name = field.verbose_name.capitalize()
+                value1 = getattr(vehicle1, field.name)
+                value2 = getattr(vehicle2, field.name)
+
+                # Format price in LKR with commas
+                if field.name == 'price':
+                    value1 = f"LKR {value1:,.2f}"
+                    value2 = f"LKR {value2:,.2f}"
+
+                compared_data.append((field_name, value1, value2))
 
     context = {
         'form': form,
