@@ -511,8 +511,25 @@
         justify-content: center;
         align-items: center;
         margin: 20px 0;
-        font-size: 24px;
+        font-size: 12px;
         font-weight: bold;
+    }
+    .time-unit {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 0 5px;
+    }
+
+    .time-value {
+        font-size: 2em;
+        font-weight: bold;
+    }
+
+    .time-separator {
+        font-size: 2em;
+        font-weight: bold;
+        margin: 0 5px;
     }
 
     .time-remaining span {
@@ -528,6 +545,11 @@
 
     .time-labels span {
         margin: 0 5px;
+    }
+
+    .time-remaining p {
+        margin-bottom: 10px;
+        font-weight: bold;
     }
 
     .bid-values {
@@ -982,37 +1004,39 @@
         </div>
     </div>
 
-        <div class="vehicle-description-card">
-          <div class="seller-description-card">
+<div class="vehicle-description-card">
+    <div class="seller-description-card">
 
-        <div class="col-md-5">
+            <p>Bidding Period Ends In,</p>
+
+            <div id="time-remaining-container1"></div>
 
             <div>
-                <div>
-                    <h3>Highest Bid: {{ highest_bid }}</h3>
-                    {% if highest_bid %}
-                        <ul>
-                            {% for bid in vehicle.bid_set.all %}
-                                <li>
-                                    Amount: {{ bid.amount }} - Status: {{ bid.get_bid_status_display }}
-                                </li>
-                            {% endfor %}
-                        </ul>
-                    {% else %}
-                        <p>No bids yet</p>
-                    {% endif %}
-                </div>
-            {% if auction_ended %}
-                <button class="btn btn-outline-secondary btn-custom" id="auctionEndedButton" disabled>Auction Ended</button>
-            {% else %}
-                <button class="btn btn-primary btn-custom" id="placeBidButton">Place Bid</button>
-            {% endif %}
+                <h3>Highest Bid: {{ highest_bid }}</h3>
+                {% if highest_bid %}
+                    <ul>
+                        {% for bid in vehicle.bid_set.all %}
+                            <li>
+                                Amount: {{ bid.amount }} - Status: {{ bid.get_bid_status_display }}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p>No bids yet</p>
+                {% endif %}
+            </div>
+         {% if not auction_ended %}
+            <button class="btn btn-primary btn-custom place-bid-button" id="placeBidButtonSeller">Place Bid</button>
+        {% endif %}
 
-        </div>
+
+
+
+
     </div>
-
-      </div>
 </div>
+
+
   </div>
 </div>
 </div>
@@ -1021,7 +1045,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title"><b>Place Your Bid</b></h4>
+                <h4 class="modal-title"><b>Place Your Bid</b></h4><br>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -1031,18 +1055,13 @@
                 <p class="vehicle-price">LKR {{ highest_bid|intcomma }}</p>
                 <p class="item-description">Read the item description or contact seller for more information.</p>
                 <div class="info-row">
-                    <p class="reserve-status">RESERVE NOT YET MET.</p>
+                    <p class="reserve-status">RESERVE NOT YET MET</p>
                     <p class="bids-total">BIDS IN TOTAL FOR VEHICLE: {{ total_bids }}</p>
                 </div>
-                <div class="time-remaining">
-                    <span>6</span> : <span>23</span> : <span>36</span> : <span>49</span>
-                    <div class="time-labels">
-                        <span>DAYS</span>
-                        <span>HOURS</span>
-                        <span>MINUTES</span>
-                        <span>SECONDS</span>
-                    </div>
-                </div>
+
+                <p>Bidding Period Ends In,</p>
+                <div id="time-remaining-container2"></div>
+
                 <div class="bid-values">
                     {% for bid_value in bid_increments %}
                         <button class="bid-value" type="button" onclick="setBidValue({{ bid_value }})">LKR {{ bid_value|intcomma }}</button>
@@ -1067,21 +1086,118 @@
     </div>
 </div>
 
+<div id="countdown-template" style="display: none;">
+    <div class="time-remaining">
+        <div class="time-unit">
+            <span class="time-value" id="days"></span>
+            <span class="time-label">DAYS</span>
+        </div>
+        <span class="time-separator">:</span>
+        <div class="time-unit">
+            <span class="time-value" id="hours"></span>
+            <span class="time-label">HOURS</span>
+        </div>
+        <span class="time-separator">:</span>
+        <div class="time-unit">
+            <span class="time-value" id="minutes"></span>
+            <span class="time-label">MINUTES</span>
+        </div>
+        <span class="time-separator">:</span>
+        <div class="time-unit">
+            <span class="time-value" id="seconds"></span>
+            <span class="time-label">SECONDS</span>
+        </div>
+    </div>
+</div>
+
 <script>
-    function displayImage(imageUrl) {
-        document.getElementById('main-image').src = imageUrl;
+document.addEventListener('DOMContentLoaded', function() {
+    var remainingTime = {{ remaining_time|default:'null' }};
+    var placeBidButton = document.getElementById('placeBidButton');
+    var placeBidButtonSeller = document.getElementById('placeBidButtonSeller');
+    var watchlistButton = document.getElementById('watchlistButton');
+    var bidForm = document.getElementById('bidForm');
+
+    // Countdown Initialization
+    function initializeCountdown(selector, remainingSeconds) {
+        var countdownElement = document.querySelector(selector);
+        if (!countdownElement) return;
+
+        var daysElem = countdownElement.querySelector('#days');
+        var hoursElem = countdownElement.querySelector('#hours');
+        var minutesElem = countdownElement.querySelector('#minutes');
+        var secondsElem = countdownElement.querySelector('#seconds');
+
+        function updateCountdown() {
+            if (remainingSeconds <= 0) {
+                countdownElement.innerHTML = "Auction Ended";
+                return;
+            }
+
+            var days = Math.floor(remainingSeconds / 86400);
+            var hours = Math.floor((remainingSeconds % 86400) / 3600);
+            var minutes = Math.floor((remainingSeconds % 3600) / 60);
+            var seconds = Math.floor(remainingSeconds % 60);
+
+            daysElem.innerText = days;
+            hoursElem.innerText = hours;
+            minutesElem.innerText = minutes;
+            secondsElem.innerText = seconds;
+
+            remainingSeconds--;
+            setTimeout(updateCountdown, 1000);
+        }
+
+        updateCountdown();
     }
 
-    document.addEventListener('DOMContentLoaded', function() {
-        var placeBidButton = document.getElementById('placeBidButton');
+    // Append Countdown Template
+    if (remainingTime !== null) {
+        var countdownTemplate = document.getElementById('countdown-template').innerHTML;
+
+        function appendCountdown(elementId) {
+            var container = document.getElementById(elementId);
+            if (container) {
+                container.innerHTML += countdownTemplate;
+            }
+        }
+
+        appendCountdown('time-remaining-container1');
+        appendCountdown('time-remaining-container2');
+
+        initializeCountdown('#time-remaining-container1 .time-remaining', remainingTime);
+        initializeCountdown('#time-remaining-container2 .time-remaining', remainingTime);
+    } else {
+        document.getElementById('time-remaining').innerHTML = 'PLACE THE FIRST BID TO START AUCTION';
+    }
+
+    // Place Bid Button Event Listener
+    if (placeBidButton) {
         placeBidButton.addEventListener('click', handlePlaceBidClick);
+    }
 
-        var watchlistButton = document.getElementById('watchlistButton');
+    if (placeBidButtonSeller) {
+        placeBidButtonSeller.addEventListener('click', function() {
+            var isAuthenticated = '{{ user.is_authenticated|yesno:"True,False" }}';
+
+            if (isAuthenticated === 'True') {
+                $('#placeBidModal').modal('show');
+            } else {
+                var loginUrl = '{% url "login" %}?next={{ request.path }}';
+                window.location.href = loginUrl;
+            }
+        });
+    }
+
+    // Watchlist Button Event Listener
+    if (watchlistButton) {
         watchlistButton.addEventListener('click', handleWatchlistClick);
+    }
 
-        var bidForm = document.getElementById('bidForm');
+    // Bid Form Event Listener
+    if (bidForm) {
         bidForm.addEventListener('submit', validateBid);
-    });
+    }
 
     function handlePlaceBidClick() {
         var isAuthenticated = '{{ user.is_authenticated|yesno:"True,False" }}';
@@ -1139,6 +1255,8 @@
             event.preventDefault();
         }
     }
+});
+
 </script>
 
 

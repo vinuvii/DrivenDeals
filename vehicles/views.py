@@ -77,10 +77,14 @@ def vehicle_detail(request, vehicle_id):
 
     bid_increments = [highest_bid_amount + i * 50000 for i in range(1, 4)]
 
+    auction_ended = False
+    remaining_time = None
+
     if vehicle.first_bid_date:
-        auction_ended = timezone.now() > vehicle.first_bid_date + timedelta(days=vehicle.auction_duration_days)
-    else:
-        auction_ended = False
+        auction_end_time = vehicle.first_bid_date + timedelta(days=vehicle.auction_duration_days)
+        auction_ended = timezone.now() > auction_end_time
+        if not auction_ended:
+            remaining_time = auction_end_time - timezone.now()
 
     total_bids = Bid.objects.filter(vehicle=vehicle).count()
 
@@ -98,6 +102,7 @@ def vehicle_detail(request, vehicle_id):
         'form': BidForm(),
         'is_in_watchlist': is_in_watchlist,
         'total_bids': total_bids,
+        'remaining_time': remaining_time.total_seconds() if remaining_time else None,
     }
 
     if request.method == 'POST':
