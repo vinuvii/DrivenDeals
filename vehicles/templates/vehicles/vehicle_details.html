@@ -1041,6 +1041,7 @@
 </div>
 </div>
 
+{% if not auction_ended %}
 <div class="modal fade" id="placeBidModal" tabindex="-1" role="dialog" aria-labelledby="placeBidModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -1062,11 +1063,11 @@
                 <p>Bidding Period Ends In,</p>
                 <div id="time-remaining-container2"></div>
 
-                <div class="bid-values">
-                    {% for bid_value in bid_increments %}
-                        <button class="bid-value" type="button" onclick="setBidValue({{ bid_value }})">LKR {{ bid_value|intcomma }}</button>
-                    {% endfor %}
-                </div>
+                    <div class="bid-values">
+                        {% for bid_value in bid_increments %}
+                            <button class="bid-value" type="button" onclick="setBidValue({{ bid_value }})">LKR {{ bid_value }}</button>
+                        {% endfor %}
+                    </div>
                 <div class="max-bid-section">
                     <p class="max-bid-label">Or Enter Your Maximum Bid:</p>
                     <form method="post" action="{% url 'vehicle_detail' vehicle.id %}" id="bidForm">
@@ -1108,10 +1109,18 @@
             <span class="time-label">SECONDS</span>
         </div>
     </div>
+    {% endif %}
 </div>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+        var bidIncrementButtons = document.querySelectorAll('.bid-value');
+        bidIncrementButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                setBidValue(this.textContent.replace('LKR ', ''));
+            });
+        });
+
     var remainingTime = {{ remaining_time|default:'null' }};
     var placeBidButton = document.getElementById('placeBidButton');
     var placeBidButtonSeller = document.getElementById('placeBidButtonSeller');
@@ -1242,7 +1251,10 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function setBidValue(value) {
-        document.getElementById('id_amount').value = value;
+        var bidInput = document.getElementById('id_amount');
+        if (bidInput) {
+            bidInput.value = value;
+        }
     }
 
     function validateBid(event) {
@@ -1256,6 +1268,10 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 });
+
+function displayImage(imageUrl) {
+    document.getElementById('main-image').src = imageUrl;
+}
 
 </script>
 
