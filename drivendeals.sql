@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 22, 2024 at 12:53 PM
+-- Generation Time: Jun 22, 2024 at 06:23 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.1.12
 
@@ -203,7 +203,8 @@ INSERT INTO `bids_bid` (`id`, `amount`, `timestamp`, `bid_status`, `expiry_date`
 (21, '5250000.00', '2024-06-22 10:50:36.826819', 'PENDING', '2024-06-29 10:17:48.361711', 1, 21),
 (22, '1030000.00', '2024-06-22 10:50:53.262253', 'PENDING', '2024-06-27 10:26:23.689252', 1, 29),
 (23, '4800000.00', '2024-06-22 10:51:05.863819', 'PENDING', '2024-06-29 10:51:05.863819', 1, 31),
-(24, '4690010.00', '2024-06-22 10:51:21.887613', 'PENDING', '2024-06-27 10:28:42.200284', 1, 33);
+(24, '4690010.00', '2024-06-22 10:51:21.887613', 'PENDING', '2024-06-27 10:28:42.200284', 1, 33),
+(25, '4740010.00', '2024-06-22 10:56:29.721143', 'PENDING', '2024-06-27 10:28:42.200284', 1, 33);
 
 -- --------------------------------------------------------
 
@@ -516,7 +517,9 @@ INSERT INTO `vehicles_vehicle` (`id`, `model`, `year`, `price`, `picture`, `desc
 (30, 'Swift RS Turbo', 2023, '8690000.00', 'vehicle_pictures/susuki1.jpg', 'The Suzuki Swift RS Turbo blends sporty design with practicality, offering agile handling and turbocharged performance. It features advanced safety technologies, modern interior amenities, and a stylish exterior, making it a popular choice among enthusiasts and everyday drivers alike.', '2024-06-18 14:24:28.090812', 'White', 750, 'car', '1.0', 'Hybrid', 'petrol', 'Suzuki', 5, 'Automatic', 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 'vehicle_pictures/susuki2.jpg', '', 4, 1, '2024-06-22 10:26:48.933380'),
 (31, 'Ashok Leyland JanBu', 2024, '4700000.00', 'vehicle_pictures/bus1.jpg', 'Ashok Leyland buses are renowned for their robust build quality, reliability, and versatility. They are widely used for public transportation, school buses, intercity travel, and special applications such as tourist coaches. Featuring spacious interiors, comfortable seating arrangements, and advanced engineering, Ashok Leyland buses cater to both passenger comfort and safety. Equipped with modern technology and designed for efficient performance, these buses are a preferred choice for fleet operators and transportation companies looking for durability and operational excellence.', '2024-06-18 14:35:03.290650', 'White', 0, 'bus', '1.5', 'Internal Combustion Engine', 'diesel', 'other', 60, 'Manual', 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 'vehicle_pictures/Bus2.jpg', '', 4, 7, '2024-06-22 10:51:05.863819'),
 (32, 'CX-5', 2017, '18500000.00', 'vehicle_pictures/mazda1.jpg', 'The Mazda CX-5 combines stylish design with sporty performance and practicality. It offers a comfortable and upscale interior, advanced safety features, and a smooth driving experience suitable for both city and highway driving. With its responsive handling and versatile cargo space, the CX-5 is a popular choice among SUV enthusiasts seeking a blend of luxury and utility.', '2024-06-18 15:02:50.188755', 'Blue', 120000, 'suv', '2.0', 'Internal Combustion Engine', 'petrol', 'Mazda', 5, 'Automatic', 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 'vehicle_pictures/maxda2.jpg', '', 5, 4, '2024-06-22 10:28:20.122773'),
-(33, 'Vitz', 2023, '4590000.00', 'vehicle_pictures/vitz1.jpg', 'The Toyota Vitz (Yaris) is a reliable and fuel-efficient hatchback known for its compact size and practicality. It offers agile handling, a comfortable interior, and a range of modern features suitable for urban commuting. With Toyota\'s reputation for reliability and affordability, the Vitz appeals to drivers looking for a dependable and economical everyday car.', '2024-06-18 15:06:39.386820', 'Red', 1000, 'car', '13.0', 'Hybrid', 'hybrid', 'Toyota', 5, 'Automatic', 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 'vehicle_pictures/vitz2.jpg', 'vehicle_pictures/vitz3.jpg', 5, 5, '2024-06-22 10:28:42.200284');
+(33, 'Vitz', 2023, '4590000.00', 'vehicle_pictures/vitz1.jpg', 'The Toyota Vitz (Yaris) is a reliable and fuel-efficient hatchback known for its compact size and practicality. It offers agile handling, a comfortable interior, and a range of modern features suitable for urban commuting. With Toyota\'s reputation for reliability and affordability, the Vitz appeals to drivers looking for a dependable and economical everyday car.', '2024-06-18 15:06:39.386820', 'Red', 1000, 'car', '13.0', 'Hybrid', 'hybrid', 'Toyota', 5, 'Automatic', 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 'vehicle_pictures/vitz2.jpg', 'vehicle_pictures/vitz3.jpg', 5, 5, '2024-06-22 10:28:42.200284'),
+(34, 'Civic', 2020, '5000000.00', 'vehicle_pictures/Midnight_Black_honda_civic_xVQlMYi.jpg', 'The Honda Civic Midnight Black is a sleek and stylish vehicle featuring a bold, dark exterior color. It boasts a precise fitment and top-notch quality, ensuring safety without compromising airbag deployment. This exclusive car interior is made with PRIME materials for a premium look and feel', '2024-06-22 15:02:03.822089', 'Midnight Black', 2500, 'sedan', '1.6', 'Hybrid', 'hybrid', 'Honda', 5, 'Automatic', 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 'vehicle_pictures/Midnight_Black_honda_civic1_G7DUQPF.jpg', 'vehicle_pictures/Midnight_Black_honda_civic2_JodHobW.jpg', 1, 2, NULL),
+(35, 'Corolla', 2018, '4800000.00', 'vehicle_pictures/metaliccorolla1_rTmUfh0.jpg', 'A well-maintained metallic Toyota Corolla with all essential features.', '2024-06-22 15:44:48.814717', 'Metallic Blue', 50000, 'sedan', '1.8', 'Internal Combustion Engine', 'petrol', 'Toyota', 5, 'Automatic', 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 'vehicle_pictures/metaliccorolla2_r5S6x8r.jpg', 'vehicle_pictures/metaliccorolla3_yP0kON8.jpg', 1, 5, NULL);
 
 --
 -- Indexes for dumped tables
@@ -694,7 +697,7 @@ ALTER TABLE `auth_user_user_permissions`
 -- AUTO_INCREMENT for table `bids_bid`
 --
 ALTER TABLE `bids_bid`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `django_admin_log`
@@ -748,7 +751,7 @@ ALTER TABLE `user_watchlist`
 -- AUTO_INCREMENT for table `vehicles_vehicle`
 --
 ALTER TABLE `vehicles_vehicle`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- Constraints for dumped tables
