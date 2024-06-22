@@ -6,13 +6,42 @@
         padding: 50px 20px;
         background-color: #ffffff;
         color: #333;
+        position: relative;
+        overflow: hidden; /* Ensure child elements do not overflow */
+    }
+    .services-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url('https://www.seat.com/content/dam/public/seat-website/myco/2425/carworlds/leon/overview/version-view/leon-fr/seat-leon-5d-fr-trim-desire-red-colour-alloy-wheels.png') no-repeat center center/cover;
+        opacity: 0; /* Start with full transparency */
+        transform: scale(1.2); /* Start with a slight zoom */
+        transition: opacity 1.5s ease-in-out, transform 1.5s ease-in-out; /* Transition for opacity and transform */
+        z-index: 0;
+    }
+    .services-section.visible::before {
+        opacity: 0.05; /* End with light opacity */
+        transform: scale(1); /* End with original size */
+    }
+    .services-section .service {
+        position: relative;
+        z-index: 1;
+        transform: translateY(50px); /* Start position for the slide-up effect */
+        opacity: 0; /* Start with full transparency */
+        transition: transform 1s ease-in-out, opacity 1s ease-in-out; /* Transition for both transform and opacity */
+    }
+    .services-section.visible .service {
+        transform: translateY(0); /* End position for the slide-up effect */
+        opacity: 1; /* End with full opacity */
     }
     .services-section h1 {
         text-align: center;
         margin-bottom: 30px;
-    }
-    .services-section .service {
-        margin-bottom: 20px;
+        position: relative;
+        z-index: 1;
     }
     .services-section .service h2 {
         font-size: 24px;
@@ -24,6 +53,19 @@
         max-width: 800px;
     }
 </style>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const servicesSection = document.querySelector('.services-section');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    servicesSection.classList.add('visible');
+                }
+            });
+        });
+        observer.observe(servicesSection);
+    });
+</script>
 {% endblock %}
 
 {% block content %}
