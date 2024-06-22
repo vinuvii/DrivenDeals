@@ -1017,7 +1017,7 @@
                     <ul>
                         {% for bid in vehicle.bid_set.all %}
                             <li>
-                                Amount: {{ bid.amount }} - Status: {{ bid.get_bid_status_display }}
+                                Timestamp: {{ bid.timestamp|date:"Y-m-d" }} {{ bid.timestamp|time:"H:i:s" }} - Amount: {{ bid.amount }} - Status: {{ bid.get_bid_status_display }}
                             </li>
                         {% endfor %}
                     </ul>
