@@ -73,6 +73,11 @@
         margin-bottom: 20px; /* Space below the heading */
         color: #333; /* Ensure heading text color */
     }
+    .no-bids-message {
+        font-size: 24px;
+        text-align: center;
+        margin-top: 20px; /* Space above the message */
+    }
 </style>
 {% endblock %}
 {% block content %}
@@ -120,7 +125,7 @@
                     {% endfor %}
                 </ul>
             {% else %}
-                <p>You have no items in your watchlist.</p>
+                <p class="no-bids-message">You have no items in your watchlist.</p>
             {% endif %}
         </div>
     </div>

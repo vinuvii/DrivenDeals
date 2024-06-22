@@ -366,7 +366,7 @@ def compare_vehicles(request):
         vehicle2 = form.cleaned_data['vehicle2']
 
         # Prepare data for comparison
-        excluded_fields = ['id', 'picture', 'picture2', 'picture3', 'description', 'posted_date']
+        excluded_fields = ['id', 'picture2', 'picture3', 'description', 'posted_date']
         compared_data = []
         for field in vehicle1._meta.fields:
             if field.name not in excluded_fields:

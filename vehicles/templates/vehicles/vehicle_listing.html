@@ -367,7 +367,7 @@
                 item.classList.add('border-gray-300', 'text-gray-600');
             });
 
-            const currentItem = document.querySelector(`#sidebar div[data-step="${step}"]`);
+            const currentItem = document.querySelector(#sidebar div[data-step="${step}"]);
             currentItem.classList.remove('border-gray-300', 'text-gray-600');
             currentItem.classList.add('border-red-600', 'text-red-600', 'font-bold');
         }
@@ -377,13 +377,13 @@
                 s.classList.remove('active');
             });
 
-            const currentStep = document.getElementById(`step-${step}`);
+            const currentStep = document.getElementById(step-${step});
             currentStep.classList.add('active');
         }
 
         function updateProgressBar(step) {
             const percentage = (step / 5) * 100;
-            progressBar.style.width = `${percentage}%`;
+            progressBar.style.width = ${percentage}%;
         }
 
         // Initial setup
