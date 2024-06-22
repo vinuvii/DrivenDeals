@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 22, 2024 at 06:23 PM
+-- Generation Time: Jun 22, 2024 at 07:37 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.1.12
 
@@ -358,8 +358,8 @@ CREATE TABLE `django_session` (
 --
 
 INSERT INTO `django_session` (`session_key`, `session_data`, `expire_date`) VALUES
+('63jnqh36exeer8j4e53sl6n54wwzd3h4', '.eJxVjEEOwiAQRe_C2hBgQqEu3XsGwjCDVA1NSrtqvLsl6UJ3P_-9vF2EuK0lbI2XMJG4ChCX3w9jenHtgJ6xPmaZ5rouE8quyJM2eZ-J37fT_QuU2ErPoiNjDeAxvNJecSZCsCqzUWCTB_YDOcuHACPrDGjGOFjUyUUAEJ8v3ok3xA:1sL3qt:IZVFq2SiO1opiI6xzt8wX9URlxGJt1hm6z4M0j0LzRA', '2024-07-06 16:44:35.694108'),
 ('nwpw2w5c2felm7bcr7tf65za7x1g8r0r', '.eJxVjEEOgjAQRe_StWnodKAdl-49QzPtDIIaSCisjHdXEha6_e-9_zKJt3VIW9UljWLOpjWn3y1zeei0A7nzdJttmad1GbPdFXvQaq-z6PNyuH8HA9fhW3ODAKgOHIloACCIRYPzxKHx3nEsSEo9llzaHj06jVEDkgB56Trz_gDGSTcm:1sJaFm:T9UeTwk-0LN9hYXx0UphxOQ4FOskbAgEYq1clRmuV9Y', '2024-07-02 14:56:10.044636'),
-('vhovfa0m1bjalyorx9c1jdzfn2jss767', '.eJxVjEEOgjAQRe_StWkGqLR16Z4zNDOdGYsaSCisjHdXEha6_e-9_zIJt7WkrcqSRjYX05jT70aYHzLtgO843Wab52ldRrK7Yg9a7TCzPK-H-3dQsJZvHaR1EN2ZCDySIIOXrteuVW1AEaNrpWeIWckrhSjMIYdGM0cFcmjeHwJbOVU:1sKy2u:CGBz9L-HBMokR5IoD6qHo3pY0Vl7po8O4C-fTBoJZ0s', '2024-07-06 10:32:36.466246'),
 ('w1bardw1dzj8vd7m82hyr8f54a616w62', '.eJxVjEEOgjAQRe_StWkGqLR16Z4zNDOdGYsaSCisjHdXEha6_e-9_zIJt7WkrcqSRjYX05jT70aYHzLtgO843Wab52ldRrK7Yg9a7TCzPK-H-3dQsJZvHaR1EN2ZCDySIIOXrteuVW1AEaNrpWeIWckrhSjMIYdGM0cFcmjeHwJbOVU:1sIjmn:Ytv61AaBN_iRe-XPR9a9ZpE_-YOhkKjz-hZe6C90Qnk', '2024-06-30 06:54:45.214359'),
 ('w8slgv5r5p0xtuqbm81n186npbgjll87', '.eJxVjDsOwyAQBe9CHSHM16RM7zOgXRaCkwgkY1dR7h5bcpG0b-bNmwXY1hK2npYwE7uygV1-N4T4TPUA9IB6bzy2ui4z8kPhJ-18apRet9P9CxToZX9bjUAGwDtDA2krsyNyfnRJSuUyoQNI1koVSWchktGo9rowcjSeLLLPF_mAOGQ:1sGJ7v:ZxPWXsUmVEuUYkCfNfRwM5JCrQlZ38XWYAnxFW2wk9g', '2024-06-23 14:02:31.942534');
 
@@ -408,7 +408,7 @@ CREATE TABLE `user_user` (
 INSERT INTO `user_user` (`id`, `username`, `password`, `email`, `first_name`, `last_name`, `mobile_number`, `postal_code`, `trading_address`, `date_joined`, `is_active`, `is_staff`, `is_superuser`, `last_login`) VALUES
 (1, 'Jane_Fernando', 'pbkdf2_sha256$720000$7vFls4MVg806f21pLdgy8l$rkB6bhQccGIDYGhtmLAoF7sEzkHjf02/yecC7acMumc=', 'islandexplorer@example.com', 'Jane', 'Fernando', '+94 76 987 6543', '20050', '12 Palm Grove, Negombo, Sri Lanka', '2024-06-13 14:48:07.098245', 1, 0, 0, '2024-06-22 10:32:36.460199'),
 (2, 'Jason_Fonseka', 'pbkdf2_sha256$720000$ThTJoXgSrQ3uzD0mygoBhH$qbATyNhtqiDhfjWYgwurGF9LAgRLz1cVXLCYopV8iWI=', 'adventureseeker88@example.com', 'Jason', 'Fonseka', '+94 71 876 5432', '30025', '8 Sea View Road, Galle, Sri Lanka', '2024-06-18 11:43:38.828563', 1, 0, 0, '2024-06-18 13:40:17.908021'),
-(3, 'Pete_Peiris', 'pbkdf2_sha256$720000$Q6Kxf70BN6PrzYByjSyZ6w$qVFA24IVteyHjeqcR+VkEDGFw/4QO9ta9rU/TZCYLyg=', 'pete.peiris@example.com', 'Pete', 'Peris', '+94 70 123 4567', '40090', '25 Lake Road, Kandy, Sri Lanka', '2024-06-18 12:22:35.054592', 1, 0, 0, '2024-06-18 14:00:40.647174'),
+(3, 'Pete_Peiris', 'pbkdf2_sha256$720000$Q6Kxf70BN6PrzYByjSyZ6w$qVFA24IVteyHjeqcR+VkEDGFw/4QO9ta9rU/TZCYLyg=', 'pete.peiris@example.com', 'Pete', 'Peris', '+94 70 123 4567', '40090', '25 Lake Road, Kandy, Sri Lanka', '2024-06-18 12:22:35.054592', 1, 0, 0, '2024-06-22 16:44:35.689072'),
 (4, 'Nimal_Fernando', 'pbkdf2_sha256$720000$KdXkj1ifY2d9fNxpmB8s9j$Qs4J4DMXXoAT1vUFmj/tJ+RnOC1+kaj6ld3S+XRqekc=', 'lankanuser123@example.com', 'Nimal', 'Fernando', '+94 77 123 4567', '10000', '45A, Lotus Lane, Colombo 07, Sri Lanka', '2024-06-18 14:19:26.814086', 1, 0, 0, '2024-06-22 10:17:37.637546'),
 (5, 'Savindi', 'pbkdf2_sha256$720000$HomqCdtc9FYFpZ9G5Vr1eh$KW5JlkkeNBz7ALo8igEOmzN6IyoEA3SAVGNOelZiuVc=', 'savindi.dias@example.com', 'Savindi', 'Dias', '+94 76 234 5678', '50070', '15 Jasmine Avenue, Nuwara Eliya, Sri Lanka', '2024-06-18 14:56:09.124282', 1, 0, 0, '2024-06-18 14:56:10.028921');
 
@@ -518,8 +518,9 @@ INSERT INTO `vehicles_vehicle` (`id`, `model`, `year`, `price`, `picture`, `desc
 (31, 'Ashok Leyland JanBu', 2024, '4700000.00', 'vehicle_pictures/bus1.jpg', 'Ashok Leyland buses are renowned for their robust build quality, reliability, and versatility. They are widely used for public transportation, school buses, intercity travel, and special applications such as tourist coaches. Featuring spacious interiors, comfortable seating arrangements, and advanced engineering, Ashok Leyland buses cater to both passenger comfort and safety. Equipped with modern technology and designed for efficient performance, these buses are a preferred choice for fleet operators and transportation companies looking for durability and operational excellence.', '2024-06-18 14:35:03.290650', 'White', 0, 'bus', '1.5', 'Internal Combustion Engine', 'diesel', 'other', 60, 'Manual', 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 'vehicle_pictures/Bus2.jpg', '', 4, 7, '2024-06-22 10:51:05.863819'),
 (32, 'CX-5', 2017, '18500000.00', 'vehicle_pictures/mazda1.jpg', 'The Mazda CX-5 combines stylish design with sporty performance and practicality. It offers a comfortable and upscale interior, advanced safety features, and a smooth driving experience suitable for both city and highway driving. With its responsive handling and versatile cargo space, the CX-5 is a popular choice among SUV enthusiasts seeking a blend of luxury and utility.', '2024-06-18 15:02:50.188755', 'Blue', 120000, 'suv', '2.0', 'Internal Combustion Engine', 'petrol', 'Mazda', 5, 'Automatic', 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 'vehicle_pictures/maxda2.jpg', '', 5, 4, '2024-06-22 10:28:20.122773'),
 (33, 'Vitz', 2023, '4590000.00', 'vehicle_pictures/vitz1.jpg', 'The Toyota Vitz (Yaris) is a reliable and fuel-efficient hatchback known for its compact size and practicality. It offers agile handling, a comfortable interior, and a range of modern features suitable for urban commuting. With Toyota\'s reputation for reliability and affordability, the Vitz appeals to drivers looking for a dependable and economical everyday car.', '2024-06-18 15:06:39.386820', 'Red', 1000, 'car', '13.0', 'Hybrid', 'hybrid', 'Toyota', 5, 'Automatic', 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 'vehicle_pictures/vitz2.jpg', 'vehicle_pictures/vitz3.jpg', 5, 5, '2024-06-22 10:28:42.200284'),
-(34, 'Civic', 2020, '5000000.00', 'vehicle_pictures/Midnight_Black_honda_civic_xVQlMYi.jpg', 'The Honda Civic Midnight Black is a sleek and stylish vehicle featuring a bold, dark exterior color. It boasts a precise fitment and top-notch quality, ensuring safety without compromising airbag deployment. This exclusive car interior is made with PRIME materials for a premium look and feel', '2024-06-22 15:02:03.822089', 'Midnight Black', 2500, 'sedan', '1.6', 'Hybrid', 'hybrid', 'Honda', 5, 'Automatic', 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 'vehicle_pictures/Midnight_Black_honda_civic1_G7DUQPF.jpg', 'vehicle_pictures/Midnight_Black_honda_civic2_JodHobW.jpg', 1, 2, NULL),
-(35, 'Corolla', 2018, '4800000.00', 'vehicle_pictures/metaliccorolla1_rTmUfh0.jpg', 'A well-maintained metallic Toyota Corolla with all essential features.', '2024-06-22 15:44:48.814717', 'Metallic Blue', 50000, 'sedan', '1.8', 'Internal Combustion Engine', 'petrol', 'Toyota', 5, 'Automatic', 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 'vehicle_pictures/metaliccorolla2_r5S6x8r.jpg', 'vehicle_pictures/metaliccorolla3_yP0kON8.jpg', 1, 5, NULL);
+(34, 'Civic', 2020, '5000000.00', 'vehicle_pictures/Midnight_Black_honda_civic.jpg', 'The Honda Civic Midnight Black is a sleek and stylish vehicle featuring a bold, dark exterior color. It boasts a precise fitment and top-notch quality, ensuring safety without compromising airbag deployment. This exclusive car interior is made with PRIME materials for a premium look and feel', '2024-06-22 15:02:03.822089', 'Midnight Black', 2500, 'sedan', '1.6', 'Hybrid', 'hybrid', 'Honda', 5, 'Automatic', 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 'vehicle_pictures/Midnight_Black_honda_civic1.jpg', 'vehicle_pictures/Midnight_Black_honda_civic2.jpg', 1, 2, NULL),
+(35, 'Corolla', 2018, '4800000.00', 'vehicle_pictures/metaliccorolla1.jpg', 'A well-maintained metallic Toyota Corolla with all essential features.', '2024-06-22 15:44:48.814717', 'Metallic Blue', 50000, 'sedan', '1.8', 'Internal Combustion Engine', 'petrol', 'Toyota', 5, 'Automatic', 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 'vehicle_pictures/metaliccorolla2.jpg', 'vehicle_pictures/metaliccorolla3.jpg', 1, 5, NULL),
+(36, 'Mustang', 2020, '11200000.00', 'vehicle_pictures/yellowmustang.jpg', 'A powerful metallic Ford Mustang with low mileage and premium features.', '2024-06-22 16:51:11.773305', 'Yellow', 15000, 'coupe', '5.0', 'Internal Combustion Engine', 'petrol', 'Ford', 4, 'Automatic', 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 'vehicle_pictures/yellowmustang1.jpg', 'vehicle_pictures/yellowmustang2.jpg', 3, 3, NULL);
 
 --
 -- Indexes for dumped tables
@@ -751,7 +752,7 @@ ALTER TABLE `user_watchlist`
 -- AUTO_INCREMENT for table `vehicles_vehicle`
 --
 ALTER TABLE `vehicles_vehicle`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- Constraints for dumped tables
