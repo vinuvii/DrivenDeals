@@ -39,7 +39,6 @@ class Vehicle(models.Model):
         ('motorbike', 'Motorbike'),
         ('car', 'Car'),
         ('three_wheeler', 'Three Wheeler'),
-        ('bicycle', 'Bicycle'),
         ('lorry', 'Lorry'),
         ('truck', 'Truck'),
         ('van', 'Van'),
