@@ -71,6 +71,11 @@
         margin-bottom: 20px; /* Space below the heading */
         color: #333; /* Ensure heading text color */
     }
+        .no-bids-message {
+        font-size: 24px;
+        text-align: center;
+        margin-top: 20px; /* Space above the message */
+    }
 </style>
 {% endblock %}
 
@@ -117,7 +122,7 @@
             </div>
             {% endfor %}
         {% else %}
-            <p>You have no listings.</p>
+            <p class="no-bids-message">You have no listings.</p>
         {% endif %}
 
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>

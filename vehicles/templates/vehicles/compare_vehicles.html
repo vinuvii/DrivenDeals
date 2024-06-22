@@ -34,9 +34,13 @@
             background-color: #c02f24;
         }
         .car-listings-heading {
-        font-size: 36px;
-        text-align: center;
-        margin-bottom: 20px; /* Space below the heading */
+            font-size: 36px;
+            text-align: center;
+            margin-bottom: 20px; /* Space below the heading */
+        }
+        .vehicle-image {
+            max-width: 300px;
+            max-height: 300px;
         }
     </style>
 {% endblock %}
@@ -63,6 +67,11 @@
                 </tr>
             </thead>
             <tbody>
+                <tr>
+                    <td></td>
+                    <td><img src="{{ vehicle1.picture.url }}" alt="Vehicle 1" class="vehicle-image"></td>
+                    <td><img src="{{ vehicle2.picture.url }}" alt="Vehicle 2" class="vehicle-image"></td>
+                </tr>
                 {% for field_name, value1, value2 in compared_data %}
                 <tr>
                     <td>{{ field_name }}</td>
@@ -75,4 +84,3 @@
         {% endif %}
     </div>
 {% endblock %}
-

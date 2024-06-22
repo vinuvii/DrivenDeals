@@ -54,6 +54,11 @@
         font-size: 18px;
         margin-top: 20px;
     }
+    .no-bids-message {
+        font-size: 24px;
+        text-align: center;
+        margin-top: 20px; /* Space above the message */
+    }
 </style>
 {% endblock %}
 
@@ -205,7 +210,7 @@
                         {% endif %}
                         <div class="card-body">
                             <a href="{% url 'vehicle_detail' vehicle.id %}" style="text-decoration: none; color: inherit;">
-                                <h5 class="card-title">{{ vehicle.make }} {{ vehicle.model }}</h5>
+                                <h5 class="card-title"> {{ vehicle.model }}</h5>
                                 <p class="card-text">Year: {{ vehicle.year }}</p>
                                 <p class="card-text">Price: LKR {{ vehicle.price|intcomma }}</p>
                                 <p class="card-text">Mileage: {{ vehicle.mileage|intcomma }} km</p>
@@ -218,7 +223,7 @@
             {% endfor %}
         </div>
     {% else %}
-        <p class="no-vehicles">No vehicles found matching the filters.</p>
+        <p  class="no-bids-message">No vehicles found matching the filters.</p>
     {% endif %}
 </div>
 {% endblock %}
