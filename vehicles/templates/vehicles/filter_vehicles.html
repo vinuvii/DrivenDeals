@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load humanize %}
 
 {% block extra_head %}
 <!-- Add any additional head content for filter_vehicles.html here if necessary -->
@@ -14,6 +15,15 @@
     }
     .card {
         margin-bottom: 20px;
+        border: 2px solid #e74c3c;
+        border-radius: 10px;
+    }
+    .card img {
+        width: 100%;
+        height: 200px; /* Set a fixed height */
+        object-fit: cover; /* Ensures the image covers the area while maintaining aspect ratio */
+        border-bottom: 2px #e74c3c;
+        border-radius: 10px 10px 0 0;
     }
     .car-listings-heading {
         font-size: 36px;
@@ -188,12 +198,17 @@
             {% for vehicle in vehicles %}
                 <div class="col-md-4">
                     <div class="card">
+                        {% if vehicle.picture %}
+                            <img src="{{ vehicle.picture.url }}" alt="{{ vehicle.make }} {{ vehicle.model }}">
+                        {% else %}
+                            <img src="path/to/default/image.jpg" alt="No Image Available">
+                        {% endif %}
                         <div class="card-body">
                             <a href="{% url 'vehicle_detail' vehicle.id %}" style="text-decoration: none; color: inherit;">
                                 <h5 class="card-title">{{ vehicle.make }} {{ vehicle.model }}</h5>
                                 <p class="card-text">Year: {{ vehicle.year }}</p>
-                                <p class="card-text">Price: ${{ vehicle.price }}</p>
-                                <p class="card-text">Mileage: {{ vehicle.mileage }} km</p>
+                                <p class="card-text">Price: LKR {{ vehicle.price|intcomma }}</p>
+                                <p class="card-text">Mileage: {{ vehicle.mileage|intcomma }} km</p>
                                 <p class="card-text">Color: {{ vehicle.color }}</p>
                                 <!-- Add more fields as needed -->
                             </a>
@@ -211,13 +226,3 @@
 {% block extra_scripts %}
 <!-- Add any additional scripts for filter_vehicles.html here if necessary -->
 {% endblock %}
-
-
-
-
-
-
-
-
-
-
