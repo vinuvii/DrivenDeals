@@ -3,13 +3,13 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 18, 2024 at 05:08 PM
+-- Generation Time: Jun 22, 2024 at 12:53 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.1.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
-SET time_zone = "+05:30";
+SET time_zone = "+00:00";
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -186,6 +186,25 @@ CREATE TABLE `bids_bid` (
   `vehicle_id` bigint(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `bids_bid`
+--
+
+INSERT INTO `bids_bid` (`id`, `amount`, `timestamp`, `bid_status`, `expiry_date`, `user_id`, `vehicle_id`) VALUES
+(12, '5100000.00', '2024-06-22 10:17:48.359477', 'PENDING', '2024-06-29 10:17:48.358480', 4, 21),
+(13, '5950000.00', '2024-06-22 10:25:13.913335', 'PENDING', '2024-06-23 10:25:13.913335', 4, 22),
+(14, '12050010.00', '2024-06-22 10:25:36.843926', 'PENDING', '2024-06-24 10:25:36.842538', 4, 23),
+(15, '7555500.00', '2024-06-22 10:26:00.276742', 'PENDING', '2024-06-25 10:26:00.275657', 4, 27),
+(16, '3700000.00', '2024-06-22 10:26:14.863017', 'PENDING', '2024-06-29 10:26:14.863017', 4, 28),
+(17, '930000.00', '2024-06-22 10:26:23.681432', 'PENDING', '2024-06-27 10:26:23.681432', 4, 29),
+(18, '8790000.00', '2024-06-22 10:26:48.930351', 'PENDING', '2024-06-23 10:26:48.930351', 4, 30),
+(19, '18550000.00', '2024-06-22 10:28:20.117386', 'PENDING', '2024-06-26 10:28:20.117386', 4, 32),
+(20, '4590010.00', '2024-06-22 10:28:42.197777', 'PENDING', '2024-06-27 10:28:42.197777', 4, 33),
+(21, '5250000.00', '2024-06-22 10:50:36.826819', 'PENDING', '2024-06-29 10:17:48.361711', 1, 21),
+(22, '1030000.00', '2024-06-22 10:50:53.262253', 'PENDING', '2024-06-27 10:26:23.689252', 1, 29),
+(23, '4800000.00', '2024-06-22 10:51:05.863819', 'PENDING', '2024-06-29 10:51:05.863819', 1, 31),
+(24, '4690010.00', '2024-06-22 10:51:21.887613', 'PENDING', '2024-06-27 10:28:42.200284', 1, 33);
+
 -- --------------------------------------------------------
 
 --
@@ -316,7 +335,10 @@ INSERT INTO `django_migrations` (`id`, `app`, `name`, `applied`) VALUES
 (43, 'bids', '0003_alter_bid_options', '2024-06-16 16:11:22.481745'),
 (44, 'vehicles', '0011_alter_vehicle_engine_type_and_more', '2024-06-17 04:11:38.422475'),
 (45, 'user', '0013_userwatchlistitem_watchlist_delete_watchlistitem', '2024-06-17 12:29:37.818076'),
-(46, 'user', '0014_alter_watchlist_unique_together_and_more', '2024-06-17 12:29:38.482563');
+(46, 'user', '0014_alter_watchlist_unique_together_and_more', '2024-06-17 12:29:38.482563'),
+(47, 'user', '0015_alter_userwatchlistitem_unique_together_and_more', '2024-06-22 10:16:57.540577'),
+(48, 'vehicles', '0012_vehicle_auction_duration_days', '2024-06-22 10:16:57.596775'),
+(49, 'vehicles', '0013_vehicle_first_bid_date', '2024-06-22 10:16:57.616776');
 
 -- --------------------------------------------------------
 
@@ -336,6 +358,7 @@ CREATE TABLE `django_session` (
 
 INSERT INTO `django_session` (`session_key`, `session_data`, `expire_date`) VALUES
 ('nwpw2w5c2felm7bcr7tf65za7x1g8r0r', '.eJxVjEEOgjAQRe_StWnodKAdl-49QzPtDIIaSCisjHdXEha6_e-9_zKJt3VIW9UljWLOpjWn3y1zeei0A7nzdJttmad1GbPdFXvQaq-z6PNyuH8HA9fhW3ODAKgOHIloACCIRYPzxKHx3nEsSEo9llzaHj06jVEDkgB56Trz_gDGSTcm:1sJaFm:T9UeTwk-0LN9hYXx0UphxOQ4FOskbAgEYq1clRmuV9Y', '2024-07-02 14:56:10.044636'),
+('vhovfa0m1bjalyorx9c1jdzfn2jss767', '.eJxVjEEOgjAQRe_StWkGqLR16Z4zNDOdGYsaSCisjHdXEha6_e-9_zIJt7WkrcqSRjYX05jT70aYHzLtgO843Wab52ldRrK7Yg9a7TCzPK-H-3dQsJZvHaR1EN2ZCDySIIOXrteuVW1AEaNrpWeIWckrhSjMIYdGM0cFcmjeHwJbOVU:1sKy2u:CGBz9L-HBMokR5IoD6qHo3pY0Vl7po8O4C-fTBoJZ0s', '2024-07-06 10:32:36.466246'),
 ('w1bardw1dzj8vd7m82hyr8f54a616w62', '.eJxVjEEOgjAQRe_StWkGqLR16Z4zNDOdGYsaSCisjHdXEha6_e-9_zIJt7WkrcqSRjYX05jT70aYHzLtgO843Wab52ldRrK7Yg9a7TCzPK-H-3dQsJZvHaR1EN2ZCDySIIOXrteuVW1AEaNrpWeIWckrhSjMIYdGM0cFcmjeHwJbOVU:1sIjmn:Ytv61AaBN_iRe-XPR9a9ZpE_-YOhkKjz-hZe6C90Qnk', '2024-06-30 06:54:45.214359'),
 ('w8slgv5r5p0xtuqbm81n186npbgjll87', '.eJxVjDsOwyAQBe9CHSHM16RM7zOgXRaCkwgkY1dR7h5bcpG0b-bNmwXY1hK2npYwE7uygV1-N4T4TPUA9IB6bzy2ui4z8kPhJ-18apRet9P9CxToZX9bjUAGwDtDA2krsyNyfnRJSuUyoQNI1koVSWchktGo9rowcjSeLLLPF_mAOGQ:1sGJ7v:ZxPWXsUmVEuUYkCfNfRwM5JCrQlZ38XWYAnxFW2wk9g', '2024-06-23 14:02:31.942534');
 
@@ -382,50 +405,11 @@ CREATE TABLE `user_user` (
 --
 
 INSERT INTO `user_user` (`id`, `username`, `password`, `email`, `first_name`, `last_name`, `mobile_number`, `postal_code`, `trading_address`, `date_joined`, `is_active`, `is_staff`, `is_superuser`, `last_login`) VALUES
-(1, 'Jane_Fernando', 'pbkdf2_sha256$720000$7vFls4MVg806f21pLdgy8l$rkB6bhQccGIDYGhtmLAoF7sEzkHjf02/yecC7acMumc=', 'islandexplorer@example.com', 'Jane', 'Fernando', '+94 76 987 6543', '20050', '12 Palm Grove, Negombo, Sri Lanka', '2024-06-13 14:48:07.098245', 1, 0, 0, '2024-06-18 13:48:33.838906'),
+(1, 'Jane_Fernando', 'pbkdf2_sha256$720000$7vFls4MVg806f21pLdgy8l$rkB6bhQccGIDYGhtmLAoF7sEzkHjf02/yecC7acMumc=', 'islandexplorer@example.com', 'Jane', 'Fernando', '+94 76 987 6543', '20050', '12 Palm Grove, Negombo, Sri Lanka', '2024-06-13 14:48:07.098245', 1, 0, 0, '2024-06-22 10:32:36.460199'),
 (2, 'Jason_Fonseka', 'pbkdf2_sha256$720000$ThTJoXgSrQ3uzD0mygoBhH$qbATyNhtqiDhfjWYgwurGF9LAgRLz1cVXLCYopV8iWI=', 'adventureseeker88@example.com', 'Jason', 'Fonseka', '+94 71 876 5432', '30025', '8 Sea View Road, Galle, Sri Lanka', '2024-06-18 11:43:38.828563', 1, 0, 0, '2024-06-18 13:40:17.908021'),
 (3, 'Pete_Peiris', 'pbkdf2_sha256$720000$Q6Kxf70BN6PrzYByjSyZ6w$qVFA24IVteyHjeqcR+VkEDGFw/4QO9ta9rU/TZCYLyg=', 'pete.peiris@example.com', 'Pete', 'Peris', '+94 70 123 4567', '40090', '25 Lake Road, Kandy, Sri Lanka', '2024-06-18 12:22:35.054592', 1, 0, 0, '2024-06-18 14:00:40.647174'),
-(4, 'Nimal_Fernando', 'pbkdf2_sha256$720000$KdXkj1ifY2d9fNxpmB8s9j$Qs4J4DMXXoAT1vUFmj/tJ+RnOC1+kaj6ld3S+XRqekc=', 'lankanuser123@example.com', 'Nimal', 'Fernando', '+94 77 123 4567', '10000', '45A, Lotus Lane, Colombo 07, Sri Lanka', '2024-06-18 14:19:26.814086', 1, 0, 0, '2024-06-18 14:19:27.742363'),
+(4, 'Nimal_Fernando', 'pbkdf2_sha256$720000$KdXkj1ifY2d9fNxpmB8s9j$Qs4J4DMXXoAT1vUFmj/tJ+RnOC1+kaj6ld3S+XRqekc=', 'lankanuser123@example.com', 'Nimal', 'Fernando', '+94 77 123 4567', '10000', '45A, Lotus Lane, Colombo 07, Sri Lanka', '2024-06-18 14:19:26.814086', 1, 0, 0, '2024-06-22 10:17:37.637546'),
 (5, 'Savindi', 'pbkdf2_sha256$720000$HomqCdtc9FYFpZ9G5Vr1eh$KW5JlkkeNBz7ALo8igEOmzN6IyoEA3SAVGNOelZiuVc=', 'savindi.dias@example.com', 'Savindi', 'Dias', '+94 76 234 5678', '50070', '15 Jasmine Avenue, Nuwara Eliya, Sri Lanka', '2024-06-18 14:56:09.124282', 1, 0, 0, '2024-06-18 14:56:10.028921');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `user_userprofile`
---
-
-CREATE TABLE `user_userprofile` (
-  `id` bigint(20) NOT NULL,
-  `mobile_number` varchar(15) NOT NULL,
-  `postal_code` varchar(10) NOT NULL,
-  `user_id` bigint(20) NOT NULL,
-  `email_address` varchar(254) NOT NULL,
-  `trading_address` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `user_userprofile`
---
-
-INSERT INTO `user_userprofile` (`id`, `mobile_number`, `postal_code`, `user_id`, `email_address`, `trading_address`) VALUES
-(1, '', '', 1, '', NULL),
-(2, '', '', 2, '', NULL),
-(3, '', '', 3, '', NULL),
-(4, '', '', 4, '', NULL),
-(5, '', '', 5, '', NULL);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `user_userwatchlistitem`
---
-
-CREATE TABLE `user_userwatchlistitem` (
-  `id` bigint(20) NOT NULL,
-  `added_at` datetime(6) NOT NULL,
-  `user_id` bigint(20) NOT NULL,
-  `vehicle_id` bigint(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -470,7 +454,10 @@ CREATE TABLE `user_watchlist` (
 INSERT INTO `user_watchlist` (`id`, `user_id`, `vehicle_id`) VALUES
 (5, 3, 21),
 (6, 3, 23),
-(7, 5, 27);
+(7, 5, 27),
+(8, 4, 21),
+(9, 4, 22),
+(10, 4, 33);
 
 -- --------------------------------------------------------
 
@@ -507,27 +494,29 @@ CREATE TABLE `vehicles_vehicle` (
   `sunroof` tinyint(1) NOT NULL,
   `picture2` varchar(100) DEFAULT NULL,
   `picture3` varchar(100) DEFAULT NULL,
-  `seller_id` bigint(20) DEFAULT NULL
+  `seller_id` bigint(20) DEFAULT NULL,
+  `auction_duration_days` int(10) UNSIGNED NOT NULL CHECK (`auction_duration_days` >= 0),
+  `first_bid_date` datetime(6) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `vehicles_vehicle`
 --
 
-INSERT INTO `vehicles_vehicle` (`id`, `model`, `year`, `price`, `picture`, `description`, `posted_date`, `color`, `mileage`, `body_type`, `engine_capacity`, `engine_type`, `fuel_type`, `make`, `no_of_seats`, `transmission_type`, `abs_breaks`, `air_conditioning`, `airbags`, `alloy_wheels`, `central_locking`, `leather_seats`, `power_steering`, `power_windows`, `reverse_camera`, `sunroof`, `picture2`, `picture3`, `seller_id`) VALUES
-(21, 'Corolla', 2023, '5000000.00', 'vehicle_pictures/Coralla1.jpg', 'Discover elegance and reliability with our pristine Toyota Corolla, a timeless sedan designed for comfort and efficiency. This 2023 model in sleek silver boasts modern features and safety enhancements, ensuring a smooth ride for every journey. Ideal for discerning drivers seeking quality and value.', '2024-06-18 13:35:04.412298', 'Silver', 1000, 'sedan', '18.0', 'Hybrid', 'petrol', 'Toyota', 5, 'Automatic', 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 'vehicle_pictures/Corolla_2.jpg', 'vehicle_pictures/corolla3.jpg', 2),
-(22, 'Civic', 2023, '5800000.00', 'vehicle_pictures/Honda1.jpg', 'Introducing the dynamic Honda Civic, a standout sedan delivering performance and style. This 2023 model in striking red combines sporty design with premium amenities, including a turbocharged engine for exhilarating drives. Perfect for those who crave sophistication and innovation.', '2024-06-18 13:39:22.325011', 'Red', 0, 'sedan', '1.5', 'Hybrid', 'petrol', 'Honda', 5, 'Automatic', 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 'vehicle_pictures/Honda2.jpg', 'vehicle_pictures/Honda3.jpg', 2),
-(23, 'Sprinter', 2024, '12000000.00', 'vehicle_pictures/Benze1.jpg', 'The Mercedes-Benz Sprinter Minibus is designed for transporting passengers with comfort and efficiency in mind. Built on a solid platform with a 2.1-liter inline-4 diesel engine and automatic transmission, it combines reliability with fuel efficiency. This minibus can seat up to 12 passengers comfortably, equipped with essential features like ABS brakes, airbags, air conditioning, power steering, central locking, and a reverse camera for added safety and convenience. It\'s an ideal choice for businesses or organizations needing a reliable people-mover that offers a blend of practicality and comfort.', '2024-06-18 13:47:44.945029', 'White', 0, 'bus', '2.1', 'Internal Combustion Engine', 'diesel', 'Mercedes-Benz', 12, 'Automatic', 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 'vehicle_pictures/Benze2.jpg', 'vehicle_pictures/Benze3.jpg', 2),
-(24, 'F-150', 2022, '9000000.00', 'vehicle_pictures/Ford1.jpg', 'The Ford F-150 is a robust and versatile pickup truck known for its durability and capability. Featuring a powerful 3.5-liter V6 engine paired with an automatic transmission, it offers excellent performance both on and off the road. With a spacious cabin accommodating up to 5 passengers, it includes modern amenities such as ABS brakes, alloy wheels, airbags, air conditioning, power steering, power windows, central locking, and a reverse camera. Ideal for those seeking a reliable vehicle for heavy-duty tasks without compromising on comfort and safety.', '2024-06-18 13:51:51.844288', 'Blue', 5000, 'truck', '3.5', 'Internal Combustion Engine', 'diesel', 'Ford', 5, 'Automatic', 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 'vehicle_pictures/Ford2.jpg', 'vehicle_pictures/Ford3.jpg', 1),
-(25, 'RE Auto Rickshaw', 2023, '800000.00', 'vehicle_pictures/tuk1.jpg', 'Discover the reliable Bajaj RE Auto Rickshaw, a trusted companion for urban commuting and short-distance travel. Known for its sturdy build and economical performance, this auto rickshaw is ideal for navigating bustling city streets with ease. Perfect for drivers looking for affordability and durability in their daily transportation solution.', '2024-06-18 13:56:33.355841', 'Yellow', 7000, 'three_wheeler', '0.2', 'Internal Combustion Engine', 'petrol', 'other', 3, 'Manual', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'vehicle_pictures/tuk2.jpg', '', 1),
-(26, 'YZF-R6', 2022, '2500000.00', 'vehicle_pictures/bike1.jpg', 'Experience exhilaration with the Yamaha YZF-R6, a high-performance sportbike designed for thrill-seeking riders. Renowned for its agility and power, the YZF-R6 delivers precision handling and impressive acceleration, making it a favorite on both the track and the road. Embrace the excitement of riding with Yamaha\'s legendary engineering and sleek design.', '2024-06-18 14:00:15.364594', 'Blue', 5000, 'motorbike', '0.6', 'Internal Combustion Engine', 'petrol', 'other', 2, 'Manual', 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 'vehicle_pictures/bike2.jpg', 'vehicle_pictures/bike3.jpg', 1),
-(27, 'Camry', 2023, '7500000.00', 'vehicle_pictures/Camry1.jpg', 'Embrace sophistication and reliability with the Toyota Camry, a flagship sedan renowned for its comfort, performance, and lasting appeal. Ideal for discerning drivers seeking a blend of style and practicality, the Camry excels with its spacious interior, advanced technology features, and smooth driving experience. Whether navigating city streets or embarking on long journeys, the Camry delivers a harmonious balance of luxury and efficiency, making it a timeless choice in the sedan segment.', '2024-06-18 14:05:24.838227', 'Silver', 1000, 'sedan', '2.5', 'Hybrid', 'hybrid', 'Toyota', 5, 'Automatic', 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 'vehicle_pictures/Camry2.jpg', 'vehicle_pictures/Camry3.jpg', 3),
-(28, '45DI', 2018, '3600000.00', 'vehicle_pictures/tracktor.jpg', 'The TAFE 45DI is a robust and reliable tractor designed for agricultural purposes. Known for its durability and simplicity, it offers essential features for farm work and rural applications, ensuring dependable performance in demanding conditions.', '2024-06-18 14:14:29.402653', 'Red', 1000, 'tractor', '1.0', 'Internal Combustion Engine', 'diesel', 'other', 1, 'Manual', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'vehicle_pictures/tracktor2.jpg', 'vehicle_pictures/tracktor3.jpg', 3),
-(29, 'Ntorq', 2023, '780000.00', 'vehicle_pictures/Bikke1.jpg', 'The TVS Ntorq is a sporty and feature-packed scooter that appeals to urban riders seeking style and performance. It combines modern design elements with practical features such as a digital instrument cluster, smartphone connectivity, and a peppy engine, making it an ideal choice for daily commuting with a touch of excitement.', '2024-06-18 14:17:33.722131', 'Red', 500, 'motorbike', '0.2', 'Internal Combustion Engine', 'petrol', 'other', 2, 'Automatic', 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 'vehicle_pictures/Bikke2.jpg', 'vehicle_pictures/Bikke3.jpg', 3),
-(30, 'Swift RS Turbo', 2023, '8690000.00', 'vehicle_pictures/susuki1.jpg', 'The Suzuki Swift RS Turbo blends sporty design with practicality, offering agile handling and turbocharged performance. It features advanced safety technologies, modern interior amenities, and a stylish exterior, making it a popular choice among enthusiasts and everyday drivers alike.', '2024-06-18 14:24:28.090812', 'White', 750, 'car', '1.0', 'Hybrid', 'petrol', 'Suzuki', 5, 'Automatic', 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 'vehicle_pictures/susuki2.jpg', '', 4),
-(31, 'Ashok Leyland JanBu', 2024, '4700000.00', 'vehicle_pictures/bus1.jpg', 'Ashok Leyland buses are renowned for their robust build quality, reliability, and versatility. They are widely used for public transportation, school buses, intercity travel, and special applications such as tourist coaches. Featuring spacious interiors, comfortable seating arrangements, and advanced engineering, Ashok Leyland buses cater to both passenger comfort and safety. Equipped with modern technology and designed for efficient performance, these buses are a preferred choice for fleet operators and transportation companies looking for durability and operational excellence.', '2024-06-18 14:35:03.290650', 'White', 0, 'bus', '1.5', 'Internal Combustion Engine', 'diesel', 'other', 60, 'Manual', 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 'vehicle_pictures/Bus2.jpg', '', 4),
-(32, 'CX-5', 2017, '18500000.00', 'vehicle_pictures/mazda1.jpg', 'The Mazda CX-5 combines stylish design with sporty performance and practicality. It offers a comfortable and upscale interior, advanced safety features, and a smooth driving experience suitable for both city and highway driving. With its responsive handling and versatile cargo space, the CX-5 is a popular choice among SUV enthusiasts seeking a blend of luxury and utility.', '2024-06-18 15:02:50.188755', 'Blue', 120000, 'suv', '2.0', 'Internal Combustion Engine', 'petrol', 'Mazda', 5, 'Automatic', 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 'vehicle_pictures/maxda2.jpg', '', 5),
-(33, 'Vitz', 2023, '4590000.00', 'vehicle_pictures/vitz1.jpg', 'The Toyota Vitz (Yaris) is a reliable and fuel-efficient hatchback known for its compact size and practicality. It offers agile handling, a comfortable interior, and a range of modern features suitable for urban commuting. With Toyota\'s reputation for reliability and affordability, the Vitz appeals to drivers looking for a dependable and economical everyday car.', '2024-06-18 15:06:39.386820', 'Red', 1000, 'car', '13.0', 'Hybrid', 'hybrid', 'Toyota', 5, 'Automatic', 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 'vehicle_pictures/vitz2.jpg', 'vehicle_pictures/vitz3.jpg', 5);
+INSERT INTO `vehicles_vehicle` (`id`, `model`, `year`, `price`, `picture`, `description`, `posted_date`, `color`, `mileage`, `body_type`, `engine_capacity`, `engine_type`, `fuel_type`, `make`, `no_of_seats`, `transmission_type`, `abs_breaks`, `air_conditioning`, `airbags`, `alloy_wheels`, `central_locking`, `leather_seats`, `power_steering`, `power_windows`, `reverse_camera`, `sunroof`, `picture2`, `picture3`, `seller_id`, `auction_duration_days`, `first_bid_date`) VALUES
+(21, 'Corolla', 2023, '5000000.00', 'vehicle_pictures/Coralla1.jpg', 'Discover elegance and reliability with our pristine Toyota Corolla, a timeless sedan designed for comfort and efficiency. This 2023 model in sleek silver boasts modern features and safety enhancements, ensuring a smooth ride for every journey. Ideal for discerning drivers seeking quality and value.', '2024-06-18 13:35:04.412298', 'Silver', 1000, 'sedan', '18.0', 'Hybrid', 'petrol', 'Toyota', 5, 'Automatic', 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 'vehicle_pictures/Corolla_2.jpg', 'vehicle_pictures/corolla3.jpg', 2, 7, '2024-06-22 10:17:48.361711'),
+(22, 'Civic', 2023, '5800000.00', 'vehicle_pictures/Honda1.jpg', 'Introducing the dynamic Honda Civic, a standout sedan delivering performance and style. This 2023 model in striking red combines sporty design with premium amenities, including a turbocharged engine for exhilarating drives. Perfect for those who crave sophistication and innovation.', '2024-06-18 13:39:22.325011', 'Red', 0, 'sedan', '1.5', 'Hybrid', 'petrol', 'Honda', 5, 'Automatic', 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 'vehicle_pictures/Honda2.jpg', 'vehicle_pictures/Honda3.jpg', 2, 1, '2024-06-22 10:25:13.921570'),
+(23, 'Sprinter', 2024, '12000000.00', 'vehicle_pictures/Benze1.jpg', 'The Mercedes-Benz Sprinter Minibus is designed for transporting passengers with comfort and efficiency in mind. Built on a solid platform with a 2.1-liter inline-4 diesel engine and automatic transmission, it combines reliability with fuel efficiency. This minibus can seat up to 12 passengers comfortably, equipped with essential features like ABS brakes, airbags, air conditioning, power steering, central locking, and a reverse camera for added safety and convenience. It\'s an ideal choice for businesses or organizations needing a reliable people-mover that offers a blend of practicality and comfort.', '2024-06-18 13:47:44.945029', 'White', 0, 'bus', '2.1', 'Internal Combustion Engine', 'diesel', 'Mercedes-Benz', 12, 'Automatic', 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 'vehicle_pictures/Benze2.jpg', 'vehicle_pictures/Benze3.jpg', 2, 2, '2024-06-22 10:25:36.846360'),
+(24, 'F-150', 2022, '9000000.00', 'vehicle_pictures/Ford1.jpg', 'The Ford F-150 is a robust and versatile pickup truck known for its durability and capability. Featuring a powerful 3.5-liter V6 engine paired with an automatic transmission, it offers excellent performance both on and off the road. With a spacious cabin accommodating up to 5 passengers, it includes modern amenities such as ABS brakes, alloy wheels, airbags, air conditioning, power steering, power windows, central locking, and a reverse camera. Ideal for those seeking a reliable vehicle for heavy-duty tasks without compromising on comfort and safety.', '2024-06-18 13:51:51.844288', 'Blue', 5000, 'truck', '3.5', 'Internal Combustion Engine', 'diesel', 'Ford', 5, 'Automatic', 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 'vehicle_pictures/Ford2.jpg', 'vehicle_pictures/Ford3.jpg', 1, 4, NULL),
+(25, 'RE Auto Rickshaw', 2023, '800000.00', 'vehicle_pictures/tuk1.jpg', 'Discover the reliable Bajaj RE Auto Rickshaw, a trusted companion for urban commuting and short-distance travel. Known for its sturdy build and economical performance, this auto rickshaw is ideal for navigating bustling city streets with ease. Perfect for drivers looking for affordability and durability in their daily transportation solution.', '2024-06-18 13:56:33.355841', 'Yellow', 7000, 'three_wheeler', '0.2', 'Internal Combustion Engine', 'petrol', 'other', 3, 'Manual', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'vehicle_pictures/tuk2.jpg', '', 1, 3, NULL),
+(26, 'YZF-R6', 2022, '2500000.00', 'vehicle_pictures/bike1.jpg', 'Experience exhilaration with the Yamaha YZF-R6, a high-performance sportbike designed for thrill-seeking riders. Renowned for its agility and power, the YZF-R6 delivers precision handling and impressive acceleration, making it a favorite on both the track and the road. Embrace the excitement of riding with Yamaha\'s legendary engineering and sleek design.', '2024-06-18 14:00:15.364594', 'Blue', 5000, 'motorbike', '0.6', 'Internal Combustion Engine', 'petrol', 'other', 2, 'Manual', 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 'vehicle_pictures/bike2.jpg', 'vehicle_pictures/bike3.jpg', 1, 6, NULL),
+(27, 'Camry', 2023, '7500000.00', 'vehicle_pictures/Camry1.jpg', 'Embrace sophistication and reliability with the Toyota Camry, a flagship sedan renowned for its comfort, performance, and lasting appeal. Ideal for discerning drivers seeking a blend of style and practicality, the Camry excels with its spacious interior, advanced technology features, and smooth driving experience. Whether navigating city streets or embarking on long journeys, the Camry delivers a harmonious balance of luxury and efficiency, making it a timeless choice in the sedan segment.', '2024-06-18 14:05:24.838227', 'Silver', 1000, 'sedan', '2.5', 'Hybrid', 'hybrid', 'Toyota', 5, 'Automatic', 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 'vehicle_pictures/Camry2.jpg', 'vehicle_pictures/Camry3.jpg', 3, 3, '2024-06-22 10:26:00.279805'),
+(28, '45DI', 2018, '3600000.00', 'vehicle_pictures/tracktor.jpg', 'The TAFE 45DI is a robust and reliable tractor designed for agricultural purposes. Known for its durability and simplicity, it offers essential features for farm work and rural applications, ensuring dependable performance in demanding conditions.', '2024-06-18 14:14:29.402653', 'Red', 1000, 'tractor', '1.0', 'Internal Combustion Engine', 'diesel', 'other', 1, 'Manual', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'vehicle_pictures/tracktor2.jpg', 'vehicle_pictures/tracktor3.jpg', 3, 7, '2024-06-22 10:26:14.869855'),
+(29, 'Ntorq', 2023, '780000.00', 'vehicle_pictures/Bikke1.jpg', 'The TVS Ntorq is a sporty and feature-packed scooter that appeals to urban riders seeking style and performance. It combines modern design elements with practical features such as a digital instrument cluster, smartphone connectivity, and a peppy engine, making it an ideal choice for daily commuting with a touch of excitement.', '2024-06-18 14:17:33.722131', 'Red', 500, 'motorbike', '0.2', 'Internal Combustion Engine', 'petrol', 'other', 2, 'Automatic', 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 'vehicle_pictures/Bikke2.jpg', 'vehicle_pictures/Bikke3.jpg', 3, 5, '2024-06-22 10:26:23.689252'),
+(30, 'Swift RS Turbo', 2023, '8690000.00', 'vehicle_pictures/susuki1.jpg', 'The Suzuki Swift RS Turbo blends sporty design with practicality, offering agile handling and turbocharged performance. It features advanced safety technologies, modern interior amenities, and a stylish exterior, making it a popular choice among enthusiasts and everyday drivers alike.', '2024-06-18 14:24:28.090812', 'White', 750, 'car', '1.0', 'Hybrid', 'petrol', 'Suzuki', 5, 'Automatic', 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 'vehicle_pictures/susuki2.jpg', '', 4, 1, '2024-06-22 10:26:48.933380'),
+(31, 'Ashok Leyland JanBu', 2024, '4700000.00', 'vehicle_pictures/bus1.jpg', 'Ashok Leyland buses are renowned for their robust build quality, reliability, and versatility. They are widely used for public transportation, school buses, intercity travel, and special applications such as tourist coaches. Featuring spacious interiors, comfortable seating arrangements, and advanced engineering, Ashok Leyland buses cater to both passenger comfort and safety. Equipped with modern technology and designed for efficient performance, these buses are a preferred choice for fleet operators and transportation companies looking for durability and operational excellence.', '2024-06-18 14:35:03.290650', 'White', 0, 'bus', '1.5', 'Internal Combustion Engine', 'diesel', 'other', 60, 'Manual', 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 'vehicle_pictures/Bus2.jpg', '', 4, 7, '2024-06-22 10:51:05.863819'),
+(32, 'CX-5', 2017, '18500000.00', 'vehicle_pictures/mazda1.jpg', 'The Mazda CX-5 combines stylish design with sporty performance and practicality. It offers a comfortable and upscale interior, advanced safety features, and a smooth driving experience suitable for both city and highway driving. With its responsive handling and versatile cargo space, the CX-5 is a popular choice among SUV enthusiasts seeking a blend of luxury and utility.', '2024-06-18 15:02:50.188755', 'Blue', 120000, 'suv', '2.0', 'Internal Combustion Engine', 'petrol', 'Mazda', 5, 'Automatic', 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 'vehicle_pictures/maxda2.jpg', '', 5, 4, '2024-06-22 10:28:20.122773'),
+(33, 'Vitz', 2023, '4590000.00', 'vehicle_pictures/vitz1.jpg', 'The Toyota Vitz (Yaris) is a reliable and fuel-efficient hatchback known for its compact size and practicality. It offers agile handling, a comfortable interior, and a range of modern features suitable for urban commuting. With Toyota\'s reputation for reliability and affordability, the Vitz appeals to drivers looking for a dependable and economical everyday car.', '2024-06-18 15:06:39.386820', 'Red', 1000, 'car', '13.0', 'Hybrid', 'hybrid', 'Toyota', 5, 'Automatic', 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 'vehicle_pictures/vitz2.jpg', 'vehicle_pictures/vitz3.jpg', 5, 5, '2024-06-22 10:28:42.200284');
 
 --
 -- Indexes for dumped tables
@@ -631,21 +620,6 @@ ALTER TABLE `user_user`
   ADD UNIQUE KEY `user_user_username_e2bdfe0c_uniq` (`username`);
 
 --
--- Indexes for table `user_userprofile`
---
-ALTER TABLE `user_userprofile`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `user_id` (`user_id`);
-
---
--- Indexes for table `user_userwatchlistitem`
---
-ALTER TABLE `user_userwatchlistitem`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `user_userwatchlistitem_user_id_vehicle_id_d2ba1258_uniq` (`user_id`,`vehicle_id`),
-  ADD KEY `user_userwatchlistit_vehicle_id_a1d71ac6_fk_vehicles_` (`vehicle_id`);
-
---
 -- Indexes for table `user_user_groups`
 --
 ALTER TABLE `user_user_groups`
@@ -720,7 +694,7 @@ ALTER TABLE `auth_user_user_permissions`
 -- AUTO_INCREMENT for table `bids_bid`
 --
 ALTER TABLE `bids_bid`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `django_admin_log`
@@ -738,7 +712,7 @@ ALTER TABLE `django_content_type`
 -- AUTO_INCREMENT for table `django_migrations`
 --
 ALTER TABLE `django_migrations`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 
 --
 -- AUTO_INCREMENT for table `user_listing`
@@ -751,18 +725,6 @@ ALTER TABLE `user_listing`
 --
 ALTER TABLE `user_user`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
---
--- AUTO_INCREMENT for table `user_userprofile`
---
-ALTER TABLE `user_userprofile`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
---
--- AUTO_INCREMENT for table `user_userwatchlistitem`
---
-ALTER TABLE `user_userwatchlistitem`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `user_user_groups`
@@ -780,7 +742,7 @@ ALTER TABLE `user_user_user_permissions`
 -- AUTO_INCREMENT for table `user_watchlist`
 --
 ALTER TABLE `user_watchlist`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `vehicles_vehicle`
@@ -838,19 +800,6 @@ ALTER TABLE `django_admin_log`
 --
 ALTER TABLE `user_listing`
   ADD CONSTRAINT `user_listing_user_id_2d0025b5_fk_user_user_id` FOREIGN KEY (`user_id`) REFERENCES `user_user` (`id`);
-
---
--- Constraints for table `user_userprofile`
---
-ALTER TABLE `user_userprofile`
-  ADD CONSTRAINT `user_userprofile_user_id_2474538d_fk_user_user_id` FOREIGN KEY (`user_id`) REFERENCES `user_user` (`id`);
-
---
--- Constraints for table `user_userwatchlistitem`
---
-ALTER TABLE `user_userwatchlistitem`
-  ADD CONSTRAINT `user_userwatchlistit_vehicle_id_a1d71ac6_fk_vehicles_` FOREIGN KEY (`vehicle_id`) REFERENCES `vehicles_vehicle` (`id`),
-  ADD CONSTRAINT `user_userwatchlistitem_user_id_0d2dfde1_fk_user_user_id` FOREIGN KEY (`user_id`) REFERENCES `user_user` (`id`);
 
 --
 -- Constraints for table `user_user_groups`
