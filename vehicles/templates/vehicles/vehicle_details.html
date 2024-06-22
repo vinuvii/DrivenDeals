@@ -1122,10 +1122,18 @@ document.addEventListener('DOMContentLoaded', function() {
         });
 
     var remainingTime = {{ remaining_time|default:'null' }};
+
     var placeBidButton = document.getElementById('placeBidButton');
+    placeBidButton.addEventListener('click', handlePlaceBidClick);
+
     var placeBidButtonSeller = document.getElementById('placeBidButtonSeller');
+    placeBidButtonSeller.addEventListener('click', handlePlaceBidClick);
+
     var watchlistButton = document.getElementById('watchlistButton');
+    watchlistButton.addEventListener('click', handleWatchlistClick);
+
     var bidForm = document.getElementById('bidForm');
+    bidForm.addEventListener('submit', validateBid);
 
     // Countdown Initialization
     function initializeCountdown(selector, remainingSeconds) {
