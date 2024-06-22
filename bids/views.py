@@ -1,11 +1,11 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from .models import Bid
 from vehicles.models import Vehicle
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from .forms import BidForm
-
+from payments.views import make_payment
 
 @login_required
 def place_bid(request, vehicle_id):
@@ -15,19 +15,26 @@ def place_bid(request, vehicle_id):
         form = BidForm(request.POST)
         if form.is_valid():
             bid_amount = form.cleaned_data['bid_amount']
-            # Assuming you have 'car_id' in your BidForm to get the vehicle ID
-            car_id = form.cleaned_data['car_id']
-            vehicle = get_object_or_404(Vehicle, pk=car_id)
 
-            # Check if it's the first bid on this vehicle
-            if not vehicle.first_bid_date:
-                vehicle.first_bid_date = timezone.now()  # Update first_bid_date
-                vehicle.save()
+            # Simulate payment (amount can be a fixed amount or calculated)
+            amount_to_charge = bid_amount  # Example: charge the bid amount
+            response = make_payment(request, amount_to_charge)
 
-            # Create the bid
-            Bid.objects.create(car=vehicle, bidder=request.user.userprofile, bid_amount=bid_amount)
-            return redirect('bid_success')  # Redirect to a success page or vehicle detail page
+            # If payment is successful, proceed to save the bid
+            if response.status_code == 200:  # Assuming make_payment returns a HttpResponse
+                # Check if it's the first bid on this vehicle
+                if not vehicle.first_bid_date:
+                    vehicle.first_bid_date = timezone.now()  # Update first_bid_date
+                    vehicle.save()
 
+                # Create the bid
+                Bid.objects.create(car=vehicle, bidder=request.user.userprofile, bid_amount=bid_amount)
+                return redirect('bid_success')  # Redirect to a success page or vehicle detail page
+            else:
+                # Handle payment failure scenario
+                return HttpResponse("Payment failed. Please try again.")
+
+    # Redirect to vehicle detail page if POST method is not used
     return redirect('vehicle_detail', vehicle_id=vehicle_id)
 
 def determine_bid_status(bid):

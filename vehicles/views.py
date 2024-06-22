@@ -2,6 +2,8 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+
+from payments.views import make_payment
 from user.models import Watchlist
 from .forms import VehicleForm
 from django.urls import reverse
@@ -26,13 +28,24 @@ def list_vehicle(request):
         if form.is_valid():
             vehicle = form.save(commit=False)
             vehicle.seller = request.user
-            vehicle.save()
-            messages.success(request, 'Your vehicle has been listed successfully!')
-            return redirect('vehicle_success')  # Redirect to a success page
+
+            # Simulate payment (fixed amount for listing a vehicle)
+            amount_to_charge = 20.00  # Example amount to charge for listing a vehicle
+            response = make_payment(request, amount_to_charge)
+
+            # If payment is successful, save the vehicle listing
+            if response.status_code == 200:  # Assuming make_payment returns a HttpResponse
+                vehicle.save()
+                messages.success(request, 'Your vehicle has been listed successfully!')
+                return redirect('vehicle_success')  # Redirect to a success page
+            else:
+                # Handle payment failure scenario
+                messages.error(request, 'Payment failed. Please try again.')
         else:
             messages.error(request, 'Please correct the error below.')
     else:
         form = VehicleForm()
+
     return render(request, 'vehicles/vehicle_listing.html', {'form': form})
 
 def vehicle_success(request):

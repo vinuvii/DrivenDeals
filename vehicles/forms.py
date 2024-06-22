@@ -49,6 +49,12 @@ class VehicleForm(forms.ModelForm):
             instance.save()
         return instance
 
+    def clean_price(self):
+        price = self.cleaned_data.get('price')
+        if price <= 0:
+            raise forms.ValidationError("Price must be a positive number.")
+        return price
+
 
 class VehicleFilterForm(forms.Form):
     MANUFACTURER_CHOICES = [
