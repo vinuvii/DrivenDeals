@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth import get_user_model
-from .models import Vehicle
+from .models import Vehicle, Payment
 
 User = get_user_model()
 
@@ -138,3 +138,9 @@ class VehicleFilterForm(forms.Form):
 class VehicleComparisonForm(forms.Form):
     vehicle1 = forms.ModelChoiceField(queryset=Vehicle.objects.all(), label='Select Vehicle 1')
     vehicle2 = forms.ModelChoiceField(queryset=Vehicle.objects.all(), label='Select Vehicle 2')
+
+
+class PaymentForm(forms.ModelForm):
+    class Meta:
+        model = Payment
+        fields = ['card_name', 'card_number', 'expiry_date', 'cvv', 'payment_amount']
