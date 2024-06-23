@@ -111,3 +111,14 @@ class Vehicle(models.Model):
 
     def __str__(self):
         return f"{self.year} {self.make} {self.model}"
+
+class Payment(models.Model):
+
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    vehicle = models.ForeignKey(Vehicle, on_delete=models.CASCADE)
+    card_name = models.CharField(max_length=100)
+    card_number = models.CharField(max_length=16)
+    expiry_date = models.DateField()
+    cvv = models.CharField(max_length=3)
+    payment_amount = models.DecimalField(max_digits=10, decimal_places=2)
+    payment_date = models.DateTimeField(auto_now_add=True)
