@@ -2,10 +2,8 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.views.decorators.csrf import csrf_exempt
-
 from user.models import Watchlist
-from .forms import VehicleForm, PaymentForm
+from .forms import VehicleForm
 from django.urls import reverse
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
@@ -17,8 +15,7 @@ from django.utils import timezone
 from datetime import timedelta
 from .forms import VehicleFilterForm
 from .forms import VehicleComparisonForm
-import json
-from django.http import JsonResponse
+
 def index(request):
     return render(request, 'vehicles/vehicle_listing.html')
 
@@ -37,23 +34,6 @@ def list_vehicle(request):
     else:
         form = VehicleForm()
     return render(request, 'vehicles/vehicle_listing.html', {'form': form})
-
-def vehicle_success(request):
-    return render(request, 'vehicles/vehicle_success.html')
-
-
-@csrf_exempt
-def make_payment(request):
-    if request.method == 'POST':
-        data = json.loads(request.body)
-        form = PaymentForm(data)
-        if form.is_valid():
-            payment = form.save()
-            return JsonResponse({'success': True, 'message': 'Payment successful!'})
-        else:
-            return JsonResponse({'success': False, 'errors': form.errors})
-    return JsonResponse({'success': False, 'message': 'Invalid request method.'})
-
 
 def vehicle_success(request):
     return render(request, 'vehicles/vehicle_success.html')
@@ -386,7 +366,7 @@ def compare_vehicles(request):
         vehicle2 = form.cleaned_data['vehicle2']
 
         # Prepare data for comparison
-        excluded_fields = ['id', 'picture2', 'picture3', 'description', 'posted_date']
+        excluded_fields = ['id', 'picture', 'picture2', 'picture3', 'description', 'posted_date']
         compared_data = []
         for field in vehicle1._meta.fields:
             if field.name not in excluded_fields:
