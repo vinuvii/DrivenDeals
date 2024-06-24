@@ -26,4 +26,6 @@ urlpatterns = [
     path('all-listings/', views.all_listings, name='all_listings'),
     path('all_listings/search/', views.search_listings, name='search_listings'),
 
+    path('seller_listings/', views.seller_listings, name='seller_listings'),
+
 ]

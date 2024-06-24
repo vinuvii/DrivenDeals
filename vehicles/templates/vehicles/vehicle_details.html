@@ -3,90 +3,200 @@
 {% load humanize %}
 {% block extra_head %}
 <style>
-    html, body {
-        overflow-x: hidden;
-    }
-    .vehicle-header {
-        width: 100%;
-        height: 300px; /* Adjust height as needed */
-        overflow: hidden;
-        position: relative;
-        margin-top: -150px;
-    }
+html, body {
+    overflow-x: hidden;
+}
 
-    .vehicle-header img {
-        width: 100%;
-        height: 100%; /* Ensure the image fills its container */
-        object-fit: cover; /* Ensures the image covers the entire container */
-        position: absolute; /* Position image absolutely within its container */
-        top: 0;
-        left: 0;
-    }
+.vehicle-details {
+    width: 100%;
+    height: auto;
+}
 
-    .vehicle-overlay {
-        font-family: 'Open Sans', 'Titillium Web', 'PT Sans', Arial, sans-serif;
-        position: absolute;
-        top: 180px;
-        left: 180px;
-        color: white;
-        padding: 5px 10px;
-        font-size: 36px;
-        font-weight: bold;
-        z-index: 10; /* Ensure overlay is above the image */
-    }
+.vehicle-header {
+    width: 100%;
+    height: 300px; /* Adjust height as needed */
+    overflow: hidden;
+    position: relative;
+    margin-top: -150px;
+}
 
-    .vehicle-details-section {
-        background-color: #f9f9f9;
-        padding: 60px 60px;
-    }
+.background-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+}
 
-    .vehicle-details-section__head-title {
-        position: relative;
-        font-size: 45px;
-        font-weight: bold;
-        text-transform: uppercase;
-        font-family: 'Open Sans', 'Titillium Web', 'PT Sans', Arial, sans-serif;
-    }
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Adjust opacity as desired */
+}
 
-    .vehicle-details-section__head-title::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: -20px; /* Adjust this value to control the distance from the text */
-        width: 5px; /* Adjust this value to control the thickness of the line */
-        height: 100%;
-        background-color: #de483d; /* Red color */
-    }
+.vehicle-overlay {
+    font-family: 'Open Sans', 'Titillium Web', 'PT Sans', Arial, sans-serif;
+    position: absolute;
+    top: 180px;
+    left: 180px;
+    color: white;
+    padding: 5px 10px;
+    font-size: 36px;
+    font-weight: bold;
+    z-index: 10;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8); /* Optional: Add text shadow for better contrast */
+}
+.vehicle-details-section {
+    background-color: #f9f9f9;
+    padding: 60px 60px 120px; /* Increased bottom padding for huge space */
+}
 
-    .vehicle-details-section__head h1,
-    .vehicle-details-section__head h3 {
-        margin: 10px 0;
-        padding-left: 10px; /* Add padding to separate text from line */
-    }
+.vehicle-details-section__head-title {
+    position: relative;
+    font-size: 45px;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-top: 40px;
+    font-family: 'Open Sans', 'Titillium Web', 'PT Sans', Arial, sans-serif;
+}
 
-    .vehicle-details-section__head-price {
-        text-align: right;
-        margin-top: 20px; /* Adjust spacing */
-    }
+.vehicle-details-section__head-title::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -20px; /* Adjust this value to control the distance from the text */
+    width: 5px; /* Adjust this value to control the thickness of the line */
+    height: 100%;
+    background-color: #de483d; /* Red color */
 
-    .vehicle-details-section__head-price-num {
-        font-size: 30px;
-        font-weight: bold;
-        color: #ffffff;
-        background-color: #de483d; /* Background color */
-        display: inline-block;
-        padding: 10px 25px;
-        border-radius: 2px;
-    }
+}
 
-    .vehicle-details-section__head-price p {
-        font-size: 14px;
-        color: #666;
-        margin-top: 5px;
+.vehicle-details-section__head h1,
+.vehicle-details-section__head h3 {
+    margin: 10px 0;
+    padding-left: 10px;
+
+}
+
+.vehicle-details-section__head-price {
+    text-align: right;
+    margin-top: 40px; /* Increase spacing between price and buttons */
+}
+
+.vehicle-details-section__head-price-num {
+    font-size: 30px;
+    font-weight: bold;
+    color: #ffffff;
+    background-color: #de483d; /* Background color */
+    display: inline-block;
+    padding: 10px 25px;
+    border-radius: 2px;
+}
+
+.vehicle-details-section__head-price p {
+    font-size: 14px;
+    color: #666;
+    margin-top: 5px;
+}
+
+.button-group {
+    margin-top: 40px; /* Add significant spacing between buttons */
+}
+
+    #placeBidButton {
+    background-color: #de483d; /* Primary button background color */
+    border: #de483d;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+#placeBidButton:hover {
+    background-color:  #e68883; /* Darker shade for hover */
+    border: none;
+    color: white;
+}
+
+#watchlistButton {
+    background-color: #f0f0f0; /* Outline secondary button background color */
+    border: 1px solid #6c757d; /* Outline border color */
+    color: #6c757d; /* Outline secondary button text color */
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+#watchlistButton:hover {
+    background-color: #e5e5ea; /* Slightly darker background for hover */
+    border: 1px solid #5a6268; /* Darker outline for hover */
+    color: #5a6268; /* Darker text color for hover */
+}
+
+#watchlistButton .fa-check {
+    color: green;
+}
+
+#watchlistButton .fa-star {
+    color: gold;
+}
+
+
+/* Animation classes */
+.animate__animated {
+    animation-duration: 1s;
+}
+
+.animate__fadeIn {
+    animation-name: fadeIn;
+}
+
+.animate__fadeInUp {
+    animation-name: fadeInUp;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
     }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+
+
     #vehicle-details-container {
         background-color: #f9f9f9;
         padding: 20px;
+        margin-top: -80px
     }
     #vehicle-details-container .vehicle-card {
         background-color: #ffffff;
@@ -100,8 +210,12 @@
         max-height: 805px; /* Adjusted max-height */
         margin: 0 auto; /* Center the vehicle-card */
         position: relative;
+        transition: transform 0.3s ease-in-out;
     }
 
+#vehicle-details-container .vehicle-card:hover {
+    transform: translateY(-10px); /* Slight lift on hover */
+}
 
     #vehicle-details-container .vehicle-gallery {
         width: 100%;
@@ -120,7 +234,11 @@
         min-width: 760px;
         max-height: 570px;
         min-height: 570px;
+        transition: transform 0.3s ease-in-out;
     }
+    #vehicle-details-container .vehicle-gallery img:hover {
+    transform: scale(1.05); /* Slight zoom on hover */
+}
 
     #vehicle-details-container .thumbnail-images {
         display: flex;
@@ -137,65 +255,169 @@
         border-radius: 5px;
         margin: 5px;
         cursor: pointer;
+        transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
     }
 
     #vehicle-details-container .thumbnail-images img:hover {
-        opacity: 0.7; /* Reduce opacity on hover */
+        opacity: 0.7;
+        transform: translateY(-5px);
     }
+.vehicle-description-card {
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-top: 0;
+    margin-bottom: 20px;
+    width: 100%;
+    max-width: 550px;
+    margin-right: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
 
-    #vehicle-details-container .vehicle-description-card  {
-        padding-top: 0; /* Adjust padding-top if needed */
-        padding-bottom: 0; /* Adjust padding-bottom if needed */
-        margin-top: 0px; /* Adjust margin-top if needed */
-        margin-bottom: 20px; /* Example: Set margin-bottom to create space between sections */
-        width: 550px; /* Adjust the width as needed */
-        margin-right: 20px;
-        background-color: #de483d;
-        border-radius: 8px;
-        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-    }
+.vehicle-description-card .card-header {
+    background-color: #de483d;
+    padding: 15px;
+    border-bottom: none;
+    position: relative;
+}
 
+.vehicle-description-card .card-title {
+    color: #ffffff;
+    font-size: 1.25rem;
+    font-weight: bold;
+    position: relative; /* Ensure positioning context */
+    display: inline-block;
+    background-color: transparent;
+    border: de483d;
+}
 
-    #vehicle-details-container .vehicle-description-card .card-header {
-        background-color: #de483d;
-        padding-top: 20px;
-        border-width: 8px 8px 0 8px; /* top, right, bottom, left */
-        border-color: #ffffff;
-    }
+.vehicle-description-card .card-title::before {
+    content: ""; /* Empty content for pseudo-element */
+    position: absolute;
+    top: 50%; /* Adjust top position for alignment */
+    left: 0;
+    width: 100%;
+    height: 1px; /* Adjust thickness of the border */
+    background-color: #de483d; /* Thick red border color */
+    z-index: -1; /* Behind text */
+    box-sizing: border-box;
+}
 
+.vehicle-description-card .card-title span {
+    display: inline-block; /* Make inline for border to wrap around */
+    padding: 0 8px; /* Add padding inside the border */
+    background-color: #de483d; /* Match the border color */
+}
+.vehicle-description-card .card-body {
+    padding: 10px;
+}
 
-    #vehicle-details-container .vehicle-description-card .card-title  {
-        color: #ffffff;
-        font-size: 1.25rem;
-        font-weight: bold;
-    }
+.vehicle-description-card .table {
+    background-color: #ffffff;
+    margin-bottom: 0;
+    border-collapse: collapse;
+}
 
-    #vehicle-details-container .vehicle-description-card .card-body {
-        padding: 0;
-    }
+.vehicle-description-card .table tbody tr {
+    height: 30px; /* Reduce the height of each row */
+}
 
-    #vehicle-details-container .vehicle-description-card .table {
-        background-color: #de483d;
-        margin-bottom: 0;
-        border: 1px solid #f0b1af;
-        border: 8px solid #ffffff;
-        border-radius: 8px;
-    }
+.vehicle-description-card .table thead {
+    background-color: #f0b1af;
+}
 
-    .vehicle-description-card .table tbody tr:nth-child(even) {
-        background-color: #f7c6c5; /* Lighter shade of #de483d */
-    }
+.vehicle-description-card .table tbody tr:nth-child(even) {
+    background-color: #f7c6c5;
+}
 
-    .vehicle-description-card .table tbody tr:nth-child(odd) {
-        background-color: #f0b1af; /* Slightly lighter shade of #de483d */
-    }
-    .seller-details {
-        background-color: #f8f9fa;
-        padding: 20px;
-        border-radius: 5px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        margin-bottom: 20px;
-    }
+.vehicle-description-card .table tbody tr:nth-child(odd) {
+    background-color: #f0b1af;
+}
+
+.vehicle-description-card .table th,
+.vehicle-description-card .table td {
+    border: none;
+    padding: 8px; /* Reduce padding for each cell */
+    color: #333;
+}
+
+.vehicle-description-card .table th {
+    background-color: #de483d;
+    color: #ffffff;
+    text-align: left;
+    font-weight: bold;
+}
+
+.vehicle-description-card .table td {
+    background-color: #ffffff;
+    color: #333;
+}
+
+.vehicle-description-card .table tr:hover {
+    background-color: #f5f5f5;
+    transition: background-color 0.3s ease;
+}
+
+.seller-description-card {
+    background-color: #ffffff;
+    margin-bottom: 20px;
+    padding: 5px; /* Slightly increased padding */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    width: 100%; /* Ensure the seller details card has the same width */
+    max-width: 550px; /* Ensure the same max-width */
+    margin-right: 20px; /* Ensure the same margin-right */
+    border: 0px solid #de483d; /* Subtle border */
+}
+
+.seller-description-card .card-header {
+    background-color: #de483d;
+    padding: 15px;
+    border-bottom: none;
+    border-radius: 8px 8px 0 0; /* Rounded top corners */
+}
+
+.seller-description-card .card-title {
+    color: #ffffff;
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin: 0;
+}
+
+.seller-description-card .card-body {
+    padding: 10px; /* Increased padding */
+}
+
+.seller-description-card p {
+    margin-bottom: 12px; /* Slightly increased margin for more line spacing */
+    font-size: 0.95rem; /* Slightly larger font size */
+    color: #333;
+    line-height: 1.6; /* Increased line-height for better spacing */
+    border-bottom: 1px solid #f0f0f0; /* Subtle bottom border for separation */
+    padding-bottom: 3px; /* Padding for bottom border */
+}
+
+.seller-description-card p:last-child {
+    margin-bottom: 0; /* Remove margin for the last paragraph */
+    border-bottom: none; /* Remove border for the last paragraph */
+}
+
+.seller-description-card p strong {
+    color: #de483d;
+}
+
+.seller-description-card a {
+    color: #c3382d;
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+.seller-description-card a:hover {
+    text-decoration: none;
+}
 
 
     .modal-background {
@@ -631,151 +853,144 @@
         border-color: #28a745;
         color: #fff;
     }
+/* Ensure margin and padding adjustments for spacing */
+.vehicle-features {
+    margin-top: 80px;
+    margin-left: 20px;
+}
 
-  .seller-description-card {
-    width: 100%;
-    max-width: 600px;
-    margin: 0 auto;
-    background-color: #f0f0f0;
-    border: 8px solid #ffffff;
+.vehicle-features h3 {
+    font-size: 1.75rem; /* Increase font size */
+    font-weight: bold; /* Make the text bold */
+    margin-bottom: 20px; /* Adds space below the heading */
+    color: #333; /* Sets a dark color for the heading text */
+    margin-top: 20px;
+}
+
+.vehicle-features ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.vehicle-features li {
+    margin-bottom: 12px;
+    line-height: 1.8;
+}
+
+.vehicle-features .fa-check-circle {
+    margin-right: 10px;
+    color: #de483d; /* Original color */
+    font-size: 16px;
+}
+
+.vehicle-description {
+    margin-top: 80px;
+    margin-bottom: 100px;
+}
+
+.vehicle-description .description-text p {
+    text-align: justify; /* Justify the text */
+    font-size: 16px; /* Example font size */
+    line-height: 1.6; /* Example line height */
+    margin-left: 20px; /* Example margin left */
+    margin-right: 60px; /* Example margin right */
+}
+
+/* Ensure margin and padding adjustments for spacing */
+.vehicle-features {
+    margin-top: 80px;
+    margin-left: 20px;
+}
+
+.vehicle-features h3 {
+    font-size: 1.75rem; /* Increase font size */
+    font-weight: bold; /* Make the text bold */
+    margin-bottom: 20px; /* Adds space below the heading */
+    color: #333; /* Sets a dark color for the heading text */
+    margin-top: 20px;
+}
+
+.vehicle-features ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.vehicle-features li {
+    margin-bottom: 12px;
+    line-height: 1.8;
+}
+
+.vehicle-features .fa-check-circle {
+    margin-right: 10px;
+    color: #de483d; /* Original color */
+    font-size: 16px;
+}
+
+.vehicle-description {
+    margin-top: 80px;
+    margin-bottom: 100px;
+}
+
+.vehicle-description .description-text p {
+    text-align: justify; /* Justify the text */
+    font-size: 16px; /* Example font size */
+    line-height: 1.6; /* Example line height */
+    margin-left: 20px; /* Example margin left */
+    margin-right: 60px; /* Example margin right */
+}
+
+.vehicle-bids-card {
+    position: relative; /* Ensure relative positioning for absolute button */
+    background-color: #ffffff;
+    margin-bottom: 100px; /* Increased bottom margin */
+    padding: 15px; /* Adjusted padding */
     border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  }
-
-  .seller-description-card .card-header {
-    background-color: #f0f0f0;
-    padding: 10px 20px;
-    margin: -8px;
-  }
-
-  .seller-description-card .card-title {
-    font-size: 1.25rem;
-    font-weight: bold;
-  }
-
-  .seller-description-card .card-body {
-    padding: 20px 20px; /* Added padding to the card body */
-  }
-
-  .seller-description-card p {
-    margin-bottom: 5px; /* Increased margin-bottom for better spacing */
-    margin-left: 10px;
-    padding: 3px;
-    margin-top: 10px;
-
-  }
-
-  .seller-description-card p:last-child {
-    margin-bottom: 0;
-  }
-
-  .seller-description-card a {
-    color: #007bff; /* Blue color */
-    text-decoration: underline;
-  }
-
-  .seller-description-card a:hover {
-    text-decoration: none;
-  }
-
-    .vehicle-features {
-        margin-top: 20px;
-        margin-left: 20px;
-    }
-
-
-    .vehicle-features ul {
-        list-style-type: none;
-        padding-left: 0;
-    }
-
-    .vehicle-features li {
-        margin-bottom: 12px;
-        line-height: 1.8;
-    }
-
-    .vehicle-features .fa-check-circle {
-        margin-right: 10px;
-        color: #de483d;
-        font-size: 16px;
-    }
-    .vehicle-features h3 {
-        font-size: 1.75rem; /* Increase font size */
-        font-weight: bold; /* Make the text bold */
-        margin-bottom: 20px; /* Adds space below the heading */
-        color: #333; /* Sets a dark color for the heading text */
-        margin-top: 20px;
-    }
-
-    .vehicle-description {
-        margin-top: 20px; /* Adds space above the description section */
-    }
-
-    .vehicle-description .description-text p {
-        text-align: justify; /* Justify the text */
-        font-size: 16px; /* Example font size */
-        line-height: 1.6; /* Example line height */
-    }
-
-    .vehicle-description .description-text {
-        margin-top: 10px; /* Example margin top */
-        margin-bottom: 20px;
-        text-align: justify;
-    }
-
-    .description-text p {
-        text-align: justify;
-        margin-left: 20px;
-        margin-right: 60px;
-    }
-
-    #placeBidButton {
-    background-color: #de483d; /* Primary button background color */
-    border: #de483d;
-    color: white;
-    padding: 10px 20px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    cursor: pointer;
-    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    width: 100%; /* Full width of the container */
+    max-width: 550px; /* Maximum width to maintain readability */
+    margin-right: 20px; /* Right margin for spacing */
+    border: 1px solid #de483d; /* Subtle border */
+    margin-top: 60px; /* Increased top margin for spacing */
 }
 
-#placeBidButton:hover {
-    background-color:  #e68883; /* Darker shade for hover */
-    border: none;
-    color: white;
+.vehicle-bids-card p {
+    margin-bottom: 12px; /* Slightly increased margin for more line spacing */
+    font-size: 0.95rem; /* Slightly larger font size */
+    color: #333;
+    line-height: 1.6; /* Increased line-height for better spacing */
+    border-bottom: 1px solid #f0f0f0; /* Subtle bottom border for separation */
+    padding-bottom: 3px; /* Padding for bottom border */
 }
 
-#watchlistButton {
-    background-color: #f0f0f0; /* Outline secondary button background color */
-    border: 1px solid #6c757d; /* Outline border color */
-    color: #6c757d; /* Outline secondary button text color */
-    padding: 10px 20px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    cursor: pointer;
-    border-radius: 5px;
+.vehicle-bids-card .place-bid-button-container {
+    position: absolute;
+    top: 10px; /* Adjust top position for vertical alignment */
+    right: 30px;
+    border-radius: 1px;
+
+.vehicle-bids-card .btn-sm {
+    font-size: 0.75rem; /* Smaller font size for smaller button */
+    padding: 0.25rem 0.5rem; /* Adjusted padding for smaller button */
 }
 
-#watchlistButton:hover {
-    background-color: #e5e5ea; /* Slightly darker background for hover */
-    border: 1px solid #5a6268; /* Darker outline for hover */
-    color: #5a6268; /* Darker text color for hover */
+
+
+/* AOS Animation Settings */
+[data-aos] {
+    opacity: 0;
+    transition-property: opacity;
 }
 
-#watchlistButton .fa-check {
-    color: green;
+[data-aos].aos-animate {
+    opacity: 1;
 }
 
-#watchlistButton .fa-star {
-    color: gold;
+[data-aos^="fade"] {
+    transition-duration: 800ms; /* Adjust duration as needed */
 }
+
+
 
 .btn-custom {
     /* Additional custom styles for all buttons with btn-custom class */
@@ -793,10 +1008,13 @@
 {% endblock %}
 
 {% block content %}
-<div class="vehicle-details">
+<div class="vehicle-details" data-aos="fade-down" data-aos-duration="500" data-aos-delay="200">
     <div class="vehicle-header">
-        <img src="https://www.freewebheaders.com/wp-content/gallery/cars/cache/toyota-gt86-dashboard-car-website-header.jpg-nggid043742-ngg0dyn-1280x375x100-00f0w010c010r110f110r010t010.jpg" alt="Vehicle Details Page">
-             <div class="vehicle-overlay">Vehicle Details Page</div>
+        <div class="background-image"
+             style="background-image: url('https://www.freewebheaders.com/wp-content/gallery/cars/cache/toyota-gt86-dashboard-car-website-header.jpg-nggid043742-ngg0dyn-1280x375x100-00f0w010c010r110f110r010t010.jpg');">
+            <div class="overlay"></div>
+            <div class="vehicle-overlay">Vehicle Details Page</div>
+        </div>
     </div>
 </div>
 
@@ -804,7 +1022,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-9">
-                <div class="vehicle-details-section__head">
+                <div class="vehicle-details-section__head animate__animated animate__fadeInUp">
                     <div class="vehicle-details-section__head-title">
                         <h1>{{ vehicle.make }} - {{ vehicle.model }}</h1>
                         <h3>{{ vehicle.year }}</h3>
@@ -812,126 +1030,136 @@
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="vehicle-details-section__head-price">
+                <div class="vehicle-details-section__head-price animate__animated animate__fadeInUp">
                     <div class="vehicle-details-section__head-price-num">LKR {{ highest_bid|intcomma }}</div>
                     <p>Winning Bid Price</p>
                 </div>
-                <button class="btn btn-outline-secondary btn-custom" id="watchlistButton"
-                    data-vehicle-id="{{ vehicle.id }}">
-                    {% if is_in_watchlist %}
-                        <i class="fas fa-check"></i> Added to Watchlist
-                    {% else %}
-                        <i class="far fa-star"></i> Add to Watchlist
-                    {% endif %}
-                </button>
+                <div class="button-group animate__animated animate__fadeInUp">
+                    <div class="d-flex flex-column align-items-start">
+                        <button class="btn btn-outline-secondary btn-custom mb-2" id="watchlistButton"
+                            data-vehicle-id="{{ vehicle.id }}">
+                            {% if is_in_watchlist %}
+                                <i class="fas fa-check"></i> Added to Watchlist
+                            {% else %}
+                                <i class="far fa-star"></i> Add to Watchlist
+                            {% endif %}
+                        </button>
 
-                {% if auction_ended %}
-                    <button class="btn btn-outline-secondary btn-custom" id="auctionEndedButton" disabled>Auction Ended</button>
-                {% else %}
-                    <button class="btn btn-primary btn-custom" id="placeBidButton">Place Bid</button>
-                {% endif %}
-
+                        {% if auction_ended %}
+                            <button class="btn btn-outline-secondary btn-custom" id="auctionEndedButton"
+                                disabled>Auction Ended</button>
+                        {% else %}
+                            <button class="btn btn-primary btn-custom mb-2" id="placeBidButton">Place Bid</button>
+                        {% endif %}
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </section>
 
 
-<div id="vehicle-details-container" class="container">
+<div id="vehicle-details-container" class="container" data-aos="fade-up">
   <div class="row">
     <div class="col-md-7">
-        <div class="vehicle-card">
-          <div class="vehicle-gallery">
-              <img id="main-image" src="{{ vehicle.picture.url }}" class="img-fluid" alt="{{ vehicle.model }}">
-          </div>
-          <div class="thumbnail-images">
-            <img src="{{ vehicle.picture.url }}" alt="{{ vehicle.model }}" onclick="displayImage('{{ vehicle.picture.url }}')">
-                        {% if vehicle.picture2 %}
-                            <img src="{{ vehicle.picture2.url }}" alt="Additional Image 1" onclick="displayImage('{{ vehicle.picture2.url }}')">
-                        {% endif %}
-                        {% if vehicle.picture3 %}
-                            <img src="{{ vehicle.picture3.url }}" alt="Additional Image 2" onclick="displayImage('{{ vehicle.picture3.url }}')">
-                        {% endif %}
-                        {% for image in vehicle.additional_images.all %}
-                            <img src="{{ image.url }}" alt="{{ vehicle.model }}" onclick="displayImage('{{ image.url }}')">
-                        {% endfor %}
-          </div>
+      <div class="vehicle-card" data-aos="fade-up">
+        <div class="vehicle-gallery">
+          <img id="main-image" src="{{ vehicle.picture.url }}" class="img-fluid" alt="{{ vehicle.model }}">
         </div>
+        <div class="thumbnail-images" data-aos="fade-up">
+          <img src="{{ vehicle.picture.url }}" alt="{{ vehicle.model }}" onclick="displayImage('{{ vehicle.picture.url }}')">
+          {% if vehicle.picture2 %}
+            <img src="{{ vehicle.picture2.url }}" alt="Additional Image 1" onclick="displayImage('{{ vehicle.picture2.url }}')">
+          {% endif %}
+          {% if vehicle.picture3 %}
+            <img src="{{ vehicle.picture3.url }}" alt="Additional Image 2" onclick="displayImage('{{ vehicle.picture3.url }}')">
+          {% endif %}
+          {% for image in vehicle.additional_images.all %}
+            <img src="{{ image.url }}" alt="{{ vehicle.model }}" onclick="displayImage('{{ image.url }}')">
+          {% endfor %}
+        </div>
+      </div>
     </div>
 
-    <div class="col-md-5">
-      <div class="vehicle-description-card">
-          <div class="card">
-                <div class="card-header">
-                    <h5 class="card-title mb-0">Description</h5>
-                </div>
-              <div class="card-body">
-                <table class="table table-striped">
-                                <tbody>
-                                    <tr>
-                                        <th>Manufacturer</th>
-                                        <td>{{ vehicle.make }}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Model</th>
-                                        <td>{{ vehicle.model }}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Year</th>
-                                        <td>{{ vehicle.year }}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Color</th>
-                                        <td>{{ vehicle.color }}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Mileage</th>
-                                        <td>{{ vehicle.mileage }} km</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Fuel Type</th>
-                                        <td>{{ vehicle.fuel_type | capfirst}}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Body Type</th>
-                                        <td>{{ vehicle.body_type | capfirst}}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Engine Capacity</th>
-                                        <td>{{ vehicle.engine_capacity }}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Engine Type</th>
-                                        <td>{{ vehicle.engine_type | capfirst}}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Transmission Type</th>
-                                        <td>{{ vehicle.transmission_type | capfirst}}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Number of Seats</th>
-                                        <td>{{ vehicle.no_of_seats }}</td>
-                                    </tr>
-                                </tbody>
-                </table>
-              </div>
+    <div class="col-md-5 d-flex flex-column" data-aos="fade-up">
+      <div class="vehicle-description-card mb-3" data-aos="fade-up">
+        <div class="card">
+          <div class="card-header">
+            <h5 class="card-title mb-0">Description</h5>
           </div>
-      </div>
-
-        <div class="vehicle-description-card">
-          <div class="seller-description-card">
-                <div class="card-header">
-                    <h5 class="card-title mb-0">Seller Details</h5>
-                </div>
-                    <p><strong>Name: </strong>{{ vehicle.seller.first_name }} {{ vehicle.seller.last_name }}</p>
-                    <p><strong>Trading Address: </strong>{{ vehicle.seller.trading_address }}</p>
-                    <p><strong>Email: </strong>{{ vehicle.seller.email }}</p>
-                    <p><strong>Contact Number: </strong>{{ vehicle.seller.mobile_number }}</p>
-                    <p><strong>Click To Check Seller's Other Listings: </strong><a href="listings.html">Click Here</a></p>
+          <div class="card-body">
+            <table class="table table-striped">
+              <tbody>
+                <tr>
+                  <th>Manufacturer</th>
+                  <td>{{ vehicle.make }}</td>
+                </tr>
+                <tr>
+                  <th>Model</th>
+                  <td>{{ vehicle.model }}</td>
+                </tr>
+                <tr>
+                  <th>Year</th>
+                  <td>{{ vehicle.year }}</td>
+                </tr>
+                <tr>
+                  <th>Color</th>
+                  <td>{{ vehicle.color }}</td>
+                </tr>
+                <tr>
+                  <th>Mileage</th>
+                  <td>{{ vehicle.mileage }} km</td>
+                </tr>
+                <tr>
+                  <th>Fuel Type</th>
+                  <td>{{ vehicle.fuel_type | capfirst }}</td>
+                </tr>
+                <tr>
+                  <th>Body Type</th>
+                  <td>{{ vehicle.body_type | capfirst }}</td>
+                </tr>
+                <tr>
+                  <th>Engine Capacity</th>
+                  <td>{{ vehicle.engine_capacity }}</td>
+                </tr>
+                <tr>
+                  <th>Engine Type</th>
+                  <td>{{ vehicle.engine_type | capfirst }}</td>
+                </tr>
+                <tr>
+                  <th>Transmission Type</th>
+                  <td>{{ vehicle.transmission_type | capfirst }}</td>
+                </tr>
+                <tr>
+                  <th>Number of Seats</th>
+                  <td>{{ vehicle.no_of_seats }}</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
+      </div>
+
+      <div class="seller-description-card" data-aos="fade-up">
+        <div class="card">
+          <div class="card-header">
+            <h5 class="card-title mb-0">Seller Details</h5>
+          </div>
+          <div class="card-body">
+            <p><strong>Name: </strong>{{ vehicle.seller.first_name }} {{ vehicle.seller.last_name }}</p>
+            <p><strong>Trading Address: </strong>{{ vehicle.seller.trading_address }}</p>
+            <p><strong>Email: </strong>{{ vehicle.seller.email }}</p>
+            <p><strong>Contact Number: </strong>{{ vehicle.seller.mobile_number }}</p>
+            <p><strong><a href="{% url 'seller_listings' %}?seller_id={{ vehicle.seller.id }}">Click To Check Seller's Other Listings</a></strong></p>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-<div class="row vehicle-features">
+
+
+
+<div class="row vehicle-features" data-aos="fade-up">
     <div class="col-md-7">
         <h3>Features</h3>
         <div class="feature-list">
@@ -996,50 +1224,52 @@
                 </div>
             </div>
         </div>
-        <h3>Description</h3>
-        <div class="feature-list">
+
+        <div class="vehicle-description" data-aos="fade-up">
+            <h3>Description</h3>
             <div class="description-text">
                 <p>{{ vehicle.description }}</p>
             </div>
         </div>
     </div>
 
-<div class="vehicle-description-card">
-    <div class="seller-description-card">
-
-            <p>Bidding Period Ends In,</p>
+    <div class="vehicle-bids-card">
+        <div id="time-remaining"></div>
+        <div class="bidding-period">
 
             <div id="time-remaining-container1"></div>
+        </div>
 
-            <div>
-                <h3>Highest Bid: {{ highest_bid }}</h3>
-                {% if highest_bid %}
-                    <ul>
-                        {% for bid in vehicle.bid_set.all %}
-                            <li>
-                                Timestamp: {{ bid.timestamp|date:"Y-m-d" }} {{ bid.timestamp|time:"H:i:s" }} - Amount: {{ bid.amount }} - Status: {{ bid.get_bid_status_display }}
-                            </li>
-                        {% endfor %}
-                    </ul>
-                {% else %}
-                    <p>No bids yet</p>
-                {% endif %}
-            </div>
-         {% if not auction_ended %}
-            <button class="btn btn-primary btn-custom place-bid-button" id="placeBidButtonSeller">Place Bid</button>
+        <div>
+            <h3>Highest Bid: {{ highest_bid }}</h3>
+            {% if highest_bid %}
+                <ul>
+                    {% for bid in vehicle.bid_set.all %}
+                        <li>
+                            <strong>{{ bid.timestamp|date:"Y-m-d" }}</strong> <i>{{ bid.timestamp|time:"H:i:s" }}</i> - Amount: {{ bid.amount }} - Status: {{ bid.get_bid_status_display }}
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No bids yet</p>
+            {% endif %}
+        </div>
+
+        {% if not auction_ended %}
+        <div class="place-bid-button-container">
+            <button class="btn btn-primary btn-sm btn-custom place-bid-button" id="placeBidButtonSeller">Place Bid</button>
+        </div>
         {% endif %}
-
-
-
-
-
     </div>
+
+
+
+
+</div>
 </div>
 
 
-  </div>
-</div>
-</div>
+
 
 {% if not auction_ended %}
 <div class="modal fade" id="placeBidModal" tabindex="-1" role="dialog" aria-labelledby="placeBidModalLabel" aria-hidden="true">
@@ -1060,10 +1290,16 @@
                     <p class="bids-total">BIDS IN TOTAL FOR VEHICLE: {{ total_bids }}</p>
                 </div>
 
+
+                {% if remaining_time %}
                 <p>Bidding Period Ends In,</p>
+                {% else %}
+                <p>Place The First Bid To Start Auction</p>
+                {% endif %}
                 <div id="time-remaining-container2"></div>
 
                     <div class="bid-values">
+
                         {% for bid_value in bid_increments %}
                             <button class="bid-value" type="button" onclick="setBidValue({{ bid_value }})">LKR {{ bid_value }}</button>
                         {% endfor %}
@@ -1170,6 +1406,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Append Countdown Template
     if (remainingTime !== null) {
+        document.getElementById('time-remaining').innerHTML = 'BIDDING PERIOD ENDS IN,';
         var countdownTemplate = document.getElementById('countdown-template').innerHTML;
 
         function appendCountdown(elementId) {

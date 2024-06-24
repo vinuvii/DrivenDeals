@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 22, 2024 at 07:37 PM
+-- Generation Time: Jun 24, 2024 at 12:39 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.1.12
 
@@ -117,7 +117,11 @@ INSERT INTO `auth_permission` (`id`, `name`, `content_type_id`, `codename`) VALU
 (53, 'Can add watchlist', 14, 'add_watchlist'),
 (54, 'Can change watchlist', 14, 'change_watchlist'),
 (55, 'Can delete watchlist', 14, 'delete_watchlist'),
-(56, 'Can view watchlist', 14, 'view_watchlist');
+(56, 'Can view watchlist', 14, 'view_watchlist'),
+(57, 'Can add payment', 15, 'add_payment'),
+(58, 'Can change payment', 15, 'change_payment'),
+(59, 'Can delete payment', 15, 'delete_payment'),
+(60, 'Can view payment', 15, 'view_payment');
 
 -- --------------------------------------------------------
 
@@ -192,19 +196,28 @@ CREATE TABLE `bids_bid` (
 
 INSERT INTO `bids_bid` (`id`, `amount`, `timestamp`, `bid_status`, `expiry_date`, `user_id`, `vehicle_id`) VALUES
 (12, '5100000.00', '2024-06-22 10:17:48.359477', 'PENDING', '2024-06-29 10:17:48.358480', 4, 21),
-(13, '5950000.00', '2024-06-22 10:25:13.913335', 'PENDING', '2024-06-23 10:25:13.913335', 4, 22),
+(13, '5950000.00', '2024-06-22 10:25:13.913335', 'ACCEPTED', '2024-06-23 10:25:13.913335', 4, 22),
 (14, '12050010.00', '2024-06-22 10:25:36.843926', 'PENDING', '2024-06-24 10:25:36.842538', 4, 23),
 (15, '7555500.00', '2024-06-22 10:26:00.276742', 'PENDING', '2024-06-25 10:26:00.275657', 4, 27),
 (16, '3700000.00', '2024-06-22 10:26:14.863017', 'PENDING', '2024-06-29 10:26:14.863017', 4, 28),
 (17, '930000.00', '2024-06-22 10:26:23.681432', 'PENDING', '2024-06-27 10:26:23.681432', 4, 29),
-(18, '8790000.00', '2024-06-22 10:26:48.930351', 'PENDING', '2024-06-23 10:26:48.930351', 4, 30),
+(18, '8790000.00', '2024-06-22 10:26:48.930351', 'ACCEPTED', '2024-06-23 10:26:48.930351', 4, 30),
 (19, '18550000.00', '2024-06-22 10:28:20.117386', 'PENDING', '2024-06-26 10:28:20.117386', 4, 32),
 (20, '4590010.00', '2024-06-22 10:28:42.197777', 'PENDING', '2024-06-27 10:28:42.197777', 4, 33),
 (21, '5250000.00', '2024-06-22 10:50:36.826819', 'PENDING', '2024-06-29 10:17:48.361711', 1, 21),
 (22, '1030000.00', '2024-06-22 10:50:53.262253', 'PENDING', '2024-06-27 10:26:23.689252', 1, 29),
 (23, '4800000.00', '2024-06-22 10:51:05.863819', 'PENDING', '2024-06-29 10:51:05.863819', 1, 31),
 (24, '4690010.00', '2024-06-22 10:51:21.887613', 'PENDING', '2024-06-27 10:28:42.200284', 1, 33),
-(25, '4740010.00', '2024-06-22 10:56:29.721143', 'PENDING', '2024-06-27 10:28:42.200284', 1, 33);
+(25, '4740010.00', '2024-06-22 10:56:29.721143', 'PENDING', '2024-06-27 10:28:42.200284', 1, 33),
+(26, '12200010.00', '2024-06-24 09:27:26.698895', 'PENDING', '2024-06-24 10:25:36.846360', 3, 23),
+(27, '9100000.00', '2024-06-24 09:28:44.716736', 'PENDING', '2024-06-28 09:28:44.712629', 3, 24),
+(28, '800500.00', '2024-06-24 09:29:02.504316', 'PENDING', '2024-06-27 09:29:02.504316', 3, 25),
+(29, '2650000.00', '2024-06-24 09:29:54.812068', 'PENDING', '2024-06-30 09:29:54.812068', 3, 26),
+(30, '4850000.00', '2024-06-24 09:31:26.973711', 'PENDING', '2024-06-29 09:31:26.973711', 3, 35),
+(31, '7655500.00', '2024-06-24 09:36:01.324110', 'PENDING', '2024-06-25 10:26:00.279805', 3, 27),
+(32, '4950000.00', '2024-06-24 09:36:38.029815', 'PENDING', '2024-06-29 10:51:05.863819', 3, 31),
+(33, '18650000.00', '2024-06-24 09:36:53.060285', 'PENDING', '2024-06-26 10:28:20.122773', 3, 32),
+(34, '4790010.00', '2024-06-24 09:37:13.541157', 'PENDING', '2024-06-27 10:28:42.200284', 3, 33);
 
 -- --------------------------------------------------------
 
@@ -271,6 +284,7 @@ INSERT INTO `django_content_type` (`id`, `app_label`, `model`) VALUES
 (13, 'user', 'userwatchlistitem'),
 (14, 'user', 'watchlist'),
 (11, 'user', 'watchlistitem'),
+(15, 'vehicles', 'payment'),
 (7, 'vehicles', 'vehicle');
 
 -- --------------------------------------------------------
@@ -339,7 +353,9 @@ INSERT INTO `django_migrations` (`id`, `app`, `name`, `applied`) VALUES
 (46, 'user', '0014_alter_watchlist_unique_together_and_more', '2024-06-17 12:29:38.482563'),
 (47, 'user', '0015_alter_userwatchlistitem_unique_together_and_more', '2024-06-22 10:16:57.540577'),
 (48, 'vehicles', '0012_vehicle_auction_duration_days', '2024-06-22 10:16:57.596775'),
-(49, 'vehicles', '0013_vehicle_first_bid_date', '2024-06-22 10:16:57.616776');
+(49, 'vehicles', '0013_vehicle_first_bid_date', '2024-06-22 10:16:57.616776'),
+(50, 'vehicles', '0014_alter_vehicle_body_type', '2024-06-23 18:58:59.066804'),
+(51, 'vehicles', '0015_payment', '2024-06-23 18:58:59.243622');
 
 -- --------------------------------------------------------
 
@@ -458,7 +474,26 @@ INSERT INTO `user_watchlist` (`id`, `user_id`, `vehicle_id`) VALUES
 (7, 5, 27),
 (8, 4, 21),
 (9, 4, 22),
-(10, 4, 33);
+(10, 4, 33),
+(13, 3, 36);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `vehicles_payment`
+--
+
+CREATE TABLE `vehicles_payment` (
+  `id` bigint(20) NOT NULL,
+  `card_name` varchar(100) NOT NULL,
+  `card_number` varchar(16) NOT NULL,
+  `expiry_date` date NOT NULL,
+  `cvv` varchar(3) NOT NULL,
+  `payment_amount` decimal(10,2) NOT NULL,
+  `payment_date` datetime(6) NOT NULL,
+  `user_id` bigint(20) NOT NULL,
+  `vehicle_id` bigint(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -508,9 +543,9 @@ INSERT INTO `vehicles_vehicle` (`id`, `model`, `year`, `price`, `picture`, `desc
 (21, 'Corolla', 2023, '5000000.00', 'vehicle_pictures/Coralla1.jpg', 'Discover elegance and reliability with our pristine Toyota Corolla, a timeless sedan designed for comfort and efficiency. This 2023 model in sleek silver boasts modern features and safety enhancements, ensuring a smooth ride for every journey. Ideal for discerning drivers seeking quality and value.', '2024-06-18 13:35:04.412298', 'Silver', 1000, 'sedan', '18.0', 'Hybrid', 'petrol', 'Toyota', 5, 'Automatic', 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 'vehicle_pictures/Corolla_2.jpg', 'vehicle_pictures/corolla3.jpg', 2, 7, '2024-06-22 10:17:48.361711'),
 (22, 'Civic', 2023, '5800000.00', 'vehicle_pictures/Honda1.jpg', 'Introducing the dynamic Honda Civic, a standout sedan delivering performance and style. This 2023 model in striking red combines sporty design with premium amenities, including a turbocharged engine for exhilarating drives. Perfect for those who crave sophistication and innovation.', '2024-06-18 13:39:22.325011', 'Red', 0, 'sedan', '1.5', 'Hybrid', 'petrol', 'Honda', 5, 'Automatic', 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 'vehicle_pictures/Honda2.jpg', 'vehicle_pictures/Honda3.jpg', 2, 1, '2024-06-22 10:25:13.921570'),
 (23, 'Sprinter', 2024, '12000000.00', 'vehicle_pictures/Benze1.jpg', 'The Mercedes-Benz Sprinter Minibus is designed for transporting passengers with comfort and efficiency in mind. Built on a solid platform with a 2.1-liter inline-4 diesel engine and automatic transmission, it combines reliability with fuel efficiency. This minibus can seat up to 12 passengers comfortably, equipped with essential features like ABS brakes, airbags, air conditioning, power steering, central locking, and a reverse camera for added safety and convenience. It\'s an ideal choice for businesses or organizations needing a reliable people-mover that offers a blend of practicality and comfort.', '2024-06-18 13:47:44.945029', 'White', 0, 'bus', '2.1', 'Internal Combustion Engine', 'diesel', 'Mercedes-Benz', 12, 'Automatic', 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 'vehicle_pictures/Benze2.jpg', 'vehicle_pictures/Benze3.jpg', 2, 2, '2024-06-22 10:25:36.846360'),
-(24, 'F-150', 2022, '9000000.00', 'vehicle_pictures/Ford1.jpg', 'The Ford F-150 is a robust and versatile pickup truck known for its durability and capability. Featuring a powerful 3.5-liter V6 engine paired with an automatic transmission, it offers excellent performance both on and off the road. With a spacious cabin accommodating up to 5 passengers, it includes modern amenities such as ABS brakes, alloy wheels, airbags, air conditioning, power steering, power windows, central locking, and a reverse camera. Ideal for those seeking a reliable vehicle for heavy-duty tasks without compromising on comfort and safety.', '2024-06-18 13:51:51.844288', 'Blue', 5000, 'truck', '3.5', 'Internal Combustion Engine', 'diesel', 'Ford', 5, 'Automatic', 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 'vehicle_pictures/Ford2.jpg', 'vehicle_pictures/Ford3.jpg', 1, 4, NULL),
-(25, 'RE Auto Rickshaw', 2023, '800000.00', 'vehicle_pictures/tuk1.jpg', 'Discover the reliable Bajaj RE Auto Rickshaw, a trusted companion for urban commuting and short-distance travel. Known for its sturdy build and economical performance, this auto rickshaw is ideal for navigating bustling city streets with ease. Perfect for drivers looking for affordability and durability in their daily transportation solution.', '2024-06-18 13:56:33.355841', 'Yellow', 7000, 'three_wheeler', '0.2', 'Internal Combustion Engine', 'petrol', 'other', 3, 'Manual', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'vehicle_pictures/tuk2.jpg', '', 1, 3, NULL),
-(26, 'YZF-R6', 2022, '2500000.00', 'vehicle_pictures/bike1.jpg', 'Experience exhilaration with the Yamaha YZF-R6, a high-performance sportbike designed for thrill-seeking riders. Renowned for its agility and power, the YZF-R6 delivers precision handling and impressive acceleration, making it a favorite on both the track and the road. Embrace the excitement of riding with Yamaha\'s legendary engineering and sleek design.', '2024-06-18 14:00:15.364594', 'Blue', 5000, 'motorbike', '0.6', 'Internal Combustion Engine', 'petrol', 'other', 2, 'Manual', 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 'vehicle_pictures/bike2.jpg', 'vehicle_pictures/bike3.jpg', 1, 6, NULL),
+(24, 'F-150', 2022, '9000000.00', 'vehicle_pictures/Ford1.jpg', 'The Ford F-150 is a robust and versatile pickup truck known for its durability and capability. Featuring a powerful 3.5-liter V6 engine paired with an automatic transmission, it offers excellent performance both on and off the road. With a spacious cabin accommodating up to 5 passengers, it includes modern amenities such as ABS brakes, alloy wheels, airbags, air conditioning, power steering, power windows, central locking, and a reverse camera. Ideal for those seeking a reliable vehicle for heavy-duty tasks without compromising on comfort and safety.', '2024-06-18 13:51:51.844288', 'Blue', 5000, 'truck', '3.5', 'Internal Combustion Engine', 'diesel', 'Ford', 5, 'Automatic', 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 'vehicle_pictures/Ford2.jpg', 'vehicle_pictures/Ford3.jpg', 1, 4, '2024-06-24 09:28:44.720123'),
+(25, 'RE Auto Rickshaw', 2023, '800000.00', 'vehicle_pictures/tuk1.jpg', 'Discover the reliable Bajaj RE Auto Rickshaw, a trusted companion for urban commuting and short-distance travel. Known for its sturdy build and economical performance, this auto rickshaw is ideal for navigating bustling city streets with ease. Perfect for drivers looking for affordability and durability in their daily transportation solution.', '2024-06-18 13:56:33.355841', 'Yellow', 7000, 'three_wheeler', '0.2', 'Internal Combustion Engine', 'petrol', 'other', 3, 'Manual', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'vehicle_pictures/tuk2.jpg', '', 1, 3, '2024-06-24 09:29:02.509634'),
+(26, 'YZF-R6', 2022, '2500000.00', 'vehicle_pictures/bike1.jpg', 'Experience exhilaration with the Yamaha YZF-R6, a high-performance sportbike designed for thrill-seeking riders. Renowned for its agility and power, the YZF-R6 delivers precision handling and impressive acceleration, making it a favorite on both the track and the road. Embrace the excitement of riding with Yamaha\'s legendary engineering and sleek design.', '2024-06-18 14:00:15.364594', 'Blue', 5000, 'motorbike', '0.6', 'Internal Combustion Engine', 'petrol', 'other', 2, 'Manual', 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 'vehicle_pictures/bike2.jpg', 'vehicle_pictures/bike3.jpg', 1, 6, '2024-06-24 09:29:54.812068'),
 (27, 'Camry', 2023, '7500000.00', 'vehicle_pictures/Camry1.jpg', 'Embrace sophistication and reliability with the Toyota Camry, a flagship sedan renowned for its comfort, performance, and lasting appeal. Ideal for discerning drivers seeking a blend of style and practicality, the Camry excels with its spacious interior, advanced technology features, and smooth driving experience. Whether navigating city streets or embarking on long journeys, the Camry delivers a harmonious balance of luxury and efficiency, making it a timeless choice in the sedan segment.', '2024-06-18 14:05:24.838227', 'Silver', 1000, 'sedan', '2.5', 'Hybrid', 'hybrid', 'Toyota', 5, 'Automatic', 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 'vehicle_pictures/Camry2.jpg', 'vehicle_pictures/Camry3.jpg', 3, 3, '2024-06-22 10:26:00.279805'),
 (28, '45DI', 2018, '3600000.00', 'vehicle_pictures/tracktor.jpg', 'The TAFE 45DI is a robust and reliable tractor designed for agricultural purposes. Known for its durability and simplicity, it offers essential features for farm work and rural applications, ensuring dependable performance in demanding conditions.', '2024-06-18 14:14:29.402653', 'Red', 1000, 'tractor', '1.0', 'Internal Combustion Engine', 'diesel', 'other', 1, 'Manual', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'vehicle_pictures/tracktor2.jpg', 'vehicle_pictures/tracktor3.jpg', 3, 7, '2024-06-22 10:26:14.869855'),
 (29, 'Ntorq', 2023, '780000.00', 'vehicle_pictures/Bikke1.jpg', 'The TVS Ntorq is a sporty and feature-packed scooter that appeals to urban riders seeking style and performance. It combines modern design elements with practical features such as a digital instrument cluster, smartphone connectivity, and a peppy engine, making it an ideal choice for daily commuting with a touch of excitement.', '2024-06-18 14:17:33.722131', 'Red', 500, 'motorbike', '0.2', 'Internal Combustion Engine', 'petrol', 'other', 2, 'Automatic', 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 'vehicle_pictures/Bikke2.jpg', 'vehicle_pictures/Bikke3.jpg', 3, 5, '2024-06-22 10:26:23.689252'),
@@ -519,7 +554,7 @@ INSERT INTO `vehicles_vehicle` (`id`, `model`, `year`, `price`, `picture`, `desc
 (32, 'CX-5', 2017, '18500000.00', 'vehicle_pictures/mazda1.jpg', 'The Mazda CX-5 combines stylish design with sporty performance and practicality. It offers a comfortable and upscale interior, advanced safety features, and a smooth driving experience suitable for both city and highway driving. With its responsive handling and versatile cargo space, the CX-5 is a popular choice among SUV enthusiasts seeking a blend of luxury and utility.', '2024-06-18 15:02:50.188755', 'Blue', 120000, 'suv', '2.0', 'Internal Combustion Engine', 'petrol', 'Mazda', 5, 'Automatic', 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 'vehicle_pictures/maxda2.jpg', '', 5, 4, '2024-06-22 10:28:20.122773'),
 (33, 'Vitz', 2023, '4590000.00', 'vehicle_pictures/vitz1.jpg', 'The Toyota Vitz (Yaris) is a reliable and fuel-efficient hatchback known for its compact size and practicality. It offers agile handling, a comfortable interior, and a range of modern features suitable for urban commuting. With Toyota\'s reputation for reliability and affordability, the Vitz appeals to drivers looking for a dependable and economical everyday car.', '2024-06-18 15:06:39.386820', 'Red', 1000, 'car', '13.0', 'Hybrid', 'hybrid', 'Toyota', 5, 'Automatic', 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 'vehicle_pictures/vitz2.jpg', 'vehicle_pictures/vitz3.jpg', 5, 5, '2024-06-22 10:28:42.200284'),
 (34, 'Civic', 2020, '5000000.00', 'vehicle_pictures/Midnight_Black_honda_civic.jpg', 'The Honda Civic Midnight Black is a sleek and stylish vehicle featuring a bold, dark exterior color. It boasts a precise fitment and top-notch quality, ensuring safety without compromising airbag deployment. This exclusive car interior is made with PRIME materials for a premium look and feel', '2024-06-22 15:02:03.822089', 'Midnight Black', 2500, 'sedan', '1.6', 'Hybrid', 'hybrid', 'Honda', 5, 'Automatic', 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 'vehicle_pictures/Midnight_Black_honda_civic1.jpg', 'vehicle_pictures/Midnight_Black_honda_civic2.jpg', 1, 2, NULL),
-(35, 'Corolla', 2018, '4800000.00', 'vehicle_pictures/metaliccorolla1.jpg', 'A well-maintained metallic Toyota Corolla with all essential features.', '2024-06-22 15:44:48.814717', 'Metallic Blue', 50000, 'sedan', '1.8', 'Internal Combustion Engine', 'petrol', 'Toyota', 5, 'Automatic', 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 'vehicle_pictures/metaliccorolla2.jpg', 'vehicle_pictures/metaliccorolla3.jpg', 1, 5, NULL),
+(35, 'Corolla', 2018, '4800000.00', 'vehicle_pictures/metaliccorolla1.jpg', 'A well-maintained metallic Toyota Corolla with all essential features.', '2024-06-22 15:44:48.814717', 'Metallic Blue', 50000, 'sedan', '1.8', 'Internal Combustion Engine', 'petrol', 'Toyota', 5, 'Automatic', 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 'vehicle_pictures/metaliccorolla2.jpg', 'vehicle_pictures/metaliccorolla3.jpg', 1, 5, '2024-06-24 09:31:26.980381'),
 (36, 'Mustang', 2020, '11200000.00', 'vehicle_pictures/yellowmustang.jpg', 'A powerful metallic Ford Mustang with low mileage and premium features.', '2024-06-22 16:51:11.773305', 'Yellow', 15000, 'coupe', '5.0', 'Internal Combustion Engine', 'petrol', 'Ford', 4, 'Automatic', 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 'vehicle_pictures/yellowmustang1.jpg', 'vehicle_pictures/yellowmustang2.jpg', 3, 3, NULL);
 
 --
@@ -648,6 +683,14 @@ ALTER TABLE `user_watchlist`
   ADD KEY `user_watchlist_user_id_cf69f936` (`user_id`);
 
 --
+-- Indexes for table `vehicles_payment`
+--
+ALTER TABLE `vehicles_payment`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `vehicles_payment_user_id_489e464c_fk_user_user_id` (`user_id`),
+  ADD KEY `vehicles_payment_vehicle_id_af4d1d67_fk_vehicles_vehicle_id` (`vehicle_id`);
+
+--
 -- Indexes for table `vehicles_vehicle`
 --
 ALTER TABLE `vehicles_vehicle`
@@ -674,7 +717,7 @@ ALTER TABLE `auth_group_permissions`
 -- AUTO_INCREMENT for table `auth_permission`
 --
 ALTER TABLE `auth_permission`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
 
 --
 -- AUTO_INCREMENT for table `auth_user`
@@ -698,7 +741,7 @@ ALTER TABLE `auth_user_user_permissions`
 -- AUTO_INCREMENT for table `bids_bid`
 --
 ALTER TABLE `bids_bid`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT for table `django_admin_log`
@@ -710,13 +753,13 @@ ALTER TABLE `django_admin_log`
 -- AUTO_INCREMENT for table `django_content_type`
 --
 ALTER TABLE `django_content_type`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `django_migrations`
 --
 ALTER TABLE `django_migrations`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 
 --
 -- AUTO_INCREMENT for table `user_listing`
@@ -746,7 +789,13 @@ ALTER TABLE `user_user_user_permissions`
 -- AUTO_INCREMENT for table `user_watchlist`
 --
 ALTER TABLE `user_watchlist`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+
+--
+-- AUTO_INCREMENT for table `vehicles_payment`
+--
+ALTER TABLE `vehicles_payment`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `vehicles_vehicle`
@@ -825,6 +874,13 @@ ALTER TABLE `user_user_user_permissions`
 ALTER TABLE `user_watchlist`
   ADD CONSTRAINT `user_watchlist_user_id_cf69f936_fk_user_user_id` FOREIGN KEY (`user_id`) REFERENCES `user_user` (`id`),
   ADD CONSTRAINT `user_watchlist_vehicle_id_fbac1da1_fk_vehicles_vehicle_id` FOREIGN KEY (`vehicle_id`) REFERENCES `vehicles_vehicle` (`id`);
+
+--
+-- Constraints for table `vehicles_payment`
+--
+ALTER TABLE `vehicles_payment`
+  ADD CONSTRAINT `vehicles_payment_user_id_489e464c_fk_user_user_id` FOREIGN KEY (`user_id`) REFERENCES `user_user` (`id`),
+  ADD CONSTRAINT `vehicles_payment_vehicle_id_af4d1d67_fk_vehicles_vehicle_id` FOREIGN KEY (`vehicle_id`) REFERENCES `vehicles_vehicle` (`id`);
 
 --
 -- Constraints for table `vehicles_vehicle`

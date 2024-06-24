@@ -1,0 +1,151 @@
+{% extends 'base.html' %}
+{% load humanize %}
+
+{% block extra_head %}
+<style>
+    /* CSS for styling */
+    .car-list-container {
+        padding: 20px;
+    }
+    .car-item {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        padding: 20px;
+        background-color: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        margin-bottom: 20px;
+        position: relative;
+    }
+    .car-item img {
+        width: 200px;
+        height: 150px;
+        border-radius: 10px;
+        object-fit: cover;
+        margin-right: 20px;
+    }
+    .car-details {
+        flex: 1;
+        min-width: 250px;
+    }
+    .car-details h3 {
+        font-size: 22px;
+        margin-bottom: 10px;
+    }
+    .car-price {
+        background-color: #e74c3c;
+        color: white;
+        padding: 5px 10px;
+        font-size: 20px;
+        font-weight: bold;
+        text-align: right;
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        border-radius: 5px;
+    }
+    .car-item a {
+        text-decoration: none;
+        color: inherit;
+        position: relative;
+    }
+    .car-item:hover {
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+    .view-details-button, .watchlist-button {
+        background-color: #e74c3c;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 5px;
+        text-decoration: none;
+        display: inline-block;
+        margin-top: 10px;
+    }
+    .view-details-button:hover {
+        background-color: #bf3c32;
+    }
+    .car-listings-heading {
+        font-size: 36px;
+        text-align: center;
+        margin-bottom: 20px;
+        color: #333;
+    }
+    .no-bids-message {
+        font-size: 24px;
+        text-align: center;
+        margin-top: 20px;
+    }
+    .seller-description-card {
+        margin-bottom: 20px;
+    }
+    .seller-description-card .card {
+        padding: 20px;
+        background-color: #f8f9fa;
+        border-radius: 10px;
+    }
+    .seller-description-card .card-header {
+        background-color: #e74c3c;
+        color: white;
+        padding: 10px;
+        border-radius: 5px 5px 0 0;
+    }
+    .seller-description-card .card-body p {
+        margin-bottom: 10px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<main>
+    <section class="car-list-container">
+        <h1 class="car-listings-heading">{{ seller.first_name }} {{ seller.last_name }} Listings</h1>
+        <div class="seller-description-card">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Seller Details</h5>
+                </div>
+                <div class="card-body">
+                    <p><strong>Name: </strong>{{ seller.first_name }} {{ seller.last_name }}</p>
+                    <p><strong>Trading Address: </strong>{{ seller.trading_address }}</p>
+                    <p><strong>Email: </strong>{{ seller.email }}</p>
+                    <p><strong>Contact Number: </strong>{{ seller.mobile_number }}</p>
+                    <p><strong>Listings:</strong></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Display vehicle listings -->
+        {% if listings %}
+            {% for vehicle in listings %}
+            <div class="car-item">
+                <img src="{{ vehicle.picture.url }}" alt="Vehicle Image">
+                <div class="car-details">
+                    <h3>{{ vehicle.model }}</h3>
+                    <strong>{{ vehicle.make }} {{ vehicle.model }} ({{ vehicle.year }})</strong><br>
+                    <span class="car-price">LKR {{ vehicle.price|intcomma }}</span><br>
+                    <p>{{ vehicle.description }}</p>
+                    <p>Registered {{ vehicle.year }} · {{ vehicle.color }} · {{ vehicle.transmission }} · {{ vehicle.fuel_type }}</p>
+                    <p><i class="fas fa-tachometer-alt"></i> {{ vehicle.mileage|intcomma }} KM</p>
+                    <a href="{% url 'vehicle_detail' vehicle.id %}" class="view-details-button">View Details</a>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <p class="no-bids-message">This seller has no listings.</p>
+        {% endif %}
+
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
+    <script>
+        function confirmLogout() {
+            const result = confirm("Are you sure you want to logout?");
+            if (result) {
+                window.location.href = "{% url 'logout' %}";
+            }
+        }
+    </script>
+</main>
+{% endblock %}

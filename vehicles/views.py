@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from user.models import Watchlist
@@ -71,7 +71,7 @@ def update_bids_table(vehicle):
                 bid.save()
 
 def vehicle_detail(request, vehicle_id):
-    vehicle = get_object_or_404(Vehicle, pk=vehicle_id)
+    vehicle = get_object_or_404(models.Vehicle, pk=vehicle_id)
     highest_bid = Bid.objects.filter(vehicle=vehicle).order_by('-amount').first()
     highest_bid_amount = highest_bid.amount if highest_bid else vehicle.price
 
@@ -169,7 +169,7 @@ def update_expired_bids():
 
 
 def home(request):
-    cars = Vehicle.objects.all()
+    cars = models.Vehicle.objects.all()
     update_expired_bids()
     context = {
         'cars': cars,
@@ -186,10 +186,10 @@ def watchlist_view(request):
     }
     return render(request, 'user/watchlist.html', context)
 
-@login_required
-def vehicle_listing_view(request):
-    # Logic to fetch data for user's bids if needed
-    return render(request, 'vehicles/vehicle_listing.html')
+# @login_required
+# def vehicle_listing_view(request):
+#     # Logic to fetch data for user's bids if needed
+#     return render(request, 'vehicles/vehicle_listing.html')
 
 from django.shortcuts import render, redirect
 
@@ -247,7 +247,7 @@ def contact(request):
 
 def compare(request):
     # Fetch all vehicles from the database
-    vehicles = Vehicle.objects.all()
+    vehicles = models.Vehicle.objects.all()
 
     context = {
         'vehicles': vehicles,
@@ -256,7 +256,7 @@ def compare(request):
 
 def filter(request):
     # Fetch all vehicles initially to populate filter options
-    vehicles = Vehicle.objects.all()
+    vehicles = models.Vehicle.objects.all()
 
     context = {
         'vehicles': vehicles
@@ -265,7 +265,7 @@ def filter(request):
 
 def filter_vehicles(request):
     form = VehicleFilterForm(request.GET)
-    vehicles = Vehicle.objects.all()
+    vehicles = models.Vehicle.objects.all()
 
     if form.is_valid():
         if form.cleaned_data['make']:
@@ -327,7 +327,7 @@ def filter_vehicles(request):
 
 def all_listings(request):
     # Initial queryset of all vehicles
-    vehicles = Vehicle.objects.all()
+    vehicles = models.Vehicle.objects.all()
 
     # Handling search functionality
     query = request.GET.get('q')
@@ -388,3 +388,27 @@ def compare_vehicles(request):
         'compared_data': compared_data,
     }
     return render(request, 'vehicles/compare_vehicles.html', context)
+
+
+from django.shortcuts import render, get_object_or_404
+from . import models
+
+from django.shortcuts import render, get_object_or_404
+from user.models import User
+from .models import Vehicle
+
+def seller_listings(request):
+    seller_id = request.GET.get('seller_id')
+
+    # Debugging print statement
+    print(f"Fetching seller with ID: {seller_id}")
+
+    seller = get_object_or_404(User, id=seller_id)
+    listings = Vehicle.objects.filter(seller=seller)
+
+    context = {
+        'seller': seller,
+        'listings': listings
+    }
+
+    return render(request, 'vehicles/seller_listings.html', context)
