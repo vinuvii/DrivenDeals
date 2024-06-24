@@ -29,4 +29,5 @@ urlpatterns = [
     path('contact/success/', views.contact_success, name='contact_success'),  # Optionally define a success page
     path('seller_listings/', views.seller_listings, name='seller_listings'),
 
+
 ]
