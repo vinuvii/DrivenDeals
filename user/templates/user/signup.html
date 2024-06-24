@@ -2,6 +2,15 @@
 
 {% block extra_head %}
 <style>
+        .parent-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0; /* Remove default margin */
+            padding-top:20px;
+            padding-bottom:20px;
+        }
+
         .register-container {
             background-color: #adadad;
             padding: 40px;
@@ -57,9 +66,10 @@
 
 {% block content %}
 <body>
-    <div class="register-container">
-        <h2>Register</h2>
-        <form method="post" action="">
+    <div class="parent-container">
+        <div class="register-container">
+            <h2>Register</h2>
+            <form method="post" action="">
             {% csrf_token %}
             {{ form.username.label_tag }} {{ form.username }}
             {{ form.password1.label_tag }} {{ form.password1 }}
@@ -70,15 +80,16 @@
             {{ form.mobile_number.label_tag }} {{ form.mobile_number }}
             {{ form.postal_code.label_tag }} {{ form.postal_code }}
             {{ form.trading_address.label_tag }} {{ form.trading_address }}
-            <button type="submit" class="btn btn-primary">Register</button>
-        </form>
-        <div class="terms">
+                <button type="submit" class="btn btn-primary">Register</button>
+            </form>
+            <div class="terms">
                 <p>By registering, you agree to our <a href="#">Privacy Policy</a> and <a href="#">Terms of Use</a>.</p>
-            <p>Already have an account? <a href="{% url 'login' %}?next={{ next }}">Log In</a></p>
-            <p>Next URL: {{ next }}</p>
+                <p>Already have an account? <a href="{% url 'login' %}?next={{ next }}">Log In</a></p>
+                <p>Next URL: {{ next }}</p>
             {% if error_message %}
-            <p class="error-message">{{ error_message }}</p>
+                <p class="error-message">{{ error_message }}</p>
             {% endif %}
+            </div>
         </div>
     </div>
 </body>
