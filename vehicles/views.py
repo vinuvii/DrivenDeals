@@ -15,6 +15,7 @@ from django.utils import timezone
 from datetime import timedelta
 from .forms import VehicleFilterForm
 from .forms import VehicleComparisonForm
+from .forms import ContactForm
 
 def index(request):
     return render(request, 'vehicles/vehicle_listing.html')
@@ -412,3 +413,21 @@ def seller_listings(request):
     }
 
     return render(request, 'vehicles/seller_listings.html', context)
+
+def contact(request):
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            form.save()
+            # Redirect to a success page or render the contact.html with a success message
+            return redirect('contact_success')  # Redirect to success page
+    else:
+        form = ContactForm()
+
+    context = {
+        'form': form,
+    }
+    return render(request, 'vehicles/contact.html', context)
+
+def contact_success(request):
+    return render(request, 'vehicles/contact_success.html')

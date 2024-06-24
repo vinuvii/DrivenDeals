@@ -112,3 +112,12 @@ class Vehicle(models.Model):
 
     def __str__(self):
         return f"{self.year} {self.make} {self.model}"
+
+class ContactMessage(models.Model):
+    name = models.CharField(max_length=100)
+    email = models.EmailField()
+    message = models.TextField()
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.name} - {self.timestamp}"
