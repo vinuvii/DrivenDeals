@@ -16,6 +16,7 @@ from datetime import timedelta
 from .forms import VehicleFilterForm
 from .forms import VehicleComparisonForm
 from .forms import ContactForm
+from .models import Vehicle, ContactMessage
 
 def index(request):
     return render(request, 'vehicles/vehicle_listing.html')
@@ -168,15 +169,25 @@ def update_expired_bids():
                 vehicle_bid.save()
 
 
-
 def home(request):
+    # Retrieve all vehicles
     cars = models.Vehicle.objects.all()
+
+    # Update expired bids
     update_expired_bids()
+
+    # Retrieve the latest 5 testimonials
+    testimonials = ContactMessage.objects.order_by('-timestamp')[:5]
+
+    # Combine all context data
     context = {
         'cars': cars,
+        'testimonials': testimonials,
         # Add more context data as needed
     }
-    return render(request, 'vehicles/home.html', {'cars': cars})
+
+    # Render the template with the context data
+    return render(request, 'vehicles/home.html', context)
 
 
 @login_required
@@ -414,13 +425,15 @@ def seller_listings(request):
 
     return render(request, 'vehicles/seller_listings.html', context)
 
+
+@login_required
 def contact(request):
     if request.method == 'POST':
         form = ContactForm(request.POST)
         if form.is_valid():
             form.save()
-            # Redirect to a success page or render the contact.html with a success message
-            return redirect('contact_success')  # Redirect to success page
+            messages.success(request, 'Your message has been sent successfully!')
+            return redirect('home')  # Redirect to homepage to see the testimonial
     else:
         form = ContactForm()
 
@@ -429,5 +442,12 @@ def contact(request):
     }
     return render(request, 'vehicles/contact.html', context)
 
+
+
+
 def contact_success(request):
     return render(request, 'vehicles/contact_success.html')
+
+
+
+

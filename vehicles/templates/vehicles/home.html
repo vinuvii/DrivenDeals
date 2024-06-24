@@ -105,6 +105,17 @@
         text-align: center;
         margin-bottom: 20px; /* Space below the heading */
     }
+    .testimonials {
+        padding: 50px 20px;
+        background-color: #f9f9f9;
+        text-align: center;
+    }
+    .testimonial-item {
+        margin-bottom: 20px;
+    }
+    .testimonial-item p {
+        font-style: italic;
+    }
 </style>
 {% endblock %}
 
@@ -133,6 +144,16 @@
                 {% endfor %}
             </div>
         </div>
+    </section>
+
+    <section class="testimonials" data-aos="fade-up">
+        <h2 class="car-listings-heading">User Testimonials</h2>
+        {% for testimonial in testimonials %}
+        <div class="testimonial-item">
+            <p>"{{ testimonial.review }}"</p>
+            <p><strong>- {{ testimonial.name }}</strong></p>
+        </div>
+        {% endfor %}
     </section>
 </main>
 
