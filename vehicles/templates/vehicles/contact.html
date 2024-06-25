@@ -37,6 +37,7 @@
     }
     .contact-info p {
         margin-bottom: 20px;
+        white-space: nowrap; /* Prevent line wrapping */
     }
     .contact-form {
         margin-top: 30px; /* Adjusted margin-top for consistency */
@@ -80,22 +81,27 @@
         background-color: rgba(0, 123, 255, 1); /* Hover effect */
     }
     .social-links {
-        margin-top: 30px; /* Adjusted margin-top for consistency */
+        margin-top: 60px; /* Adjusted margin-top for more space */
+        margin-left: -20px; /* Adjusted margin-left to move left */
         text-align: center;
         max-width: 600px;
         margin: 0 auto; /* Centering the section */
         padding: 0 20px; /* Added padding for consistency */
     }
     .social-links h2 {
+        margin-top: 60px; /* Adjusted margin-top for more space */
+        margin-left: -100px; /* Adjusted margin-left to move left */
         margin-bottom: 10px;
     }
     .social-links a {
+        margin-top: 60px; /* Adjusted margin-top for more space */
         display: inline-block;
         margin-right: 10px;
         color: #007bff;
         font-size: 20px;
     }
     .social-links a:hover {
+        margin-top: 60px; /* Adjusted margin-top for more space */
         text-decoration: none;
     }
 </style>
@@ -120,16 +126,15 @@
     </div>
 
     <div class="social-links">
-        <h2 style="font-size: 20px;">Follow Us</h2>
+        <h2 style="font-size: 20px;, display: inline-block; white-space: nowrap;">Follow Us</h2>
         <a href="https://www.facebook.com/drivendeals" target="_blank">
             <i class="fab fa-facebook-square"></i> Facebook
         </a>
         <a href="https://www.instagram.com/drivendeals" target="_blank">
             <i class="fab fa-instagram"></i> Instagram
         </a>
-        <p>Email: drivendeals@gmail.com</p>
-        <p>Phone: +94 777 586459</p>
+        <p style="margin-top: 60px;">Email: drivendeals@gmail.com</p>
+        <p style="display: inline-block; white-space: nowrap; margin-top: 60px;">Phone: +94 777 586459</p>
     </div>
 </div>
 {% endblock %}
-
