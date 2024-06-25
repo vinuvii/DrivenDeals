@@ -26,8 +26,8 @@ urlpatterns = [
     path('vehicles/', include('vehicles.urls')),
     path('bids/', include('bids.urls')),  # Include the bids app URLs
     path('', include('vehicles.urls')),
-    path('templates/', views.terms_of_use, name='terms_of_use'),
-    path('templates/', views.privacy_policy, name='privacy_policy'),
+    path('terms-of-use/', views.terms_of_use, name='terms_of_use'),
+    path('privacy-policy/', views.privacy_policy, name='privacy_policy'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 
