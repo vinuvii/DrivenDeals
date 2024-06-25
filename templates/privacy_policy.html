@@ -1,17 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Privacy Policy - Driven Deals</title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+{% extends 'base.html' %}
+
+{% block extra_head %}
+
+
     <style>
         body {
             font-family: Arial, sans-serif;
             background-color: #f8f9fa;
+
         }
-        .container {
+        .container3 {
             margin-top: 50px;
+
         }
         .privacy-policy {
             background-color: #ffffff;
@@ -32,9 +32,11 @@
             margin-left: 20px;
         }
     </style>
-</head>
+{% endblock %}
+
+{% block content %}
 <body>
-    <div class="container">
+    <div class="container3">
         <div class="privacy-policy">
             <h2>Driven Deals Privacy Policy</h2>
             <p><strong>Effective Date:</strong> 25/06/2024</p>
@@ -91,3 +93,4 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
+{% endblock %}
