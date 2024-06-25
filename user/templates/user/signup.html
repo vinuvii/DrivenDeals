@@ -2,66 +2,76 @@
 
 {% block extra_head %}
 <style>
-        .parent-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: 0; /* Remove default margin */
-            padding-top:20px;
-            padding-bottom:20px;
-        }
+    .parent-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0; /* Remove default margin */
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
 
-        .register-container {
-            background-color: #adadad;
-            padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-            width: 400px;
-            text-align: center;
-        }
+    .register-container {
+        background-color: #adadad;
+        padding: 40px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        width: 400px;
+        text-align: center;
+    }
 
-        .register-container h2 {
-            margin-bottom: 20px;
-            font-size: 24px;
-        }
+    .register-container h2 {
+        margin-bottom: 20px;
+        font-size: 24px;
+    }
 
-        .register-container input[type="text"],
-        .register-container input[type="email"],
-        .register-container input[type="password"],
-        .register-container textarea {
-            width: calc(100% - 22px); /* Adjusted width to accommodate padding and borders */
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid #0D1B2A;
-            border-radius: 5px;
-            background-color: #ffffff;
-            color: #000000;
-            box-sizing: border-box; /* Ensures padding and border are included in the width */
-            font-size: 14px; /* Adjust font size as needed */
-        }
+    .register-container input[type="text"],
+    .register-container input[type="email"],
+    .register-container input[type="password"],
+    .register-container textarea {
+        width: calc(100% - 22px); /* Adjusted width to accommodate padding and borders */
+        padding: 10px;
+        margin: 10px 0;
+        border: 1px solid #0D1B2A;
+        border-radius: 5px;
+        background-color: #ffffff;
+        color: #000000;
+        box-sizing: border-box; /* Ensures padding and border are included in the width */
+        font-size: 14px; /* Adjust font size as needed */
+    }
 
-        .register-container button {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border: none;
-            border-radius: 5px;
-            background-color: #187bcd;
-            color: #FFFFFF;
-            cursor: pointer;
-            font-size: 16px; /* Adjust button font size */
-        }
+    .register-container button {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        border: none;
+        border-radius: 5px;
+        background-color: #187bcd;
+        color: #FFFFFF;
+        cursor: pointer;
+        font-size: 16px; /* Adjust button font size */
+    }
 
-        .register-container .terms {
-            margin-top: 20px;
-            font-size: 12px;
-        }
+    .register-container .terms {
+        margin-top: 20px;
+        font-size: 12px;
+    }
 
-        .register-container .terms a {
-            color: #FFFFFF;
-            text-decoration: none;
-        }
-    </style>
+    .register-container .terms a {
+        color: #FFFFFF;
+        text-decoration: none;
+    }
+
+    .register-container .checkbox-container {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .register-container .checkbox-container input {
+        margin-right: 10px;
+    }
+</style>
 {% endblock %}
 
 {% block content %}
@@ -70,16 +80,22 @@
         <div class="register-container">
             <h2>Register</h2>
             <form method="post" action="">
-            {% csrf_token %}
-            {{ form.username.label_tag }} {{ form.username }}
-            {{ form.password1.label_tag }} {{ form.password1 }}
-            {{ form.password2.label_tag }} {{ form.password2 }}
-            {{ form.email.label_tag }} {{ form.email }}
-            {{ form.first_name.label_tag }} {{ form.first_name }}
-            {{ form.last_name.label_tag }} {{ form.last_name }}
-            {{ form.mobile_number.label_tag }} {{ form.mobile_number }}
-            {{ form.postal_code.label_tag }} {{ form.postal_code }}
-            {{ form.trading_address.label_tag }} {{ form.trading_address }}
+                {% csrf_token %}
+                {{ form.username.label_tag }} {{ form.username }}
+                {{ form.password1.label_tag }} {{ form.password1 }}
+                {{ form.password2.label_tag }} {{ form.password2 }}
+                {{ form.email.label_tag }} {{ form.email }}
+                {{ form.first_name.label_tag }} {{ form.first_name }}
+                {{ form.last_name.label_tag }} {{ form.last_name }}
+                {{ form.mobile_number.label_tag }} {{ form.mobile_number }}
+                {{ form.postal_code.label_tag }} {{ form.postal_code }}
+                {{ form.trading_address.label_tag }} {{ form.trading_address }}
+
+                <div class="checkbox-container">
+                    <input type="checkbox" id="agree_terms" name="agree_terms" required>
+                    <label for="agree_terms">I agree to the <a href="{% url 'terms_of_use' %}">Terms of Use</a> and the <a href="{% url 'privacy_policy' %}">Privacy Policy</a></label>
+                </div>
+
                 <button type="submit" class="btn btn-primary">Register</button>
             </form>
             <div class="terms">
