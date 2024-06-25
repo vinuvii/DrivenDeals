@@ -2,9 +2,15 @@
 {% load humanize %}
 
 {% block extra_head %}
-<!-- Add any additional head content for filter_vehicles.html here if necessary -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-l5XddQ8R13IoD41D8r9qR+ldvi2njK2Kc1zT2LOPzqEGlXqD4T6GkRWJY7YzG2sFXuvJgV0NN0cBl1JdBTpObQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
 <style>
+html, body {
+    overflow-x: hidden;
+    font-family: 'Open Sans', 'Titillium Web', 'PT Sans', Arial, sans-serif;
+    background: linear-gradient(to bottom, #f7f7f7 0%, #e6e6e6 100%);
+    transition: background-color 0.5s;
+    color: #333;
+}
     .filter-form {
         margin: 20px 0;
     }
@@ -14,112 +20,279 @@
     .filter-form .btn-primary {
         margin-top: 20px;
     }
-    .card {
-        margin-bottom: 20px;
-        border: 2px solid #e74c3c;
-        border-radius: 10px;
-        padding: 15px; /* Add padding for better separation */
-        opacity: 0;
-        transform: translateY(100px);
-        animation: slideUp 0.5s forwards;
-    }
+.card {
+    margin-bottom: 20px;
+    border: none;
+    border-radius: 15px;
+    padding: 15px;
+    opacity: 0;
+    transform: translateY(100px);
+    animation: slideUp 0.7s forwards;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.vehicle-details-card {
+    background-color: #fff; /* Set background color to white */
+    border: none; /* Remove border if any */
+    border-radius: 15px; /* Optional: Add border radius */
+    padding: 15px; /* Optional: Add padding */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); /* Optional: Add box shadow */
+    transition: box-shadow 0.3s; /* Optional: Add transition effects */
+}
+
+.vehicle-background-card {
+    background-color: rgba(255, 255, 255, 0);
+    border: none;
+    box-shadow: none;
+}
+.vehicle-background-card:hover {
+    transform: none;
+    box-shadow: none;
+}
+
+.vehicle-details-card:hover {
+    transform: translateY(-10px)!important;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3); /* Adjusted for more visibility */
+}
+
     .card img {
         width: 100%;
         height: 200px; /* Set a fixed height */
         object-fit: cover; /* Ensures the image covers the area while maintaining aspect ratio */
         border-radius: 10px 10px 0 0;
     }
-    .car-listings-heading {
-        font-size: 36px;
-        text-align: center;
-        margin-bottom: 20px; /* Space below the heading */
-         margin-top: 20px; /* Space above the heading */
+
+.car-listings-heading {
+    font-size: 42px;
+    text-align: center;
+    margin: 40px 0;
+    font-weight: 700;
+    color: #2c3e50;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+}
+
+
+.filter-button {
+    padding: 12px 25px;
+    font-size: 18px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.clear-filters-button {
+    background-color: #e74c3c;
+    color: white;
+    padding: 12px 25px;
+    border-radius: 8px;
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+
+.filter-button:hover {
+    background-color: #2980b9;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+.clear-filters-button:hover {
+    background-color: #c0392b;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+.no-vehicles {
+    text-align: center;
+    font-size: 24px;
+    margin-top: 20px;
+    color: #7f8c8d;
+}
+
+.no-bids-message {
+    font-size: 28px;
+    text-align: center;
+    margin-top: 20px;
+    color: #7f8c8d;
+}
+
+.sidebar {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 25px;
+    position: sticky;
+    top: 0;
+    height: calc(100vh - 40px);
+    overflow-y: auto;
+    height: 100%;
+}
+
+.sidebar .filter-section {
+    margin-bottom: 30px;
+}
+
+.sidebar .filter-section h4 {
+    font-size: 32px;
+    cursor: pointer;
+    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+    color:  #c2362b;
+    font-weight: bold;
+}
+
+.sidebar .filter-section h3 {
+    font-size: 24px;
+    cursor: pointer;
+    margin-bottom: 20px;
+    margin-left: 30px;
+    display: flex;
+    align-items: center;
+    color: #000000; /* Darker shade but lighter than #de483d */
+    transition: color 0.3s;
+    font-weight: bold;
+}
+
+.sidebar .filter-section h3:hover{
+    color: #de483d;
+}
+
+.sidebar .filter-section h3 img,
+.sidebar .filter-section h4 img {
+    max-width: 35px;
+    height: auto;
+    margin-right: 15px;
+}
+
+.form-control {
+    border-radius: 8px;
+    padding: 12px;
+    border: 1px solid #bdc3c7;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.form-control:focus {
+    border-color: #3498db;
+    box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
+}
+
+.form-check {
+    margin-bottom: 15px;
+}
+
+.form-check-label {
+    font-size: 16px;
+    color: #34495e;
+}
+
+.card-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: #2c3e50;
+}
+
+.card-text {
+    font-size: 16px;
+    margin-bottom: 10px;
+    color: #34495e;
+}
+
+.card-body a {
+    text-decoration: none;
+    color: inherit;
+    transition: color 0.3s;
+}
+
+.card-body a:hover {
+    color: #3498db;
+}
+
+@keyframes slideUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
-    .filter-button {
-        padding: 10px 20px;
-        font-size: 16px;
-        background-color: #e74c3c;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-    }
-    .clear-filters-button {
-        background-color: #3498db;
-        color: white;
-        padding: 10px 20px;
-        border-radius: 5px;
-        text-decoration: none;
-        display: inline-block;
-        margin-top: 10px;
-        cursor: pointer;
-    }
-    .no-vehicles {
-        text-align: center;
-        font-size: 18px;
-        margin-top: 20px;
-    }
-    .no-bids-message {
-        font-size: 24px;
-        text-align: center;
-        margin-top: 20px; /* Space above the message */
-    }
+}
+
+@media (max-width: 768px) {
     .sidebar {
-        position: sticky;
-        top: 0;
-        height: 100%;
-        overflow-y: auto;
-        background-color: #f8f9fa;
-        padding: 20px;
-        border-right: 1px solid #ddd;
-    }
-    .sidebar .filter-section {
-        margin-bottom: 20px;
-    }
-    .sidebar .filter-section h3 {
-        font-size: 22px;
-        cursor: pointer;
-        margin-bottom: 10px;
-        display: flex;
-        align-items: center; /* Align text and image vertically */
-        color: #e74c3c;
-    }
-    .sidebar .filter-section h4 {
-        font-size: 30px;
-        cursor: pointer;
-        margin-bottom: 10px;
-        display: flex;
-        align-items: center; /* Align text and image vertically */
-        color: black;
-    }
-    .sidebar .filter-section h3 img {
-        max-width: 30px; /* Adjust width of the image as needed */
-        height: auto; /* Maintain aspect ratio */
-        margin-right: 10px; /* Space between image and text */
+        position: static;
+        height: auto;
+        margin-bottom: 30px;
     }
 
-    @keyframes slideUp {
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
+    .car-listings-heading {
+        font-size: 28px;
     }
+    .filter-container {
+        margin-bottom: 10px; /* Adjust for smaller screens */
+    }
+}
+.filter-button {
+    padding: 12px 25px;
+    font-size: 18px;
+    background-color: #de483d; /* Filter button color */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.filter-button:hover {
+    background-color: #c2362b; /* Darker color on hover */
+}
+
+.clear-filters-button {
+    background-color: #bdc3c7; /* More towards gray color */
+    color: white;
+    padding: 12px 25px;
+    border-radius: 8px;
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.clear-filters-button:hover {
+    background-color: #a6acb1; /* Darker color on hover */
+}
+
+.fas {
+    margin-right: 10px; /* Adjust spacing as needed */
+}
+
 </style>
+
 {% endblock %}
 
 {% block content %}
 <div class="container-fluid">
-    <h2 class="car-listings-heading"></i> Advanced Filter</h2>
+    <h2 class="car-listings-heading">Advanced Filter</h2>
     <div class="filter-container">
         <div class="filter-sidebar">
             <div class="card">
                 <div class="sidebar">
                     <form method="get" class="filter-form">
-			<div class="form-group">
+			            <div class="form-group">
                             <input type="text" name="search" class="form-control" placeholder="Search by keyword" value="{{ request.GET.search }}">
                         </div>
                         <div class="filter-section">
-                            <h4><i class="fas fa-filter"></i> Filter Options</h4>
+                            <h4><i class="fas fa-filter"></i>Filter Options</h4>
                             <h3 onclick="toggleSection('vehicle-info')"><i class="fas fa-car"></i> Vehicle Information</h3>
                             <div id="vehicle-info" class="filter-section-content">
                                 <div class="form-group">
@@ -235,14 +408,15 @@
                 </div>
             </div>
         </div>
+
         <div class="filter-results">
-            <div class="card">
+            <div class="card vehicle-background-card">
                 {% if vehicles %}
                     <h2 class="car-listings-heading"><i class="fas fa-car"></i> Results</h2>
                     <div class="row">
                         {% for vehicle in vehicles %}
                             <div class="col-md-4">
-                                <div class="card">
+                                <div class="card vehicle-details-card" data-aos="fade-down" data-aos-duration="500" data-aos-delay="100">
                                     {% if vehicle.picture %}
                                         <img src="{{ vehicle.picture.url }}" alt="{{ vehicle.make }} {{ vehicle.model }}">
                                     {% else %}

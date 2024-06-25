@@ -3,6 +3,11 @@
 
 {% block extra_head %}
 <style>
+html, body {
+    overflow-x: hidden;
+    font-family: 'Open Sans', 'Titillium Web', 'PT Sans', Arial, sans-serif;
+}
+
     .hero-section {
         position: relative;
         width: 100%;
@@ -51,6 +56,8 @@
     .featured-cars {
         padding: 50px 20px;
         text-align: center;
+        margin-top: 50px; /* Added top margin */
+        margin-bottom: 50px; /* Added bottom margin */
     }
 
     .featured-cars h2 {
@@ -103,24 +110,32 @@
     .car-listings-heading {
         font-size: 36px;
         text-align: center;
-        margin-bottom: 20px; /* Space below the heading */
+        margin-bottom: 20px;
+        margin-top: 50px;
     }
+
+
     .testimonials {
         padding: 50px 20px;
         background-color: #f9f9f9;
         text-align: center;
+        margin-top: 50px;
     }
+
     .testimonial-item {
         margin-bottom: 20px;
+        margin-top: 20px; /* Added top margin */
     }
+
     .testimonial-item p {
         font-style: italic;
     }
 
     /* Styling for search form */
     .search-form {
-        margin-top: 20px;
         text-align: center;
+        background-color: #f9f9f9;
+        padding: 40px;
     }
     .search-form input[type="text"], .search-form input[type="number"] {
         padding: 10px;
@@ -129,6 +144,8 @@
         border-radius: 5px;
         width: 200px;
         margin-right: 10px;
+        margin-top: 50px;
+        margin-bottom: 100px;
     }
     .search-form button[type="submit"] {
         padding: 10px 20px;
@@ -148,15 +165,15 @@
 {% block content %}
 <div class="hero-section" data-aos="fade-down">
     <div class="hero-content">
-        <h1>DRIVEN DEALS</h1>
-        <p>BEST CAR DEALER IN TOWN!</p>
+        <h1><strong>DRIVEN DEALS</strong></h1>
+        <p><strong>BEST CAR DEALER IN TOWN!</strong></p>
         <a href="#contact" class="btn">Contact Us</a>
     </div>
 </div>
 
 <!-- Search bar section -->
-<div class="search-form">
-    <h2 class="car-listings-heading">Search for Your Dream Vehicle</h2>
+<div class="search-form" data-aos="fade-up">
+    <h2 class="car-listings-heading"><strong>Search for Your Dream Vehicle</strong></h2>
     <form action="{% url 'all_listings' %}" method="GET">
         <input type="text" name="q" placeholder="Search listings...">
         <input type="number" name="min_price" placeholder="Min Price">
@@ -167,7 +184,7 @@
 
 <main>
     <section class="featured-cars" data-aos="fade-up">
-        <h2 class="car-listings-heading">Featured Vehicles</h2>
+        <h2 class="car-listings-heading"><strong>Featured Vehicles</strong></h2>
         <div class="car-list-container">
             <div class="car-list">
                 {% for car in cars %}
@@ -184,7 +201,7 @@
     </section>
 
     <section class="testimonials" data-aos="fade-up">
-        <h2 class="car-listings-heading">User Testimonials</h2>
+        <h2 class="car-listings-heading"><strong>User Testimonials</strong></h2>
         {% for testimonial in testimonials %}
         <div class="testimonial-item">
             <p>"{{ testimonial.review }}"</p>

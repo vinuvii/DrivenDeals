@@ -348,7 +348,7 @@ html, body {
                             <p class="bid-status">Status: {{ bid.get_bid_status_display }}</p>
 
                             {% if bid.vehicle.seller %}
-                                <a href="{% url 'seller_listings' %}?seller_id={{ bid.vehicle.seller.id }}" class="seller-listings-link">View Seller's Listings</a>
+                                <a href="{% url 'seller_listings' %}?seller_id={{ bid.vehicle.seller.id }}" class="seller-listings-link" style="text-decoration: underline; color: black;">Click To View Seller's Listings</a>
                             {% endif %}
 
                             {% if bid.bid_status == 'PENDING' %}
@@ -371,6 +371,16 @@ html, body {
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function() {
+        function animateItems() {
+            $('.car-item').each(function() {
+                $(this).addClass('animate-in');
+            });
+        }
+
+        // Trigger animation on page load
+        animateItems();
+
+        // Check animation on scroll
         function checkAnimation() {
             $('.car-item').each(function() {
                 var bottom_of_object = $(this).offset().top + $(this).outerHeight();
@@ -401,5 +411,4 @@ html, body {
         $('#logout-tab').click(confirmLogout);
     });
 </script>
-
 {% endblock %}
