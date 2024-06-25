@@ -1,4 +1,4 @@
-# DrivenDeals: Car Selling Platform
+# DrivenDeals: Car Selling Platform - Group 08
 
 ## Overview
 DrivenDeals is an online platform designed for buying and selling vehicles. Users can list their vehicles for sale, browse available listings, place bids, and manage their transactions seamlessly.
