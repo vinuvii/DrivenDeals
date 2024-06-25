@@ -26,7 +26,6 @@ urlpatterns = [
     path('all-listings/', views.all_listings, name='all_listings'),
     path('all_listings/search/', views.search_listings, name='search_listings'),
     path('contact/', views.contact, name='contact'),
-    path('contact/success/', views.contact_success, name='contact_success'),  # Optionally define a success page
     path('seller_listings/', views.seller_listings, name='seller_listings'),
 
 

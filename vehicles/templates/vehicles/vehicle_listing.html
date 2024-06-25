@@ -480,103 +480,112 @@ html, body {
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        const sidebarItems = document.querySelectorAll('#sidebar div');
-        const steps = document.querySelectorAll('.form-content .step');
-        const progressBar = document.getElementById('progress-bar');
-        const nextButtons = document.querySelectorAll('.nextBtn');
-        const publishButton = document.querySelector('.save-btn');
-        const form = document.querySelector('form');
+    const sidebarItems = document.querySelectorAll('#sidebar div');
+    const steps = document.querySelectorAll('.form-content .step');
+    const progressBar = document.getElementById('progress-bar');
+    const nextButtons = document.querySelectorAll('.nextBtn');
+    const publishButton = document.querySelector('.save-btn');
+    const form = document.querySelector('form');
 
-        // Function to validate Step 2 fields
-        function validateStep2() {
-            const step2Inputs = document.querySelectorAll('#step-2 input[type="text"], #step-2 input[type="number"], #step-2 select');
-            let isValid = true;
+    // Function to validate Step 2 fields
+    function validateStep2() {
+        const step2Inputs = document.querySelectorAll('#step-2 input[type="text"], #step-2 input[type="number"], #step-2 select');
+        let isValid = true;
 
-            step2Inputs.forEach(input => {
-                if (input.value.trim() === '') {
-                    isValid = false;
-                }
-            });
-
-            if (!isValid) {
-                alert('Please fill in all fields in Step 2.');
+        step2Inputs.forEach(input => {
+            if (input.value.trim() === '') {
+                isValid = false;
             }
+        });
 
-            return isValid;
+        if (!isValid) {
+            alert('Please fill in all fields in Step 2.');
         }
 
-        // Function to handle form submission
-        form.addEventListener('submit', function(event) {
+        return isValid;
+    }
+
+    // Function to handle form submission
+    form.addEventListener('submit', function(event) {
+        const currentStep = document.querySelector('.form-content .step.active').id.split('-')[1];
+
+        if (currentStep === '2') {
+            if (!validateStep2()) {
+                event.preventDefault(); // Prevent form submission if Step 2 validation fails
+                return; // Stop execution
+            }
+        }
+    });
+
+    // Event listener for Next buttons
+    nextButtons.forEach(button => {
+        button.addEventListener('click', function() {
             const currentStep = document.querySelector('.form-content .step.active').id.split('-')[1];
+            let nextStep = parseInt(currentStep) + 1;
 
             if (currentStep === '2') {
                 if (!validateStep2()) {
-                    event.preventDefault(); // Prevent form submission if Step 2 validation fails
-                    return; // Stop execution
+                    return; // Stop proceeding if Step 2 validation fails
                 }
             }
+
+            if (nextStep <= 5) {
+                updateSidebar(nextStep);
+                updateSteps(nextStep);
+                updateProgressBar(nextStep);
+            }
         });
-
-        // Event listener for Next buttons
-        nextButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                const currentStep = document.querySelector('.form-content .step.active').id.split('-')[1];
-                let nextStep = parseInt(currentStep) + 1;
-
-                if (currentStep === '2') {
-                    if (!validateStep2()) {
-                        return; // Stop proceeding if Step 2 validation fails
-                    }
-                }
-
-                if (nextStep <= 5) {
-                    updateSidebar(nextStep);
-                    updateSteps(nextStep);
-                    updateProgressBar(nextStep);
-                }
-            });
-        });
-
-        // Function to update sidebar menu on click
-        sidebarItems.forEach(item => {
-            item.addEventListener('click', function() {
-                const step = this.getAttribute('data-step');
-                updateSidebar(step);
-                updateSteps(step);
-                updateProgressBar(step);
-            });
-        });
-
-        function updateSidebar(step) {
-            sidebarItems.forEach(item => {
-                item.classList.remove('border-red-600', 'text-red-600', 'font-bold');
-                item.classList.add('border-gray-300', 'text-gray-600');
-            });
-
-            const currentItem = document.querySelector(`#sidebar div[data-step="${step}"]`);
-            currentItem.classList.remove('border-gray-300', 'text-gray-600');
-            currentItem.classList.add('border-red-600', 'text-red-600', 'font-bold');
-        }
-
-        function updateSteps(step) {
-            steps.forEach(s => {
-                s.classList.remove('active');
-            });
-
-            const currentStep = document.getElementById(`step-${step}`);
-            currentStep.classList.add('active');
-        }
-
-        function updateProgressBar(step) {
-            const percentage = (step / 5) * 100;
-            progressBar.style.width = `${percentage}%`;
-        }
-
-        // Initial setup
-        updateSidebar(1);
-        updateSteps(1);
-        updateProgressBar(1);
     });
+
+    // Event listener for sidebar items (steps)
+    sidebarItems.forEach(item => {
+        item.addEventListener('click', function() {
+            const step = this.getAttribute('data-step');
+
+            // Validate Step 2 fields when clicking sidebar items
+            if (step === '3') { // Assuming '3' corresponds to Step 3 in your setup
+                if (!validateStep2()) {
+                    return; // Stop proceeding if Step 2 validation fails
+                }
+            }
+
+            updateSidebar(step);
+            updateSteps(step);
+            updateProgressBar(step);
+        });
+    });
+
+    function updateSidebar(step) {
+        sidebarItems.forEach(item => {
+            item.classList.remove('border-red-600', 'text-red-600', 'font-bold');
+            item.classList.add('border-gray-300', 'text-gray-600');
+        });
+
+        const currentItem = document.querySelector(`#sidebar div[data-step="${step}"]`);
+        currentItem.classList.remove('border-gray-300', 'text-gray-600');
+        currentItem.classList.add('border-red-600', 'text-red-600', 'font-bold');
+    }
+
+    function updateSteps(step) {
+        steps.forEach(s => {
+            s.classList.remove('active');
+        });
+
+        const currentStep = document.getElementById(`step-${step}`);
+        currentStep.classList.add('active');
+    }
+
+    function updateProgressBar(step) {
+        const percentage = (step / 5) * 100;
+        progressBar.style.width = `${percentage}%`;
+    }
+
+    // Initial setup
+    updateSidebar(1);
+    updateSteps(1);
+    updateProgressBar(1);
+});
+
 </script>
 
 
