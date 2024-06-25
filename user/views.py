@@ -113,10 +113,23 @@ def my_listings_view(request):
 @login_required
 def my_bids_view(request):
     user = request.user
+    status = request.GET.get('status', 'all')
     bids = Bid.objects.filter(user=user)
 
+    if status == 'pending':
+        bids = bids.filter(bid_status=Bid.BID_STATUS_PENDING)
+    elif status == 'accepted':
+        bids = bids.filter(bid_status=Bid.BID_STATUS_ACCEPTED)
+    elif status == 'rejected':
+        bids = bids.filter(bid_status=Bid.BID_STATUS_REJECTED)
+
+    for bid in bids:
+        highest_bid = Bid.objects.filter(vehicle=bid.vehicle).order_by('-amount').first()
+        bid.highest_bid_amount = highest_bid.amount if highest_bid else bid.vehicle.price
+
     context = {
-        'bids': bids
+        'bids': bids,
+        'current_status': status,
     }
     return render(request, 'user/my_bids.html', context)
 
