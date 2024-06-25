@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 24, 2024 at 12:39 PM
+-- Generation Time: Jun 25, 2024 at 08:15 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.1.12
 
@@ -121,7 +121,15 @@ INSERT INTO `auth_permission` (`id`, `name`, `content_type_id`, `codename`) VALU
 (57, 'Can add payment', 15, 'add_payment'),
 (58, 'Can change payment', 15, 'change_payment'),
 (59, 'Can delete payment', 15, 'delete_payment'),
-(60, 'Can view payment', 15, 'view_payment');
+(60, 'Can view payment', 15, 'view_payment'),
+(61, 'Can add contact message', 16, 'add_contactmessage'),
+(62, 'Can change contact message', 16, 'change_contactmessage'),
+(63, 'Can delete contact message', 16, 'delete_contactmessage'),
+(64, 'Can view contact message', 16, 'view_contactmessage'),
+(65, 'Can add testimonial', 17, 'add_testimonial'),
+(66, 'Can change testimonial', 17, 'change_testimonial'),
+(67, 'Can delete testimonial', 17, 'delete_testimonial'),
+(68, 'Can view testimonial', 17, 'view_testimonial');
 
 -- --------------------------------------------------------
 
@@ -197,8 +205,8 @@ CREATE TABLE `bids_bid` (
 INSERT INTO `bids_bid` (`id`, `amount`, `timestamp`, `bid_status`, `expiry_date`, `user_id`, `vehicle_id`) VALUES
 (12, '5100000.00', '2024-06-22 10:17:48.359477', 'PENDING', '2024-06-29 10:17:48.358480', 4, 21),
 (13, '5950000.00', '2024-06-22 10:25:13.913335', 'ACCEPTED', '2024-06-23 10:25:13.913335', 4, 22),
-(14, '12050010.00', '2024-06-22 10:25:36.843926', 'PENDING', '2024-06-24 10:25:36.842538', 4, 23),
-(15, '7555500.00', '2024-06-22 10:26:00.276742', 'PENDING', '2024-06-25 10:26:00.275657', 4, 27),
+(14, '12050010.00', '2024-06-22 10:25:36.843926', 'REJECTED', '2024-06-24 10:25:36.842538', 4, 23),
+(15, '7555500.00', '2024-06-22 10:26:00.276742', 'REJECTED', '2024-06-25 10:26:00.275657', 4, 27),
 (16, '3700000.00', '2024-06-22 10:26:14.863017', 'PENDING', '2024-06-29 10:26:14.863017', 4, 28),
 (17, '930000.00', '2024-06-22 10:26:23.681432', 'PENDING', '2024-06-27 10:26:23.681432', 4, 29),
 (18, '8790000.00', '2024-06-22 10:26:48.930351', 'ACCEPTED', '2024-06-23 10:26:48.930351', 4, 30),
@@ -209,12 +217,12 @@ INSERT INTO `bids_bid` (`id`, `amount`, `timestamp`, `bid_status`, `expiry_date`
 (23, '4800000.00', '2024-06-22 10:51:05.863819', 'PENDING', '2024-06-29 10:51:05.863819', 1, 31),
 (24, '4690010.00', '2024-06-22 10:51:21.887613', 'PENDING', '2024-06-27 10:28:42.200284', 1, 33),
 (25, '4740010.00', '2024-06-22 10:56:29.721143', 'PENDING', '2024-06-27 10:28:42.200284', 1, 33),
-(26, '12200010.00', '2024-06-24 09:27:26.698895', 'PENDING', '2024-06-24 10:25:36.846360', 3, 23),
+(26, '12200010.00', '2024-06-24 09:27:26.698895', 'ACCEPTED', '2024-06-24 10:25:36.846360', 3, 23),
 (27, '9100000.00', '2024-06-24 09:28:44.716736', 'PENDING', '2024-06-28 09:28:44.712629', 3, 24),
 (28, '800500.00', '2024-06-24 09:29:02.504316', 'PENDING', '2024-06-27 09:29:02.504316', 3, 25),
 (29, '2650000.00', '2024-06-24 09:29:54.812068', 'PENDING', '2024-06-30 09:29:54.812068', 3, 26),
 (30, '4850000.00', '2024-06-24 09:31:26.973711', 'PENDING', '2024-06-29 09:31:26.973711', 3, 35),
-(31, '7655500.00', '2024-06-24 09:36:01.324110', 'PENDING', '2024-06-25 10:26:00.279805', 3, 27),
+(31, '7655500.00', '2024-06-24 09:36:01.324110', 'ACCEPTED', '2024-06-25 10:26:00.279805', 3, 27),
 (32, '4950000.00', '2024-06-24 09:36:38.029815', 'PENDING', '2024-06-29 10:51:05.863819', 3, 31),
 (33, '18650000.00', '2024-06-24 09:36:53.060285', 'PENDING', '2024-06-26 10:28:20.122773', 3, 32),
 (34, '4790010.00', '2024-06-24 09:37:13.541157', 'PENDING', '2024-06-27 10:28:42.200284', 3, 33);
@@ -284,7 +292,9 @@ INSERT INTO `django_content_type` (`id`, `app_label`, `model`) VALUES
 (13, 'user', 'userwatchlistitem'),
 (14, 'user', 'watchlist'),
 (11, 'user', 'watchlistitem'),
+(16, 'vehicles', 'contactmessage'),
 (15, 'vehicles', 'payment'),
+(17, 'vehicles', 'testimonial'),
 (7, 'vehicles', 'vehicle');
 
 -- --------------------------------------------------------
@@ -355,7 +365,10 @@ INSERT INTO `django_migrations` (`id`, `app`, `name`, `applied`) VALUES
 (48, 'vehicles', '0012_vehicle_auction_duration_days', '2024-06-22 10:16:57.596775'),
 (49, 'vehicles', '0013_vehicle_first_bid_date', '2024-06-22 10:16:57.616776'),
 (50, 'vehicles', '0014_alter_vehicle_body_type', '2024-06-23 18:58:59.066804'),
-(51, 'vehicles', '0015_payment', '2024-06-23 18:58:59.243622');
+(51, 'vehicles', '0015_payment', '2024-06-23 18:58:59.243622'),
+(52, 'vehicles', '0016_contactmessage_alter_vehicle_body_type_testimonial_and_more', '2024-06-24 13:00:14.198118'),
+(53, 'vehicles', '0017_testimonial_created_at', '2024-06-24 14:09:17.378897'),
+(54, 'vehicles', '0018_rename_message_contactmessage_review_and_more', '2024-06-24 15:09:12.928849');
 
 -- --------------------------------------------------------
 
@@ -376,6 +389,7 @@ CREATE TABLE `django_session` (
 INSERT INTO `django_session` (`session_key`, `session_data`, `expire_date`) VALUES
 ('63jnqh36exeer8j4e53sl6n54wwzd3h4', '.eJxVjEEOwiAQRe_C2hBgQqEu3XsGwjCDVA1NSrtqvLsl6UJ3P_-9vF2EuK0lbI2XMJG4ChCX3w9jenHtgJ6xPmaZ5rouE8quyJM2eZ-J37fT_QuU2ErPoiNjDeAxvNJecSZCsCqzUWCTB_YDOcuHACPrDGjGOFjUyUUAEJ8v3ok3xA:1sL3qt:IZVFq2SiO1opiI6xzt8wX9URlxGJt1hm6z4M0j0LzRA', '2024-07-06 16:44:35.694108'),
 ('nwpw2w5c2felm7bcr7tf65za7x1g8r0r', '.eJxVjEEOgjAQRe_StWnodKAdl-49QzPtDIIaSCisjHdXEha6_e-9_zKJt3VIW9UljWLOpjWn3y1zeei0A7nzdJttmad1GbPdFXvQaq-z6PNyuH8HA9fhW3ODAKgOHIloACCIRYPzxKHx3nEsSEo9llzaHj06jVEDkgB56Trz_gDGSTcm:1sJaFm:T9UeTwk-0LN9hYXx0UphxOQ4FOskbAgEYq1clRmuV9Y', '2024-07-02 14:56:10.044636'),
+('u93hk6jpmif4rblh1t0vv6twihh4g4ql', '.eJxVjEEOwiAQRe_C2hDKUAou3XsGMjCDVA0kpV0Z765NutDtf-_9lwi4rSVsnZcwkzgLI06_W8T04LoDumO9NZlaXZc5yl2RB-3y2oifl8P9OyjYy7f2WhuC6IylEXlQkJICq9gAsAWVhlEBa8rWaeP1RNmj9z7GKSJZl414fwDGXTd3:1sMA1N:VDjoy6THQmJBr03YHLqaAYGH21CCdaP_iubLmTjtBCM', '2024-07-09 17:31:57.946848'),
 ('w1bardw1dzj8vd7m82hyr8f54a616w62', '.eJxVjEEOgjAQRe_StWkGqLR16Z4zNDOdGYsaSCisjHdXEha6_e-9_zIJt7WkrcqSRjYX05jT70aYHzLtgO843Wab52ldRrK7Yg9a7TCzPK-H-3dQsJZvHaR1EN2ZCDySIIOXrteuVW1AEaNrpWeIWckrhSjMIYdGM0cFcmjeHwJbOVU:1sIjmn:Ytv61AaBN_iRe-XPR9a9ZpE_-YOhkKjz-hZe6C90Qnk', '2024-06-30 06:54:45.214359'),
 ('w8slgv5r5p0xtuqbm81n186npbgjll87', '.eJxVjDsOwyAQBe9CHSHM16RM7zOgXRaCkwgkY1dR7h5bcpG0b-bNmwXY1hK2npYwE7uygV1-N4T4TPUA9IB6bzy2ui4z8kPhJ-18apRet9P9CxToZX9bjUAGwDtDA2krsyNyfnRJSuUyoQNI1koVSWchktGo9rowcjSeLLLPF_mAOGQ:1sGJ7v:ZxPWXsUmVEuUYkCfNfRwM5JCrQlZ38XWYAnxFW2wk9g', '2024-06-23 14:02:31.942534');
 
@@ -422,10 +436,10 @@ CREATE TABLE `user_user` (
 --
 
 INSERT INTO `user_user` (`id`, `username`, `password`, `email`, `first_name`, `last_name`, `mobile_number`, `postal_code`, `trading_address`, `date_joined`, `is_active`, `is_staff`, `is_superuser`, `last_login`) VALUES
-(1, 'Jane_Fernando', 'pbkdf2_sha256$720000$7vFls4MVg806f21pLdgy8l$rkB6bhQccGIDYGhtmLAoF7sEzkHjf02/yecC7acMumc=', 'islandexplorer@example.com', 'Jane', 'Fernando', '+94 76 987 6543', '20050', '12 Palm Grove, Negombo, Sri Lanka', '2024-06-13 14:48:07.098245', 1, 0, 0, '2024-06-22 10:32:36.460199'),
-(2, 'Jason_Fonseka', 'pbkdf2_sha256$720000$ThTJoXgSrQ3uzD0mygoBhH$qbATyNhtqiDhfjWYgwurGF9LAgRLz1cVXLCYopV8iWI=', 'adventureseeker88@example.com', 'Jason', 'Fonseka', '+94 71 876 5432', '30025', '8 Sea View Road, Galle, Sri Lanka', '2024-06-18 11:43:38.828563', 1, 0, 0, '2024-06-18 13:40:17.908021'),
-(3, 'Pete_Peiris', 'pbkdf2_sha256$720000$Q6Kxf70BN6PrzYByjSyZ6w$qVFA24IVteyHjeqcR+VkEDGFw/4QO9ta9rU/TZCYLyg=', 'pete.peiris@example.com', 'Pete', 'Peris', '+94 70 123 4567', '40090', '25 Lake Road, Kandy, Sri Lanka', '2024-06-18 12:22:35.054592', 1, 0, 0, '2024-06-22 16:44:35.689072'),
-(4, 'Nimal_Fernando', 'pbkdf2_sha256$720000$KdXkj1ifY2d9fNxpmB8s9j$Qs4J4DMXXoAT1vUFmj/tJ+RnOC1+kaj6ld3S+XRqekc=', 'lankanuser123@example.com', 'Nimal', 'Fernando', '+94 77 123 4567', '10000', '45A, Lotus Lane, Colombo 07, Sri Lanka', '2024-06-18 14:19:26.814086', 1, 0, 0, '2024-06-22 10:17:37.637546'),
+(1, 'Jane_Fernando', 'pbkdf2_sha256$720000$7vFls4MVg806f21pLdgy8l$rkB6bhQccGIDYGhtmLAoF7sEzkHjf02/yecC7acMumc=', 'islandexplorer@example.com', 'Jane', 'Fernando', '+94 76 987 6543', '20050', '12 Palm Grove, Negombo, Sri Lanka', '2024-06-13 14:48:07.098245', 1, 0, 0, '2024-06-24 17:52:53.654052'),
+(2, 'Jason_Fonseka', 'pbkdf2_sha256$720000$ThTJoXgSrQ3uzD0mygoBhH$qbATyNhtqiDhfjWYgwurGF9LAgRLz1cVXLCYopV8iWI=', 'adventureseeker88@example.com', 'Jason', 'Fonseka', '+94 71 876 5432', '30025', '8 Sea View Road, Galle, Sri Lanka', '2024-06-18 11:43:38.828563', 1, 0, 0, '2024-06-25 06:15:32.390414'),
+(3, 'Pete_Peiris', 'pbkdf2_sha256$720000$Q6Kxf70BN6PrzYByjSyZ6w$qVFA24IVteyHjeqcR+VkEDGFw/4QO9ta9rU/TZCYLyg=', 'pete.peiris@example.com', 'Pete', 'Peris', '+94 70 123 4567', '40090', '25 Lake Road, Kandy, Sri Lanka', '2024-06-18 12:22:35.054592', 1, 0, 0, '2024-06-25 15:10:56.951981'),
+(4, 'Nimal_Fernando', 'pbkdf2_sha256$720000$KdXkj1ifY2d9fNxpmB8s9j$Qs4J4DMXXoAT1vUFmj/tJ+RnOC1+kaj6ld3S+XRqekc=', 'lankanuser123@example.com', 'Nimal', 'Fernando', '+94 77 123 4567', '10000', '45A, Lotus Lane, Colombo 07, Sri Lanka', '2024-06-18 14:19:26.814086', 1, 0, 0, '2024-06-25 17:31:57.941893'),
 (5, 'Savindi', 'pbkdf2_sha256$720000$HomqCdtc9FYFpZ9G5Vr1eh$KW5JlkkeNBz7ALo8igEOmzN6IyoEA3SAVGNOelZiuVc=', 'savindi.dias@example.com', 'Savindi', 'Dias', '+94 76 234 5678', '50070', '15 Jasmine Avenue, Nuwara Eliya, Sri Lanka', '2024-06-18 14:56:09.124282', 1, 0, 0, '2024-06-18 14:56:10.028921');
 
 -- --------------------------------------------------------
@@ -475,25 +489,31 @@ INSERT INTO `user_watchlist` (`id`, `user_id`, `vehicle_id`) VALUES
 (8, 4, 21),
 (9, 4, 22),
 (10, 4, 33),
-(13, 3, 36);
+(13, 3, 36),
+(14, 1, 27);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `vehicles_payment`
+-- Table structure for table `vehicles_contactmessage`
 --
 
-CREATE TABLE `vehicles_payment` (
+CREATE TABLE `vehicles_contactmessage` (
   `id` bigint(20) NOT NULL,
-  `card_name` varchar(100) NOT NULL,
-  `card_number` varchar(16) NOT NULL,
-  `expiry_date` date NOT NULL,
-  `cvv` varchar(3) NOT NULL,
-  `payment_amount` decimal(10,2) NOT NULL,
-  `payment_date` datetime(6) NOT NULL,
-  `user_id` bigint(20) NOT NULL,
-  `vehicle_id` bigint(20) NOT NULL
+  `name` varchar(100) NOT NULL,
+  `email` varchar(254) NOT NULL,
+  `review` longtext NOT NULL,
+  `timestamp` datetime(6) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `vehicles_contactmessage`
+--
+
+INSERT INTO `vehicles_contactmessage` (`id`, `name`, `email`, `review`, `timestamp`) VALUES
+(3, 'Pete Peiris', 'pete.peiris@example.com', 'Fantastic selection of cars and unbeatable prices. I found exactly what I was looking for at Driven Deals.', '2024-06-24 15:17:45.720362'),
+(4, 'Jane Fernando', 'adventureseeker88@example.com', 'Great service and amazing deals! Highly recommend Driven Deals for anyone looking to buy a car.', '2024-06-24 15:20:49.718978'),
+(5, 'Jason Fonseka', 'adventureseeker88@example.com', '\"DrivenDeals\" website is impressively user-friendly, ensuring a seamless and intuitive experience for all visitors.', '2024-06-25 07:04:25.817141');
 
 -- --------------------------------------------------------
 
@@ -550,7 +570,7 @@ INSERT INTO `vehicles_vehicle` (`id`, `model`, `year`, `price`, `picture`, `desc
 (28, '45DI', 2018, '3600000.00', 'vehicle_pictures/tracktor.jpg', 'The TAFE 45DI is a robust and reliable tractor designed for agricultural purposes. Known for its durability and simplicity, it offers essential features for farm work and rural applications, ensuring dependable performance in demanding conditions.', '2024-06-18 14:14:29.402653', 'Red', 1000, 'tractor', '1.0', 'Internal Combustion Engine', 'diesel', 'other', 1, 'Manual', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'vehicle_pictures/tracktor2.jpg', 'vehicle_pictures/tracktor3.jpg', 3, 7, '2024-06-22 10:26:14.869855'),
 (29, 'Ntorq', 2023, '780000.00', 'vehicle_pictures/Bikke1.jpg', 'The TVS Ntorq is a sporty and feature-packed scooter that appeals to urban riders seeking style and performance. It combines modern design elements with practical features such as a digital instrument cluster, smartphone connectivity, and a peppy engine, making it an ideal choice for daily commuting with a touch of excitement.', '2024-06-18 14:17:33.722131', 'Red', 500, 'motorbike', '0.2', 'Internal Combustion Engine', 'petrol', 'other', 2, 'Automatic', 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 'vehicle_pictures/Bikke2.jpg', 'vehicle_pictures/Bikke3.jpg', 3, 5, '2024-06-22 10:26:23.689252'),
 (30, 'Swift RS Turbo', 2023, '8690000.00', 'vehicle_pictures/susuki1.jpg', 'The Suzuki Swift RS Turbo blends sporty design with practicality, offering agile handling and turbocharged performance. It features advanced safety technologies, modern interior amenities, and a stylish exterior, making it a popular choice among enthusiasts and everyday drivers alike.', '2024-06-18 14:24:28.090812', 'White', 750, 'car', '1.0', 'Hybrid', 'petrol', 'Suzuki', 5, 'Automatic', 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 'vehicle_pictures/susuki2.jpg', '', 4, 1, '2024-06-22 10:26:48.933380'),
-(31, 'Ashok Leyland JanBu', 2024, '4700000.00', 'vehicle_pictures/bus1.jpg', 'Ashok Leyland buses are renowned for their robust build quality, reliability, and versatility. They are widely used for public transportation, school buses, intercity travel, and special applications such as tourist coaches. Featuring spacious interiors, comfortable seating arrangements, and advanced engineering, Ashok Leyland buses cater to both passenger comfort and safety. Equipped with modern technology and designed for efficient performance, these buses are a preferred choice for fleet operators and transportation companies looking for durability and operational excellence.', '2024-06-18 14:35:03.290650', 'White', 0, 'bus', '1.5', 'Internal Combustion Engine', 'diesel', 'other', 60, 'Manual', 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 'vehicle_pictures/Bus2.jpg', '', 4, 7, '2024-06-22 10:51:05.863819'),
+(31, 'Ashok Leyland JanBus ', 2024, '4700000.00', 'vehicle_pictures/bus1.jpg', 'Ashok Leyland buses are renowned for their robust build quality, reliability, and versatility. They are widely used for public transportation, school buses, intercity travel, and special applications such as tourist coaches. Featuring spacious interiors, comfortable seating arrangements, and advanced engineering, Ashok Leyland buses cater to both passenger comfort and safety. Equipped with modern technology and designed for efficient performance, these buses are a preferred choice for fleet operators and transportation companies looking for durability and operational excellence.', '2024-06-18 14:35:03.290650', 'White', 0, 'bus', '1.5', 'Internal Combustion Engine', 'diesel', 'other', 60, 'Manual', 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 'vehicle_pictures/Bus2.jpg', '', 4, 7, '2024-06-22 10:51:05.863819'),
 (32, 'CX-5', 2017, '18500000.00', 'vehicle_pictures/mazda1.jpg', 'The Mazda CX-5 combines stylish design with sporty performance and practicality. It offers a comfortable and upscale interior, advanced safety features, and a smooth driving experience suitable for both city and highway driving. With its responsive handling and versatile cargo space, the CX-5 is a popular choice among SUV enthusiasts seeking a blend of luxury and utility.', '2024-06-18 15:02:50.188755', 'Blue', 120000, 'suv', '2.0', 'Internal Combustion Engine', 'petrol', 'Mazda', 5, 'Automatic', 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 'vehicle_pictures/maxda2.jpg', '', 5, 4, '2024-06-22 10:28:20.122773'),
 (33, 'Vitz', 2023, '4590000.00', 'vehicle_pictures/vitz1.jpg', 'The Toyota Vitz (Yaris) is a reliable and fuel-efficient hatchback known for its compact size and practicality. It offers agile handling, a comfortable interior, and a range of modern features suitable for urban commuting. With Toyota\'s reputation for reliability and affordability, the Vitz appeals to drivers looking for a dependable and economical everyday car.', '2024-06-18 15:06:39.386820', 'Red', 1000, 'car', '13.0', 'Hybrid', 'hybrid', 'Toyota', 5, 'Automatic', 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 'vehicle_pictures/vitz2.jpg', 'vehicle_pictures/vitz3.jpg', 5, 5, '2024-06-22 10:28:42.200284'),
 (34, 'Civic', 2020, '5000000.00', 'vehicle_pictures/Midnight_Black_honda_civic.jpg', 'The Honda Civic Midnight Black is a sleek and stylish vehicle featuring a bold, dark exterior color. It boasts a precise fitment and top-notch quality, ensuring safety without compromising airbag deployment. This exclusive car interior is made with PRIME materials for a premium look and feel', '2024-06-22 15:02:03.822089', 'Midnight Black', 2500, 'sedan', '1.6', 'Hybrid', 'hybrid', 'Honda', 5, 'Automatic', 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 'vehicle_pictures/Midnight_Black_honda_civic1.jpg', 'vehicle_pictures/Midnight_Black_honda_civic2.jpg', 1, 2, NULL),
@@ -683,12 +703,10 @@ ALTER TABLE `user_watchlist`
   ADD KEY `user_watchlist_user_id_cf69f936` (`user_id`);
 
 --
--- Indexes for table `vehicles_payment`
+-- Indexes for table `vehicles_contactmessage`
 --
-ALTER TABLE `vehicles_payment`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `vehicles_payment_user_id_489e464c_fk_user_user_id` (`user_id`),
-  ADD KEY `vehicles_payment_vehicle_id_af4d1d67_fk_vehicles_vehicle_id` (`vehicle_id`);
+ALTER TABLE `vehicles_contactmessage`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `vehicles_vehicle`
@@ -717,7 +735,7 @@ ALTER TABLE `auth_group_permissions`
 -- AUTO_INCREMENT for table `auth_permission`
 --
 ALTER TABLE `auth_permission`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
 
 --
 -- AUTO_INCREMENT for table `auth_user`
@@ -753,13 +771,13 @@ ALTER TABLE `django_admin_log`
 -- AUTO_INCREMENT for table `django_content_type`
 --
 ALTER TABLE `django_content_type`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `django_migrations`
 --
 ALTER TABLE `django_migrations`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
 
 --
 -- AUTO_INCREMENT for table `user_listing`
@@ -789,13 +807,13 @@ ALTER TABLE `user_user_user_permissions`
 -- AUTO_INCREMENT for table `user_watchlist`
 --
 ALTER TABLE `user_watchlist`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
--- AUTO_INCREMENT for table `vehicles_payment`
+-- AUTO_INCREMENT for table `vehicles_contactmessage`
 --
-ALTER TABLE `vehicles_payment`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `vehicles_contactmessage`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `vehicles_vehicle`
@@ -874,13 +892,6 @@ ALTER TABLE `user_user_user_permissions`
 ALTER TABLE `user_watchlist`
   ADD CONSTRAINT `user_watchlist_user_id_cf69f936_fk_user_user_id` FOREIGN KEY (`user_id`) REFERENCES `user_user` (`id`),
   ADD CONSTRAINT `user_watchlist_vehicle_id_fbac1da1_fk_vehicles_vehicle_id` FOREIGN KEY (`vehicle_id`) REFERENCES `vehicles_vehicle` (`id`);
-
---
--- Constraints for table `vehicles_payment`
---
-ALTER TABLE `vehicles_payment`
-  ADD CONSTRAINT `vehicles_payment_user_id_489e464c_fk_user_user_id` FOREIGN KEY (`user_id`) REFERENCES `user_user` (`id`),
-  ADD CONSTRAINT `vehicles_payment_vehicle_id_af4d1d67_fk_vehicles_vehicle_id` FOREIGN KEY (`vehicle_id`) REFERENCES `vehicles_vehicle` (`id`);
 
 --
 -- Constraints for table `vehicles_vehicle`
