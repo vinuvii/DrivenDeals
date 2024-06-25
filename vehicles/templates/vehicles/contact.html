@@ -1,11 +1,10 @@
-<!-- templates/contact.html -->
 {% extends 'base.html' %}
 
 {% block extra_head %}
 <style>
     .contact-section {
         padding: 50px 20px;
-        background-color: #f1f1f1;
+        background-color: #ffffff;
         color: #333;
         text-align: center;
     }
@@ -96,33 +95,23 @@
     </div>
 
     <div class="contact-form">
-        <h2 style="font-size: 30px;">Send us a message</h2>
-        <form action="submit_form.php" method="POST">
-            <div>
-                <label for="name">Your Name:</label>
-                <input type="text" id="name" name="name" required>
-            </div>
-            <div>
-                <label for="email">Your Email:</label>
-                <input type="email" id="email" name="email" required>
-            </div>
-            <div>
-                <label for="message">Message:</label>
-                <textarea id="message" name="message" required></textarea>
-            </div>
-            <div>
-                <button type="submit">Send Message</button>
-            </div>
+        <h2 style="font-size: 30px;">Leave a Review</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Submit Review</button>
         </form>
     </div>
 
     <div class="social-links">
         <h2 style="font-size: 30px;">Follow Us</h2>
-        <a href="https://www.facebook.com/drivendeals" target="_blank">Facebook</a>
-        <a href="https://www.instagram.com/drivendeals" target="_blank">Instagram</a>
-        <!-- Add more social media links as needed -->
+        <a href="https://www.facebook.com/drivendeals" target="_blank">
+            <i class="fab fa-facebook-square"></i> Facebook
+        </a>
+        <a href="https://www.instagram.com/drivendeals" target="_blank">
+            <i class="fab fa-instagram"></i> Instagram
+        </a>
     </div>
 </div>
+
 {% endblock %}
-
-

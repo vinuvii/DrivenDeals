@@ -16,6 +16,14 @@
         box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         margin-bottom: 20px;
         position: relative;
+        opacity: 0;
+        transform: translateY(100%);
+        transition: opacity 0.8s, transform 0.8s;
+        will-change: opacity, transform;
+    }
+    .car-item.animate-in {
+        opacity: 1;
+        transform: translateY(0);
     }
     .car-item img {
         width: 200px;
@@ -112,7 +120,34 @@
         margin-top: 10px;
         cursor: pointer;
     }
+     .advance-filter-button {
+        background-color: #3498db;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 5px;
+        text-decoration: none;
+        display: inline-block;
+        margin-left: 10px; /* Space between buttons */
+    }
+
+    .advance-filter-button:hover {
+        background-color: #2980b9; /* Darker shade of blue on hover */
+    }
 </style>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $(window).scroll(function() {
+            $(".car-item").each(function() {
+                var position = $(this).offset().top;
+                var scrollPosition = $(window).scrollTop() + $(window).height();
+                if (scrollPosition > position) {
+                    $(this).addClass("animate-in");
+                }
+            });
+        });
+    });
+</script>
 {% endblock %}
 
 {% block content %}
@@ -120,13 +155,14 @@
     <section class="car-list-container">
         <h1 class="car-listings-heading">All Listings</h1>
 
-        <!-- Search form specifically for all_listings.html -->
+        <!-- Search form -->
         <form action="{% url 'all_listings' %}" method="GET" class="search-form">
             <input type="text" name="q" placeholder="Search listings...">
             <input type="number" name="min_price" placeholder="Min Price">
             <input type="number" name="max_price" placeholder="Max Price">
             <button type="submit">Search</button>
             <a href="{% url 'all_listings' %}" class="clear-filters-button">Clear Filters</a>
+            <a href="{% url 'filter_vehicles' %}" class="advance-filter-button">Advance Filter</a>
         </form>
 
         <!-- Display filtered or all listings -->
@@ -156,5 +192,3 @@
     </section>
 </main>
 {% endblock %}
-
-

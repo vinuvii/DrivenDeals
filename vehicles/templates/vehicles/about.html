@@ -1,71 +1,82 @@
-<!-- templates/about.html -->
 {% extends 'base.html' %}
 
 {% block extra_head %}
 <style>
-    .about-section {
+    .section {
         padding: 50px 20px;
-        background-color: #f1f1f1;
         color: #333;
         position: relative;
-        overflow: hidden; /* Ensure child elements do not overflow */
-    }
-    .about-section::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
+        overflow: hidden;
         background: url('https://www.seat.com/content/dam/public/seat-website/myco/2425/carworlds/leon/overview/version-view/leon-fr/seat-leon-5d-fr-trim-desire-red-colour-alloy-wheels.png') no-repeat center center/cover;
-        opacity: 0; /* Start with full transparency */
-        transform: scale(1.2); /* Start with a slight zoom */
-        transition: opacity 1.5s ease-in-out, transform 1.5s ease-in-out; /* Transition for opacity and transform */
-        z-index: 0;
+        background-attachment: fixed; /* Ensure the background image remains fixed */
     }
-    .about-section.visible::before {
-        opacity: 0.1; /* End with light opacity */
-        transform: scale(1); /* End with original size */
-    }
-    .about-section .content {
+    .content {
         position: relative;
         z-index: 1;
-        transform: translateY(50px); /* Start position for the slide-up effect */
-        opacity: 0; /* Start with full transparency */
-        transition: transform 1s ease-in-out, opacity 1s ease-in-out; /* Transition for both transform and opacity */
+        transform: translateY(50px);
+        opacity: 0;
+        transition: transform 1s ease-in-out, opacity 1s ease-in-out;
+        max-width: 800px;
+        margin: 0 auto;
+        background-color: rgba(255, 255, 255, 0.9); /* Background color for content area */
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* Box shadow for content area */
     }
-    .about-section.visible .content {
-        transform: translateY(0); /* End position for the slide-up effect */
-        opacity: 1; /* End with full opacity */
+
+    .section.visible .content {
+        transform: translateY(0);
+        opacity: 1;
     }
-    .about-section h1 {
+
+    h1 {
         text-align: center;
         margin-bottom: 20px;
         font-size: 36px;
     }
-    .about-section p {
-        text-align: justify;
+
+    p {
+
         margin: 10px auto;
-        max-width: 800px;
+    }
+
+    .service {
+        margin-bottom: 30px;
+        padding: 20px;
+        background-color: rgba(255, 255, 255, 0.9); /* Background color for each service box */
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* Box shadow for each service box */
+    }
+
+    .service h2 {
+        font-size: 24px;
+        color: #de483d;
+    }
+
+    .service p {
+        text-align: justify;
+        margin-bottom: 0;
     }
 </style>
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-        const aboutSection = document.querySelector('.about-section');
+        const sections = document.querySelectorAll('.section');
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    aboutSection.classList.add('visible');
+                    entry.target.classList.add('visible');
                 }
             });
         });
-        observer.observe(aboutSection);
+        sections.forEach(section => {
+            observer.observe(section);
+        });
     });
 </script>
 {% endblock %}
 
 {% block content %}
-<div class="about-section">
+<div class="section about-section">
     <div class="content">
         <h1>About DrivenDeals</h1>
         <p>
@@ -80,11 +91,48 @@
         <p>
             Thank you for choosing DrivenDeals. We look forward to helping you with all your car buying and selling needs!
         </p>
+    </div>
+</div>
 
-
-
-
+<div class="section services-section">
+    <div class="content">
+        <h1>Our Services</h1>
+        <div class="service">
+            <h2>Vehicle Listings</h2>
+            <p>
+                We offer a comprehensive platform for listing your vehicles for sale. Our user-friendly interface makes it easy to upload photos, add descriptions, and set prices, ensuring your listings attract potential buyers quickly.
+            </p>
+        </div>
+        <div class="service">
+            <h2>Vehicle Inspections</h2>
+            <p>
+                Our professional vehicle inspection services provide a thorough evaluation of any car you are interested in buying or selling. We check all critical components, ensuring the vehicle's condition and safety.
+            </p>
+        </div>
+        <div class="service">
+            <h2>Maintenance Tips</h2>
+            <p>
+                We offer expert tips and advice on maintaining your vehicle. From regular oil changes to tire maintenance, our tips help you keep your car in top condition and running smoothly.
+            </p>
+        </div>
+        <div class="service">
+            <h2>Customer Support</h2>
+            <p>
+                Our dedicated customer support team is available to assist you with any questions or issues you may encounter. Whether you need help with your listings or advice on buying a car, we are here to help.
+            </p>
+        </div>
+        <div class="service">
+            <h2>Vehicle Bidding</h2>
+            <p>
+                Our platform allows you to bid on vehicles, providing a dynamic and competitive marketplace. You can place bids on vehicles you are interested in and compete with other buyers to get the best deal.
+            </p>
+        </div>
+        <div class="service">
+            <h2>Advanced Filtering and Comparison Tools</h2>
+            <p>
+                Utilize our advanced filtering and comparison tools to find the perfect vehicle. Our tools allow you to filter by make, model, price, year, and more, as well as compare two vehicles side-by-side to make an informed decision.
+            </p>
+        </div>
     </div>
 </div>
 {% endblock %}
-

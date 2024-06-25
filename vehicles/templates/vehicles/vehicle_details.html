@@ -5,6 +5,7 @@
 <style>
 html, body {
     overflow-x: hidden;
+    font-family: 'Open Sans', 'Titillium Web', 'PT Sans', Arial, sans-serif;
 }
 
 .vehicle-details {
@@ -51,6 +52,7 @@ html, body {
     z-index: 10;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8); /* Optional: Add text shadow for better contrast */
 }
+
 .vehicle-details-section {
     background-color: #f9f9f9;
     padding: 60px 60px 120px; /* Increased bottom padding for huge space */
@@ -73,14 +75,12 @@ html, body {
     width: 5px; /* Adjust this value to control the thickness of the line */
     height: 100%;
     background-color: #de483d; /* Red color */
-
 }
 
 .vehicle-details-section__head h1,
 .vehicle-details-section__head h3 {
     margin: 10px 0;
     padding-left: 10px;
-
 }
 
 .vehicle-details-section__head-price {
@@ -108,7 +108,7 @@ html, body {
     margin-top: 40px; /* Add significant spacing between buttons */
 }
 
-    #placeBidButton {
+#placeBidButton {
     background-color: #de483d; /* Primary button background color */
     border: #de483d;
     color: white;
@@ -155,6 +155,107 @@ html, body {
 #watchlistButton .fa-star {
     color: gold;
 }
+
+.page-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%; /* Full height of viewport */
+}
+
+.vehicle-bids-card {
+    position: relative;
+    background-color: #ffffff;
+    margin-bottom: 100px;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    width: 100%;
+    max-width: 1150px;
+    border: 4px solid #dddddd; /* Border color similar to previous examples */
+    margin-top: 10px;
+}
+
+.vehicle-bids-card p {
+    margin-bottom: 12px;
+    font-size: 0.95rem;
+    color: #333;
+    line-height: 1.6;
+    border-bottom: 3px solid #dddddd;/* Similar border as before */
+    padding-bottom: 3px;
+    font-family: 'Open Sans', 'Titillium Web', 'PT Sans', Arial, sans-serif;
+}
+
+.vehicle-bids-card .place-bid-button-container {
+    position: absolute;
+    top: 10px;
+    right: 30px;
+    border-radius: 1px;
+}
+
+.vehicle-bids-card .btn-sm {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.5rem;
+}
+
+.bid-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    max-width: 1050px; /* Adjust maximum width as per your design */
+    margin-left: auto;
+    margin-right: auto;
+    display: table; /* Use 'table' instead of 'block' for proper centering */
+}
+
+
+.bid-table th, .bid-table td {
+    border: none;
+    padding: 16px 20px;
+    text-align: left;
+    vertical-align: top;
+}
+
+.bid-table th {
+    background-color: #fdeaea; /* Very light shade of #de483d */
+    font-weight: bold;
+    border-radius: 8px 8px 0 0;
+    padding: 12px 20px;
+    font-family: 'Open Sans', 'Titillium Web', 'PT Sans', Arial, sans-serif;
+}
+
+.bid-table td {
+    background-color: #fafafa;
+    margin-bottom: 10px;
+    border-radius: 0 0 8px 8px;
+    padding: 12px 20px;
+    font-family: 'Open Sans', 'Titillium Web', 'PT Sans', Arial, sans-serif;
+}
+
+.bid-table .status-label {
+    font-weight: bold;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-family: 'Open Sans', 'Titillium Web', 'PT Sans', Arial, sans-serif;
+}
+
+.bid-table .pending {
+    background-color: #ff9800;
+    color: #fff;
+}
+
+.bid-table .accepted {
+    background-color: #4caf50;
+    color: #fff;
+}
+
+.bid-table .rejected {
+    background-color: #f44336;
+    color: #fff;
+}
+
+
 
 
 /* Animation classes */
@@ -262,6 +363,7 @@ html, body {
         opacity: 0.7;
         transform: translateY(-5px);
     }
+
 .vehicle-description-card {
     padding-top: 0;
     padding-bottom: 0;
@@ -270,89 +372,94 @@ html, body {
     width: 100%;
     max-width: 550px;
     margin-right: 20px;
-    background-color: #ffffff;
+    background-color: #f9f9f9;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     overflow: hidden;
+    border: 5px solid #f9f9f9;
 }
 
 .vehicle-description-card .card-header {
-    background-color: #de483d;
-    padding: 15px;
+    background-color: #f9f9f9;
+    padding: 20px;
     border-bottom: none;
     position: relative;
 }
 
 .vehicle-description-card .card-title {
-    color: #ffffff;
-    font-size: 1.25rem;
+    color: #000000;
+    font-size: 1.3rem;
     font-weight: bold;
-    position: relative; /* Ensure positioning context */
+    position: relative;
     display: inline-block;
     background-color: transparent;
-    border: de483d;
+    border: none;
+    padding-left: 25px;
 }
 
 .vehicle-description-card .card-title::before {
-    content: ""; /* Empty content for pseudo-element */
+    content: "| ";
+    color: #de483d;
+    font-size: 2.0rem;
+    font-weight: bold;
     position: absolute;
-    top: 50%; /* Adjust top position for alignment */
     left: 0;
-    width: 100%;
-    height: 1px; /* Adjust thickness of the border */
-    background-color: #de483d; /* Thick red border color */
-    z-index: -1; /* Behind text */
-    box-sizing: border-box;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 .vehicle-description-card .card-title span {
-    display: inline-block; /* Make inline for border to wrap around */
-    padding: 0 8px; /* Add padding inside the border */
-    background-color: #de483d; /* Match the border color */
+    display: inline-block;
+    background-color: #f9f9f9;
 }
+
 .vehicle-description-card .card-body {
+    padding: 0;
+}
+
+.table th::before,
+.table td::before {
+    content: "|";
+    color: #999999;
+    margin-right: 8px;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.table th,
+.table td {
+    background-color: #f9f9f9;
+    color: #333;
+    border: none; /* Remove all borders */
     padding: 10px;
 }
 
 .vehicle-description-card .table {
-    background-color: #ffffff;
+    background-color: #f9f9f9;
     margin-bottom: 0;
     border-collapse: collapse;
 }
 
-.vehicle-description-card .table tbody tr {
-    height: 30px; /* Reduce the height of each row */
-}
-
-.vehicle-description-card .table thead {
-    background-color: #f0b1af;
-}
-
-.vehicle-description-card .table tbody tr:nth-child(even) {
-    background-color: #f7c6c5;
-}
-
-.vehicle-description-card .table tbody tr:nth-child(odd) {
-    background-color: #f0b1af;
-}
-
 .vehicle-description-card .table th,
 .vehicle-description-card .table td {
-    border: none;
-    padding: 8px; /* Reduce padding for each cell */
+    padding: 19px;
     color: #333;
 }
 
 .vehicle-description-card .table th {
-    background-color: #de483d;
-    color: #ffffff;
+    color: #000000;
     text-align: left;
-    font-weight: bold;
+    font-weight: normal;
 }
 
 .vehicle-description-card .table td {
-    background-color: #ffffff;
-    color: #333;
+    background-color: #f9f9f9;
+    color: #000000;
+    font-weight: bold;
+}
+
+.vehicle-description-card .table tr {
+    background-color: #f9f9f9; /* Set background color for all rows */
 }
 
 .vehicle-description-card .table tr:hover {
@@ -361,453 +468,318 @@ html, body {
 }
 
 .seller-description-card {
-    background-color: #ffffff;
+    background: linear-gradient(to bottom right, #ffffff, #f9f9f9); /* Subtle gradient background */
     margin-bottom: 20px;
-    padding: 5px; /* Slightly increased padding */
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 8px; /* Increased padding for better spacing */
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Enhanced box shadow */
     overflow: hidden;
-    width: 100%; /* Ensure the seller details card has the same width */
-    max-width: 550px; /* Ensure the same max-width */
-    margin-right: 20px; /* Ensure the same margin-right */
-    border: 0px solid #de483d; /* Subtle border */
+    width: 100%;
+    max-width: 550px;
+    max-height: 325px;
+    margin-right: 20px;
+    transition: transform 0.3s ease; /* Example animation */
+}
+.seller-description-card .card {
+    border: 5px solid #dddddd;
+    border-radius: 10px; /* Rounded border */
+    overflow: hidden; /* Ensure content doesn't overflow */
+}
+
+.seller-description-card:hover {
+    transform: translateY(-5px); /* Example hover animation */
 }
 
 .seller-description-card .card-header {
-    background-color: #de483d;
+    background-color: transparent;
     padding: 15px;
     border-bottom: none;
-    border-radius: 8px 8px 0 0; /* Rounded top corners */
+    border-radius: 12px 12px 0 0; /* Rounded top corners */
 }
 
 .seller-description-card .card-title {
-    color: #ffffff;
-    font-size: 1.25rem;
+    color: #000000; /* Black font color */
+    font-size: 1.5rem; /* Larger font size */
     font-weight: bold;
     margin: 0;
+    position: relative; /* Ensure relative positioning */
+    margin-left: 20px; /* Adjust margin as needed */
+    font-family: 'Open Sans', 'Titillium Web', 'PT Sans', Arial, sans-serif;
+}
+
+.seller-description-card .card-title::before {
+    content: "| ";
+    color: #de483d;
+    font-size: 2.0rem; /* Adjust size as needed */
+    font-weight: bold;
+    position: absolute;
+    left: -20px; /* Position the bar to the left of the title */
+    top: 50%;
+    transform: translateY(-50%);
+}
 }
 
 .seller-description-card .card-body {
-    padding: 10px; /* Increased padding */
+    padding: 15px; /* Increased padding */
+    border: 15px solid #ccc;
+
 }
 
 .seller-description-card p {
-    margin-bottom: 12px; /* Slightly increased margin for more line spacing */
-    font-size: 0.95rem; /* Slightly larger font size */
-    color: #333;
-    line-height: 1.6; /* Increased line-height for better spacing */
-    border-bottom: 1px solid #f0f0f0; /* Subtle bottom border for separation */
-    padding-bottom: 3px; /* Padding for bottom border */
-}
-
-.seller-description-card p:last-child {
-    margin-bottom: 0; /* Remove margin for the last paragraph */
-    border-bottom: none; /* Remove border for the last paragraph */
+    margin-bottom: 12px;
+    font-size: 1rem; /* Slightly larger font size */
+    color: #555; /* Darker text color for readability */
+    line-height: 1.6;
+    font-family: 'Open Sans', 'Titillium Web', 'PT Sans', Arial, sans-serif;
 }
 
 .seller-description-card p strong {
     color: #de483d;
+    font-family: 'Open Sans', 'Titillium Web', 'PT Sans', Arial, sans-serif;
 }
 
 .seller-description-card a {
-    color: #c3382d;
-    text-decoration: underline;
+    display: inline-block;
+    color: #ffffff;
+    background-color: #de483d;
+    padding: 10px 15px;
+    border-radius: 5px;
+    text-decoration: none;
     font-weight: bold;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    font-family: 'Open Sans', 'Titillium Web', 'PT Sans', Arial, sans-serif;
 }
 
 .seller-description-card a:hover {
-    text-decoration: none;
+    color: #de483d;
+}
+
+.seller-description-card .icon {
+    margin-right: 10px; /* Space between icon and text */
+    color: #de483d; /* Icon color */
+}
+
+.seller-description-card .seller-listings-link {
+    color: #b03027;  /* Darker text color */
+    text-decoration: underline;
+    transition: color 0.3s ease, text-decoration 0.3s ease;
+    background-color: transparent;
 }
 
 
-    .modal-background {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.5);
-        z-index: 1;
-        border-radius: 20px;
-    }
 
-    .modal-dialog {
-        max-width: 800px;
-        border-radius: 20px;
-        background: url('https://images.frandroid.com/wp-content/uploads/2016/02/google_car.jpg') no-repeat center center;
-        background-size: cover;
-        position: relative;
-    }
 
-    .modal-content {
-        background-color: rgba(255, 255, 255, 0.9);
-        border-radius: 20px;
-        padding: 20px;
-        position: relative;
-        z-index: 2;
-    }
+.modal-dialog {
+    max-width: 800px;
+    width: 100%;
+    border-radius: 20px;
+    position: relative;
+}
 
-    .modal-header {
-        border-bottom: none;
-    }
+#placeBidModalButton {
+    margin-bottom: 30px;
+    margin-top: 5px;
+}
+.modal-content {
+    border-radius: 20px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.9);
+    position: relative;
+    z-index: 2;
+    min-height: 650px;
+}
 
-    .modal-body {
-        text-align: center;
-    }
+.modal-dialog::before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('https://images.frandroid.com/wp-content/uploads/2016/02/google_car.jpg') no-repeat center center;
+    background-size: cover;
+    border-radius: 20px;
+    z-index: 1;
+    opacity: 0.5;
+}
 
-    .modal-header .close {
-        color: #fff; /* Close button color */
-    }
+.modal-header {
+    border-bottom: none;
+    position: relative;
+    z-index: 2;
+}
 
-    .modal-body p {
-        color: #000; /* Ensure modal body text color is black */
-        font-family: 'Open Sans', 'Titillium Web', 'PT Sans', Arial, sans-serif; /* Apply desired font */
-    }
+.modal-header .close {
+    color: #fff;
+}
 
-    .max-bid-section {
-        text-align: left;
-        margin: 20px 0;
-    }
+.modal-body {
+    text-align: center;
+    position: relative;
+    z-index: 2;
+}
 
-    .max-bid-label {
-        font-size: 16px;
-        text-align: left;
-        margin-bottom: 10px;
-        color: #000; /* Change text color to black */
-        font-family: 'Open Sans', 'Titillium Web', 'PT Sans', Arial, sans-serif; /* Apply desired font */
-    }
+.modal-body p {
+    color: #000;
+    font-family: 'Open Sans', 'Titillium Web', 'PT Sans', Arial, sans-serif;
+}
 
-    .max-bid-input {
-        display: flex;
-        align-items: center;
-        border-radius: 10px;
-        overflow: hidden;
-    }
+.max-bid-section {
+    text-align: left;
+    margin: 20px 0;
+    padding-bottom: 10px;
+    position: relative;
+}
 
-    .max-bid-currency {
-        font-weight: bold;
-        margin-right: 5px;
-        font-family: 'Open Sans', 'Titillium Web', 'PT Sans', Arial, sans-serif; /* Apply desired font */
-    }
+.max-bid-label {
+    font-size: 16px;
+    text-align: left;
+    margin-bottom: 10px;
+    color: #000;
+    font-family: 'Open Sans', 'Titillium Web', 'PT Sans', Arial, sans-serif;
+}
 
-    .terms {
-        font-size: 12px;
-        color: #888;
-        margin: 0;
-        font-family: 'Open Sans', 'Titillium Web', 'PT Sans', Arial, sans-serif; /* Apply desired font */
-    }
+.max-bid-input {
+    display: flex;
+    align-items: center;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
 
-    .reserve-status {
-        font-size: 16px;
-        font-weight: bold;
-        text-align: left;
-        color: #000; /* Ensure reserve status text color is black */
-        font-family: 'Open Sans', 'Titillium Web', 'PT Sans', Arial, sans-serif; /* Apply desired font */
-    }
+.max-bid-currency {
+    font-weight: bold;
+    margin-right: 5px;
+    font-family: 'Open Sans', 'Titillium Web', 'PT Sans', Arial, sans-serif;
+}
 
-    .bids-total {
-        font-size: 16px;
-        font-weight: bold;
-        text-align: right;
-        color: #000; /* Ensure bids total text color is black */
-        font-family: 'Open Sans', 'Titillium Web', 'PT Sans', Arial, sans-serif; /* Apply desired font */
-    }
+.terms {
+    font-size: 12px;
+    color: #888;
+    margin: 0;  /* Adjusted margin to place it at the very bottom */
+    position: absolute;
+    bottom: 10px;  /* Small margin from the bottom */
+    left: 20px;
+    right: 20px;
+    font-family: 'Open Sans', 'Titillium Web', 'PT Sans', Arial, sans-serif;
+}
 
-    .time-remaining {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin: 20px 0;
-        font-size: 24px;
-        font-weight: bold;
-    }
+.reserve-status {
+    font-size: 16px;
+    font-weight: bold;
+    text-align: left;
+    color: #000;
+    font-family: 'Open Sans', 'Titillium Web', 'PT Sans', Arial, sans-serif;
+}
 
-    .time-remaining span {
-        margin: 0 5px;
-    }
+.bids-total {
+    font-size: 16px;
+    font-weight: bold;
+    text-align: right;
+    color: #000;
+    font-family: 'Open Sans', 'Titillium Web', 'PT Sans', Arial, sans-serif;
+}
 
-    .time-labels {
-        display: flex;
-        justify-content: center;
-        font-size: 12px;
-        color: #888;
-    }
+.time-remaining {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+    font-size: 16px;
+    font-weight: bold;
+}
 
-    .time-labels span {
-        margin: 0 5px;
-    }
+.time-remaining p {
+    margin-bottom: 10px;
+    font-weight: bold;
+}
 
-    .bid-values {
-        display: flex;
-        justify-content: space-around;
-        margin: 20px 0;
-    }
-    .bid-value {
-        background-color: #ADCCE9;
-        border: none;
-        color: white;
-        padding: 10px 20px;
-        text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        font-size: 14px;
-        margin: 4px 2px;
-        cursor: pointer;
-        border-radius: 10px;
-        transition: background-color 0.3s ease;
-        width: 145px;
-        height: 42px;
-        font-family: 'Open Sans', 'Titillium Web', 'PT Sans', Arial, sans-serif; /* Apply desired font */
-    }
+.time-unit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 5px;
+}
 
-    .bid-value:hover {
-        background-color: #77AAD9;
-    }
+.time-value {
+    font-size: 2em;
+    font-weight: bold;
+}
 
-    .form-control {
-        margin: 0;
-        border-radius: 0;
-        border-top-left-radius: 10px;
-        border-bottom-left-radius: 10px;
-    }
+.time-separator {
+    font-size: 2em;
+    font-weight: bold;
+    margin: 0 5px;
+}
 
-    .max-bid-section {
-        text-align: left;
-        margin: 20px 0;
-    }
+.time-remaining span {
+    margin: 0 5px;
+}
 
-    .max-bid-label {
-        font-size: 16px;
-        text-align: left;
-        margin-bottom: 10px;
-        color: #000; /* Change text color to black */
-        font-family: 'Open Sans', 'Titillium Web', 'PT Sans', Arial, sans-serif; /* Apply desired font */
-    }
+.time-labels {
+    display: flex;
+    justify-content: center;
+    font-size: 12px;
+    color: #888;
+}
 
-    .max-bid-input {
-        display: flex;
-        align-items: center;
-        border-radius: 10px;
-        overflow: hidden;
-    }
+.time-labels span {
+    margin: 0 5px;
+}
 
-    .max-bid-currency {
-        font-weight: bold;
-        margin-right: 5px;
-        font-family: 'Open Sans', 'Titillium Web', 'PT Sans', Arial, sans-serif; /* Apply desired font */
-    }
+.bid-values {
+    display: flex;
+    justify-content: space-around;
+    margin: 20px 0;
+}
 
-    .terms {
-        font-size: 12px;
-        color: #888;
-        margin: 0;
-        font-family: 'Open Sans', 'Titillium Web', 'PT Sans', Arial, sans-serif; /* Apply desired font */
-    }
+.bid-value {
+    background-color: #e68186;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 10px;
+    transition: background-color 0.3s ease;
+    width: 145px;
+    height: 55px;
+    font-family: 'Open Sans', 'Titillium Web', 'PT Sans', Arial, sans-serif;
+}
 
-    .reserve-status {
-        font-size: 16px;
-        font-weight: bold;
-        text-align: left;
-        color: #000; /* Ensure reserve status text color is black */
-        font-family: 'Open Sans', 'Titillium Web', 'PT Sans', Arial, sans-serif; /* Apply desired font */
-    }
+.bid-value:hover {
+    background-color: #f7b1b7;/* Light shade on hover */
+}
 
-    .bids-total {
-        font-size: 16px;
-        font-weight: bold;
-        text-align: right;
-        color: #000; /* Ensure bids total text color is black */
-        font-family: 'Open Sans', 'Titillium Web', 'PT Sans', Arial, sans-serif; /* Apply desired font */
-    }
 
-    .time-remaining {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin: 20px 0;
-        font-size: 24px;
-        font-weight: bold;
-    }
+.form-control {
+    margin: 0;
+    border-radius: 0;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+.modal-header .close {
+    color: #000;  /* Adjust the color as needed for visibility */
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 1.9rem;
+    z-index: 3;  /* Ensure it's above other elements */
+}
+.info-row {
+    display: flex; /* Display children elements in a row */
+    justify-content: space-between; /* Distribute space between the children */
+    align-items: center; /* Center-align items vertically */
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
 
-    .time-remaining span {
-        margin: 0 5px;
-    }
 
-    .time-labels {
-        display: flex;
-        justify-content: center;
-        font-size: 12px;
-        color: #888;
-    }
-
-    .time-labels span {
-        margin: 0 5px;
-    }
-
-    .bid-values {
-        display: flex;
-        justify-content: space-around;
-        margin: 20px 0;
-    }
-
-    .bid-value {
-        background-color: #ADCCE9;
-        border: none;
-        color: white;
-        padding: 10px 20px;
-        text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        font-size: 14px;
-        margin: 4px 2px;
-        cursor: pointer;
-        border-radius: 10px;
-        transition: background-color 0.3s ease;
-        width: 145px;
-        height: 42px;
-        font-family: 'Open Sans', 'Titillium Web', 'PT Sans', Arial, sans-serif; /* Apply desired font */
-    }
-
-    .bid-value:hover {
-        background-color: #77AAD9;
-    }
-
-    .form-control {
-        margin: 0;
-        border-radius: 0;
-        border-top-left-radius: 10px;
-        border-bottom-left-radius: 10px;
-    }
-
-    .max-bid-section {
-        text-align: left;
-        margin: 20px 0;
-    }
-
-    .max-bid-label {
-        font-size: 16px;
-        text-align: left;
-        margin-bottom: 10px;
-        color: #000; /* Change text color to black */
-        font-family: 'Open Sans', 'Titillium Web', 'PT Sans', Arial, sans-serif; /* Apply desired font */
-    }
-
-    .max-bid-input {
-        display: flex;
-        align-items: center;
-        border-radius: 10px;
-        overflow: hidden;
-    }
-
-    .max-bid-currency {
-        font-weight: bold;
-        margin-right: 5px;
-        font-family: 'Open Sans', 'Titillium Web', 'PT Sans', Arial, sans-serif; /* Apply desired font */
-    }
-
-    .terms {
-        font-size: 12px;
-        color: #888;
-        margin: 0;
-        font-family: 'Open Sans', 'Titillium Web', 'PT Sans', Arial, sans-serif; /* Apply desired font */
-    }
-
-    .reserve-status {
-        font-size: 16px;
-        font-weight: bold;
-        text-align: left;
-        color: #000; /* Ensure reserve status text color is black */
-        font-family: 'Open Sans', 'Titillium Web', 'PT Sans', Arial, sans-serif; /* Apply desired font */
-    }
-
-    .bids-total {
-        font-size: 16px;
-        font-weight: bold;
-        text-align: right;
-        color: #000; /* Ensure bids total text color is black */
-        font-family: 'Open Sans', 'Titillium Web', 'PT Sans', Arial, sans-serif; /* Apply desired font */
-    }
-
-    .time-remaining {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin: 20px 0;
-        font-size: 12px;
-        font-weight: bold;
-    }
-    .time-unit {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        margin: 0 5px;
-    }
-
-    .time-value {
-        font-size: 2em;
-        font-weight: bold;
-    }
-
-    .time-separator {
-        font-size: 2em;
-        font-weight: bold;
-        margin: 0 5px;
-    }
-
-    .time-remaining span {
-        margin: 0 5px;
-    }
-
-    .time-labels {
-        display: flex;
-        justify-content: center;
-        font-size: 12px;
-        color: #888;
-    }
-
-    .time-labels span {
-        margin: 0 5px;
-    }
-
-    .time-remaining p {
-        margin-bottom: 10px;
-        font-weight: bold;
-    }
-
-    .bid-values {
-        display: flex;
-        justify-content: space-around;
-        margin: 20px 0;
-    }
-
-    .bid-value {
-        background-color: #ADCCE9;
-        border: none;
-        color: white;
-        padding: 10px 20px;
-        text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        font-size: 14px;
-        margin: 4px 2px;
-        cursor: pointer;
-        border-radius: 10px;
-        transition: background-color 0.3s ease;
-        width: 145px;
-        height: 42px;
-        font-family: 'Open Sans', 'Titillium Web', 'PT Sans', Arial, sans-serif; /* Apply desired font */
-    }
-
-    .bid-value:hover {
-        background-color: #77AAD9;
-    }
-
-    .form-control {
-        margin: 0;
-        border-radius: 0;
-        border-top-left-radius: 10px;
-        border-bottom-left-radius: 10px;
-    }
     .btn-primary {
         background-color: #de483df; /* Primary color */
         border-color: #de483d; /* Primary border color */
@@ -853,10 +825,11 @@ html, body {
         border-color: #28a745;
         color: #fff;
     }
-/* Ensure margin and padding adjustments for spacing */
+
 .vehicle-features {
     margin-top: 80px;
     margin-left: 20px;
+    font-family: 'Open Sans', 'Titillium Web', 'PT Sans', Arial, sans-serif;
 }
 
 .vehicle-features h3 {
@@ -865,16 +838,18 @@ html, body {
     margin-bottom: 20px; /* Adds space below the heading */
     color: #333; /* Sets a dark color for the heading text */
     margin-top: 20px;
+    font-family: 'Open Sans', 'Titillium Web', 'PT Sans', Arial, sans-serif;
 }
 
 .vehicle-features ul {
     list-style-type: none;
     padding-left: 0;
+    font-family: 'Open Sans', 'Titillium Web', 'PT Sans', Arial, sans-serif;
 }
-
 .vehicle-features li {
     margin-bottom: 12px;
     line-height: 1.8;
+    font-family: 'Open Sans', 'Titillium Web', 'PT Sans', Arial, sans-serif;
 }
 
 .vehicle-features .fa-check-circle {
@@ -886,6 +861,7 @@ html, body {
 .vehicle-description {
     margin-top: 80px;
     margin-bottom: 100px;
+    font-family: 'Open Sans', 'Titillium Web', 'PT Sans', Arial, sans-serif;
 }
 
 .vehicle-description .description-text p {
@@ -894,89 +870,28 @@ html, body {
     line-height: 1.6; /* Example line height */
     margin-left: 20px; /* Example margin left */
     margin-right: 60px; /* Example margin right */
+    font-family: 'Open Sans', 'Titillium Web', 'PT Sans', Arial, sans-serif;
 }
 
-/* Ensure margin and padding adjustments for spacing */
-.vehicle-features {
-    margin-top: 80px;
-    margin-left: 20px;
+.heading-with-bar {
+    position: relative;
+    padding-left: 20px;
+    font-family: 'Open Sans', 'Titillium Web', 'PT Sans', Arial, sans-serif;
 }
 
-.vehicle-features h3 {
-    font-size: 1.75rem; /* Increase font size */
-    font-weight: bold; /* Make the text bold */
-    margin-bottom: 20px; /* Adds space below the heading */
-    color: #333; /* Sets a dark color for the heading text */
-    margin-top: 20px;
-}
-
-.vehicle-features ul {
-    list-style-type: none;
-    padding-left: 0;
-}
-
-.vehicle-features li {
-    margin-bottom: 12px;
-    line-height: 1.8;
-}
-
-.vehicle-features .fa-check-circle {
-    margin-right: 10px;
-    color: #de483d; /* Original color */
-    font-size: 16px;
-}
-
-.vehicle-description {
-    margin-top: 80px;
-    margin-bottom: 100px;
-}
-
-.vehicle-description .description-text p {
-    text-align: justify; /* Justify the text */
-    font-size: 16px; /* Example font size */
-    line-height: 1.6; /* Example line height */
-    margin-left: 20px; /* Example margin left */
-    margin-right: 60px; /* Example margin right */
-}
-
-.vehicle-bids-card {
-    position: relative; /* Ensure relative positioning for absolute button */
-    background-color: #ffffff;
-    margin-bottom: 100px; /* Increased bottom margin */
-    padding: 15px; /* Adjusted padding */
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    width: 100%; /* Full width of the container */
-    max-width: 550px; /* Maximum width to maintain readability */
-    margin-right: 20px; /* Right margin for spacing */
-    border: 1px solid #de483d; /* Subtle border */
-    margin-top: 60px; /* Increased top margin for spacing */
-}
-
-.vehicle-bids-card p {
-    margin-bottom: 12px; /* Slightly increased margin for more line spacing */
-    font-size: 0.95rem; /* Slightly larger font size */
-    color: #333;
-    line-height: 1.6; /* Increased line-height for better spacing */
-    border-bottom: 1px solid #f0f0f0; /* Subtle bottom border for separation */
-    padding-bottom: 3px; /* Padding for bottom border */
-}
-
-.vehicle-bids-card .place-bid-button-container {
+.heading-with-bar::before {
+    content: '';
     position: absolute;
-    top: 10px; /* Adjust top position for vertical alignment */
-    right: 30px;
-    border-radius: 1px;
-
-.vehicle-bids-card .btn-sm {
-    font-size: 0.75rem; /* Smaller font size for smaller button */
-    padding: 0.25rem 0.5rem; /* Adjusted padding for smaller button */
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 5px; /* Adjust the width of the bar */
+    background-color: #de483d; /* The color of the bar */
 }
 
 
 
-/* AOS Animation Settings */
+
 [data-aos] {
     opacity: 0;
     transition-property: opacity;
@@ -993,7 +908,6 @@ html, body {
 
 
 .btn-custom {
-    /* Additional custom styles for all buttons with btn-custom class */
     font-weight: bold;
 }
 
@@ -1003,9 +917,10 @@ html, body {
     cursor: not-allowed;
 }
 
-
 </style>
 {% endblock %}
+
+
 
 {% block content %}
 <div class="vehicle-details" data-aos="fade-down" data-aos-duration="500" data-aos-delay="200">
@@ -1139,29 +1054,12 @@ html, body {
           </div>
         </div>
       </div>
-
-      <div class="seller-description-card" data-aos="fade-up">
-        <div class="card">
-          <div class="card-header">
-            <h5 class="card-title mb-0">Seller Details</h5>
-          </div>
-          <div class="card-body">
-            <p><strong>Name: </strong>{{ vehicle.seller.first_name }} {{ vehicle.seller.last_name }}</p>
-            <p><strong>Trading Address: </strong>{{ vehicle.seller.trading_address }}</p>
-            <p><strong>Email: </strong>{{ vehicle.seller.email }}</p>
-            <p><strong>Contact Number: </strong>{{ vehicle.seller.mobile_number }}</p>
-            <p><strong><a href="{% url 'seller_listings' %}?seller_id={{ vehicle.seller.id }}">Click To Check Seller's Other Listings</a></strong></p>
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
-
 
 
 <div class="row vehicle-features" data-aos="fade-up">
     <div class="col-md-7">
-        <h3>Features</h3>
+        <h3 class="heading-with-bar">Features</h3>
         <div class="feature-list">
             <div class="row">
                 <div class="col-sm-6">
@@ -1226,32 +1124,141 @@ html, body {
         </div>
 
         <div class="vehicle-description" data-aos="fade-up">
-            <h3>Description</h3>
+            <h3 class="heading-with-bar">Description</h3>
             <div class="description-text">
                 <p>{{ vehicle.description }}</p>
             </div>
         </div>
     </div>
 
-    <div class="vehicle-bids-card">
-        <div id="time-remaining"></div>
-        <div class="bidding-period">
 
+        <div class="seller-description-card" data-aos="fade-up">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Seller Details</h5>
+                </div>
+                <div class="card-body">
+                    <p>
+                        <strong><i class="fas fa-user icon"></i> Name:</strong>
+                        {{ vehicle.seller.first_name }} {{ vehicle.seller.last_name }}
+                    </p>
+                    <p>
+                        <strong><i class="fas fa-map-marker-alt icon"></i> Trading Address:</strong>
+                        {{ vehicle.seller.trading_address }}
+                    </p>
+                    <p>
+                        <strong><i class="far fa-envelope icon"></i> Email:</strong>
+                        {{ vehicle.seller.email }}
+                    </p>
+                    <p>
+                        <strong><i class="fas fa-phone-alt icon"></i> Contact Number:</strong>
+                        {{ vehicle.seller.mobile_number }}
+                    </p>
+                    <p>
+                        <strong><i class="fas fa-list-alt icon"></i><a href="{% url 'seller_listings' %}?seller_id={{ vehicle.seller.id }}" class="seller-listings-link">Click To Check Seller's Other Listings
+                            </a>
+                        </strong>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="page-container">
+    <div class="vehicle-bids-card" data-aos="fade-up">
+        <div id="time-remaining" style="font-size: 1.0rem; text-align: center; font-weight: bold;"></div>
+        <div class="bidding-period">
             <div id="time-remaining-container1"></div>
         </div>
 
         <div>
-            <h3>Highest Bid: {{ highest_bid }}</h3>
+            <h3 style="font-size: 1.9rem;"><strong>Highest Bid: {{ highest_bid }}</strong></h3>
+
             {% if highest_bid %}
-                <ul>
-                    {% for bid in vehicle.bid_set.all %}
-                        <li>
-                            <strong>{{ bid.timestamp|date:"Y-m-d" }}</strong> <i>{{ bid.timestamp|time:"H:i:s" }}</i> - Amount: {{ bid.amount }} - Status: {{ bid.get_bid_status_display }}
-                        </li>
-                    {% endfor %}
-                </ul>
-            {% else %}
-                <p>No bids yet</p>
+                {% if remaining_time %}
+                    <table class="bid-table">
+                        <thead>
+                            <tr>
+                                <th>Bid Date & Time</th>
+                                <th>Bidder</th>
+                                <th>Bid Amount</th>
+                                <th>Bid Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for bid in vehicle.bid_set.all %}
+                                <tr>
+                                    <td>
+                                        <strong>{{ bid.timestamp|date:"Y-m-d" }}</strong> <i>{{ bid.timestamp|time:"H:i:s" }}</i>
+                                    </td>
+                                        <td>
+                                            {% with bid.user.username as username %}
+                                                {% with username|slice:":3" as visible_part %}
+                                                    {{ visible_part }}{% if username|length > 3 %}***{% endif %}
+                                                {% endwith %}
+                                            {% endwith %}
+                                        </td>
+                                    <td style="font-weight: bold; color: #333;">
+                                        LKR {{ bid.amount|floatformat:"2"|intcomma }}
+                                    </td>
+                                    <td>
+                                        {% if bid.get_bid_status_display == 'Pending' %}
+                                            <span style="background-color: #ff9800; color: #fff; font-weight: bold; padding: 2px 6px; border-radius: 3px;">{{ bid.get_bid_status_display }}</span>
+                                        {% elif bid.get_bid_status_display == 'Accepted' %}
+                                            <span style="background-color: #4caf50; color: #fff; font-weight: bold; padding: 2px 6px; border-radius: 3px;">{{ bid.get_bid_status_display }}</span>
+                                        {% elif bid.get_bid_status_display == 'Rejected' %}
+                                            <span style="background-color: #f44336; color: #fff; font-weight: bold; padding: 2px 6px; border-radius: 3px;">{{ bid.get_bid_status_display }}</span>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    {% if auction_ended %}
+                        <table class="bid-table">
+                            <thead>
+                                <tr>
+                                    <th>Bid Date & Time</th>
+                                    <th>Bidder</th>
+                                    <th>Bid Amount</th>
+                                    <th>Bid Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for bid in vehicle.bid_set.all %}
+                                    <tr>
+                                        <td>
+                                            <strong>{{ bid.timestamp|date:"Y-m-d" }}</strong> <i>{{ bid.timestamp|time:"H:i:s" }}</i>
+                                        </td>
+                                        <td>
+                                            {% with bid.user.username as username %}
+                                                {% with username|slice:":3" as visible_part %}
+                                                    {{ visible_part }}{% if username|length > 3 %}***{% endif %}
+                                                {% endwith %}
+                                            {% endwith %}
+                                        </td>
+                                        <td style="font-weight: bold; color: #333;">
+                                            LKR {{ bid.amount|floatformat:"2"|intcomma }}
+                                        </td>
+                                        <td>
+                                            {% if bid.get_bid_status_display == 'Pending' %}
+                                                <span style="background-color: #ff9800; color: #fff; font-weight: bold; padding: 2px 6px; border-radius: 3px;">{{ bid.get_bid_status_display }}</span>
+                                            {% elif bid.get_bid_status_display == 'Accepted' %}
+                                                <span style="background-color: #4caf50; color: #fff; font-weight: bold; padding: 2px 6px; border-radius: 3px;">{{ bid.get_bid_status_display }}</span>
+                                            {% elif bid.get_bid_status_display == 'Rejected' %}
+                                                <span style="background-color: #f44336; color: #fff; font-weight: bold; padding: 2px 6px; border-radius: 3px;">{{ bid.get_bid_status_display }}</span>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    {% else %}
+
+                    {% endif %}
+                {% endif %}
             {% endif %}
         </div>
 
@@ -1261,13 +1268,9 @@ html, body {
         </div>
         {% endif %}
     </div>
-
-
-
-
-</div>
 </div>
 
+</div>
 
 
 
@@ -1277,7 +1280,7 @@ html, body {
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title"><b>Place Your Bid</b></h4><br>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" aria-label="Close" id="customCloseButton">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -1314,14 +1317,17 @@ html, body {
                         </div>
                         <button class="btn btn-primary btn-block mb-3" id="placeBidModalButton">Place Bid</button>
                     </form>
-                    <p class="terms mt-3">
-                        By placing a bid, you express consent to share your contact information with the seller and authorize the seller to contact you regarding this vehicle. If this bid wins, you are purchasing this item and legally required to make a payment before THE DATE. The item will be sent once payment is completed.
-                    </p>
+                </div>
+                <p class="terms mt-3">
+                    By placing a bid, you express consent to share your contact information with the seller and authorize the seller to contact you regarding this vehicle. If this bid wins, you are purchasing this item and legally required to purchase the vehicle.
+                </p>
                 </div>
             </div>
         </div>
     </div>
-</div>
+
+
+
 
 <div id="countdown-template" style="display: none;">
     <div class="time-remaining">
@@ -1348,8 +1354,18 @@ html, body {
     {% endif %}
 </div>
 
+
+
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+
+    var closeButton = document.getElementById('customCloseButton');
+    if (closeButton) {
+        closeButton.addEventListener('click', function() {
+            $('#placeBidModal').modal('hide');
+        });
+    }
+
         var bidIncrementButtons = document.querySelectorAll('.bid-value');
         bidIncrementButtons.forEach(button => {
             button.addEventListener('click', function() {
@@ -1406,7 +1422,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Append Countdown Template
     if (remainingTime !== null) {
-        document.getElementById('time-remaining').innerHTML = 'BIDDING PERIOD ENDS IN,';
+        document.getElementById('time-remaining').innerHTML = 'Bidding Period Ends In,';
         var countdownTemplate = document.getElementById('countdown-template').innerHTML;
 
         function appendCountdown(elementId) {
@@ -1422,7 +1438,7 @@ document.addEventListener('DOMContentLoaded', function() {
         initializeCountdown('#time-remaining-container1 .time-remaining', remainingTime);
         initializeCountdown('#time-remaining-container2 .time-remaining', remainingTime);
     } else {
-        document.getElementById('time-remaining').innerHTML = 'PLACE THE FIRST BID TO START AUCTION';
+        document.getElementById('time-remaining').innerHTML = 'Place The First Bid To Start Auction';
     }
 
     // Place Bid Button Event Listener
@@ -1517,8 +1533,5 @@ document.addEventListener('DOMContentLoaded', function() {
 function displayImage(imageUrl) {
     document.getElementById('main-image').src = imageUrl;
 }
-
 </script>
-
-
 {% endblock %}

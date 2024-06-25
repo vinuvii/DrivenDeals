@@ -105,6 +105,43 @@
         text-align: center;
         margin-bottom: 20px; /* Space below the heading */
     }
+    .testimonials {
+        padding: 50px 20px;
+        background-color: #f9f9f9;
+        text-align: center;
+    }
+    .testimonial-item {
+        margin-bottom: 20px;
+    }
+    .testimonial-item p {
+        font-style: italic;
+    }
+
+    /* Styling for search form */
+    .search-form {
+        margin-top: 20px;
+        text-align: center;
+    }
+    .search-form input[type="text"], .search-form input[type="number"] {
+        padding: 10px;
+        font-size: 16px;
+        border: 2px solid #ff5722;
+        border-radius: 5px;
+        width: 200px;
+        margin-right: 10px;
+    }
+    .search-form button[type="submit"] {
+        padding: 10px 20px;
+        font-size: 16px;
+        background-color: #ff5722;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    .search-form button[type="submit"]:hover {
+        background-color: #e64a19; /* Darker shade of orange on hover */
+    }
 </style>
 {% endblock %}
 
@@ -115,6 +152,17 @@
         <p>BEST CAR DEALER IN TOWN!</p>
         <a href="#contact" class="btn">Contact Us</a>
     </div>
+</div>
+
+<!-- Search bar section -->
+<div class="search-form">
+    <h2 class="car-listings-heading">Search for Your Dream Vehicle</h2>
+    <form action="{% url 'all_listings' %}" method="GET">
+        <input type="text" name="q" placeholder="Search listings...">
+        <input type="number" name="min_price" placeholder="Min Price">
+        <input type="number" name="max_price" placeholder="Max Price">
+        <button type="submit">Search</button>
+    </form>
 </div>
 
 <main>
@@ -133,6 +181,16 @@
                 {% endfor %}
             </div>
         </div>
+    </section>
+
+    <section class="testimonials" data-aos="fade-up">
+        <h2 class="car-listings-heading">User Testimonials</h2>
+        {% for testimonial in testimonials %}
+        <div class="testimonial-item">
+            <p>"{{ testimonial.review }}"</p>
+            <p><strong>- {{ testimonial.name }}</strong></p>
+        </div>
+        {% endfor %}
     </section>
 </main>
 
