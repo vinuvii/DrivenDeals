@@ -163,3 +163,5 @@ def edit_profile_view(request):
         form = UserProfileForm(instance=user)
 
     return render(request, 'user/edit_profile.html', {'form': form})
+
+
