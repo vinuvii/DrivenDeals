@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-
+from . import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -26,6 +26,7 @@ urlpatterns = [
     path('vehicles/', include('vehicles.urls')),
     path('bids/', include('bids.urls')),  # Include the bids app URLs
     path('', include('vehicles.urls')),
+    path('templates/', views.terms_of_use, name='terms_of_use'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 
