@@ -3,6 +3,7 @@
 
 {% block extra_head %}
 <!-- Add any additional head content for filter_vehicles.html here if necessary -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-l5XddQ8R13IoD41D8r9qR+ldvi2njK2Kc1zT2LOPzqEGlXqD4T6GkRWJY7YzG2sFXuvJgV0NN0cBl1JdBTpObQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <style>
     .filter-form {
         margin: 20px 0;
@@ -17,12 +18,12 @@
         margin-bottom: 20px;
         border: 2px solid #e74c3c;
         border-radius: 10px;
+        padding: 15px; /* Add padding for better separation */
     }
     .card img {
         width: 100%;
         height: 200px; /* Set a fixed height */
         object-fit: cover; /* Ensures the image covers the area while maintaining aspect ratio */
-        border-bottom: 2px #e74c3c;
         border-radius: 10px 10px 0 0;
     }
     .car-listings-heading {
@@ -59,175 +60,215 @@
         text-align: center;
         margin-top: 20px; /* Space above the message */
     }
+    .sidebar {
+        position: sticky;
+        top: 0;
+        height: 100%;
+        overflow-y: auto;
+        background-color: #f8f9fa;
+        padding: 20px;
+        border-right: 1px solid #ddd;
+    }
+    .sidebar .filter-section {
+        margin-bottom: 20px;
+    }
+    .sidebar .filter-section h3 {
+        font-size: 22px;
+        cursor: pointer;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center; /* Align text and image vertically */
+        color: #e74c3c;
+
+    }
+    .sidebar .filter-section h4 {
+        font-size: 30px;
+        cursor: pointer;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center; /* Align text and image vertically */
+        color: black;
+
+     }
+    .sidebar .filter-section h3 img {
+        max-width: 30px; /* Adjust width of the image as needed */
+        height: auto; /* Maintain aspect ratio */
+        margin-right: 10px; /* Space between image and text */
+    }
 </style>
 {% endblock %}
 
 {% block content %}
-<div class="container">
-    <h1 class="car-listings-heading">Filter Vehicles</h1>
-    <form method="get" class="filter-form">
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    {{ form.make.label_tag }}
-                    {{ form.make }}
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="form-group">
-                    {{ form.year_min.label_tag }}
-                    {{ form.year_min }}
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="form-group">
-                    {{ form.year_max.label_tag }}
-                    {{ form.year_max }}
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    {{ form.body_type.label_tag }}
-                    {{ form.body_type }}
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    {{ form.color.label_tag }}
-                    {{ form.color }}
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="form-group">
-                    {{ form.price_min.label_tag }}
-                    {{ form.price_min }}
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="form-group">
-                    {{ form.price_max.label_tag }}
-                    {{ form.price_max }}
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="form-group">
-                    {{ form.mileage_min.label_tag }}
-                    {{ form.mileage_min }}
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="form-group">
-                    {{ form.mileage_max.label_tag }}
-                    {{ form.mileage_max }}
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="form-group">
-                    {{ form.engine_capacity_min.label_tag }}
-                    {{ form.engine_capacity_min }}
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="form-group">
-                    {{ form.engine_capacity_max.label_tag }}
-                    {{ form.engine_capacity_max }}
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    {{ form.transmission_type.label_tag }}
-                    {{ form.transmission_type }}
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    {{ form.fuel_type.label_tag }}
-                    {{ form.fuel_type }}
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    {{ form.engine_type.label_tag }}
-                    {{ form.engine_type }}
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-check">
-                    {{ form.abs_breaks }}
-                    {{ form.abs_breaks.label_tag }}
-                </div>
-                <div class="form-check">
-                    {{ form.alloy_wheels }}
-                    {{ form.alloy_wheels.label_tag }}
-                </div>
-                <div class="form-check">
-                    {{ form.airbags }}
-                    {{ form.airbags.label_tag }}
-                </div>
-                <div class="form-check">
-                    {{ form.air_conditioning }}
-                    {{ form.air_conditioning.label_tag }}
-                </div>
-                <div class="form-check">
-                    {{ form.power_steering }}
-                    {{ form.power_steering.label_tag }}
-                </div>
-                <div class="form-check">
-                    {{ form.power_windows }}
-                    {{ form.power_windows.label_tag }}
-                </div>
-                <div class="form-check">
-                    {{ form.central_locking }}
-                    {{ form.central_locking.label_tag }}
-                </div>
-                <div class="form-check">
-                    {{ form.reverse_camera }}
-                    {{ form.reverse_camera.label_tag }}
-                </div>
-                <div class="form-check">
-                    {{ form.sunroof }}
-                    {{ form.sunroof.label_tag }}
-                </div>
-                <div class="form-check">
-                    {{ form.leather_seats }}
-                    {{ form.leather_seats.label_tag }}
-                </div>
-            </div>
-        </div>
-        <button type="submit" class="filter-button">Filter</button>
-        <a href="{% url 'filter_vehicles' %}" class="clear-filters-button">Clear Filters</a>
-    </form>
-    {% if vehicles %}
-        <h2 class="car-listings-heading">Results</h2>
-        <div class="row">
-            {% for vehicle in vehicles %}
-                <div class="col-md-4">
-                    <div class="card">
-                        {% if vehicle.picture %}
-                            <img src="{{ vehicle.picture.url }}" alt="{{ vehicle.make }} {{ vehicle.model }}">
-                        {% else %}
-                            <img src="path/to/default/image.jpg" alt="No Image Available">
-                        {% endif %}
-                        <div class="card-body">
-                            <a href="{% url 'vehicle_detail' vehicle.id %}" style="text-decoration: none; color: inherit;">
-                                <h5 class="card-title"> {{ vehicle.model }}</h5>
-                                <p class="card-text">Year: {{ vehicle.year }}</p>
-                                <p class="card-text">Price: LKR {{ vehicle.price|intcomma }}</p>
-                                <p class="card-text">Mileage: {{ vehicle.mileage|intcomma }} km</p>
-                                <p class="card-text">Color: {{ vehicle.color }}</p>
-                                <!-- Add more fields as needed -->
-                            </a>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="card">
+                <div class="sidebar">
+                    <form method="get" class="filter-form">
+                        <div class="filter-section">
+                            <h4><i class="fas fa-filter"></i> Filter Options</h4>
+                            <h3 onclick="toggleSection('vehicle-info')"><i class="fas fa-car"></i> Vehicle Information</h3>
+                            <div id="vehicle-info" class="filter-section-content">
+                                <div class="form-group">
+                                    {{ form.make.label_tag }}
+                                    {{ form.make }}
+                                </div>
+                                <div class="form-group">
+                                    {{ form.year_min.label_tag }}
+                                    {{ form.year_min }}
+                                </div>
+                                 <div class="form-group">
+                                {{ form.year_max.label_tag }}
+                                {{ form.year_max }}
+                            </div>
+                            <div class="form-group">
+                                {{ form.body_type.label_tag }}
+                                {{ form.body_type }}
+                            </div>
+                            <div class="form-group">
+                                {{ form.color.label_tag }}
+                                {{ form.color }}
+                            </div>
+                            <div class="form-group">
+                                {{ form.price_min.label_tag }}
+                                {{ form.price_min }}
+                            </div>
+                            <div class="form-group">
+                                {{ form.price_max.label_tag }}
+                                {{ form.price_max }}
+                            </div>
+                            <div class="form-group">
+                                {{ form.mileage_min.label_tag }}
+                                {{ form.mileage_min }}
+                            </div>
+                            <div class="form-group">
+                                {{ form.mileage_max.label_tag }}
+                                {{ form.mileage_max }}
+                            </div>
+                            <div class="form-group">
+                                {{ form.engine_capacity_min.label_tag }}
+                                {{ form.engine_capacity_min }}
+                            </div>
+                            <div class="form-group">
+                                {{ form.engine_capacity_max.label_tag }}
+                                {{ form.engine_capacity_max }}
+                            </div>
+                            <div class="form-group">
+                                {{ form.transmission_type.label_tag }}
+                                {{ form.transmission_type }}
+                            </div>
+                            <div class="form-group">
+                                {{ form.fuel_type.label_tag }}
+                                {{ form.fuel_type }}
+                            </div>
+                            <div class="form-group">
+                                {{ form.engine_type.label_tag }}
+                                {{ form.engine_type }}
+                            </div>
+
+
+                            </div>
                         </div>
-                    </div>
+                        <div class="filter-section">
+                            <h3 onclick="toggleSection('vehicle-details')"><i class="fas fa-info-circle"></i> Vehicle Details</h3>
+                            <div id="vehicle-details" class="filter-section-content">
+                                <div class="form-check">
+                                    {{ form.abs_breaks }}
+                                    {{ form.abs_breaks.label_tag }}
+                                </div>
+                                <div class="form-check">
+                                    {{ form.alloy_wheels }}
+                                    {{ form.alloy_wheels.label_tag }}
+                                </div>
+                                 <div class="form-check">
+                                {{ form.airbags }}
+                                {{ form.airbags.label_tag }}
+                            </div>
+                            <div class="form-check">
+                                {{ form.air_conditioning }}
+                                {{ form.air_conditioning.label_tag }}
+                            </div>
+                            <div class="form-check">
+                                {{ form.power_steering }}
+                                {{ form.power_steering.label_tag }}
+                            </div>
+                            <div class="form-check">
+                                {{ form.power_windows }}
+                                {{ form.power_windows.label_tag }}
+                            </div>
+                            <div class="form-check">
+                                {{ form.central_locking }}
+                                {{ form.central_locking.label_tag }}
+                            </div>
+                            <div class="form-check">
+                                {{ form.reverse_camera }}
+                                {{ form.reverse_camera.label_tag }}
+                            </div>
+                            <div class="form-check">
+                                {{ form.sunroof }}
+                                {{ form.sunroof.label_tag }}
+                            </div>
+                            <div class="form-check">
+                                {{ form.leather_seats }}
+                                {{ form.leather_seats.label_tag }}
+                            </div>
+
+                            </div>
+                        </div>
+                        <button type="submit" class="filter-button">Filter</button>
+                        <a href="{% url 'filter_vehicles' %}" class="clear-filters-button">Clear Filters</a>
+                    </form>
                 </div>
-            {% endfor %}
+            </div>
         </div>
-    {% else %}
-        <p  class="no-bids-message">No vehicles found matching the filters.</p>
-    {% endif %}
+        <div class="col-md-9">
+            <div class="card">
+                {% if vehicles %}
+                    <h2 class="car-listings-heading"><i class="fas fa-car"></i> Results</h2>
+                    <div class="row">
+                        {% for vehicle in vehicles %}
+                            <div class="col-md-4">
+                                <div class="card">
+                                    {% if vehicle.picture %}
+                                        <img src="{{ vehicle.picture.url }}" alt="{{ vehicle.make }} {{ vehicle.model }}">
+                                    {% else %}
+                                        <img src="path/to/default/image.jpg" alt="No Image Available">
+                                    {% endif %}
+                                    <div class="card-body">
+                                        <a href="{% url 'vehicle_detail' vehicle.id %}" style="text-decoration: none; color: inherit;">
+                                            <h5 class="card-title" style="font-size: 20px; font-weight: bold;">{{ vehicle.model }}</h5>
+                                            <p class="card-text"><strong>Year:</strong>  {{ vehicle.year }}</p>
+                                            <p class="card-text"><strong>Price:</strong> LKR {{ vehicle.price|intcomma }}</p>
+                                            <p class="card-text"><strong>Mileage:</strong> {{ vehicle.mileage|intcomma }} km</p>
+                                            <p class="card-text"><strong>Color:</strong> {{ vehicle.color }}</p>
+                                            <!-- Add more fields as needed -->
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <p class="no-bids-message">No vehicles found matching the filters.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}
 
 {% block extra_scripts %}
-<!-- Add any additional scripts for filter_vehicles.html here if necessary -->
+<script>
+    function toggleSection(sectionId) {
+        const section = document.getElementById(sectionId);
+        section.style.display = section.style.display === 'none' ? 'block' : 'none';
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize the sections to be collapsed or expanded as needed
+        toggleSection('vehicle-info'); // Set initial state
+        toggleSection('vehicle-details'); // Set initial state
+    });
+</script>
 {% endblock %}
+
