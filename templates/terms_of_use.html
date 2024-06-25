@@ -1,86 +1,84 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Terms of Use - Driven Deals</title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+{% extends 'base.html' %}
+
+{% block extra_head %}
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f8f9fa;
-        }
-        .container {
+        .container4 {
             margin-top: 50px;
         }
+
         .terms-of-use {
             background-color: #ffffff;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 100px;
+            border-radius: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            padding-top:20px;
+            padding-bottom:20px;
+            margin-bottom: 50px;
         }
         .terms-of-use h2 {
             color: #007bff;
-            margin-bottom: 20px;
+            font-size: 1.7em; /* Increase font size for h2 */
+        }
+        .terms-of-use h4 {
+            color: #007bff;
+            font-size: 1.5em; /* Increase font size for h4 */
         }
         .terms-of-use p, .terms-of-use ul {
             font-size: 16px;
             line-height: 1.6;
+            margin-bottom: 20px;
         }
         .terms-of-use ul {
             list-style-type: disc;
             margin-left: 20px;
         }
     </style>
-</head>
-<body>
-    <div class="container">
-        <div class="terms-of-use">
-            <h2>Driven Deals Terms of Use</h2>
-            <p><strong>Effective Date:</strong> 25/06/2024</p>
-            <p>These Terms of Use govern your access to and use of the Driven Deals online vehicle bidding platform. By accessing or using the Platform, you agree to be bound by these Terms.</p>
-            <h4>1. Eligibility</h4>
-            <p>You must be at least 18 years old and have the legal capacity to enter into contracts to use the Platform.</p>
-            <h4>2. User Accounts</h4>
-            <p>You may be required to create an account to access certain features of the Platform. You are responsible for maintaining the confidentiality of your account information, including your password. You agree to be responsible for all activities that occur under your account.</p>
-            <h4>3. Use of the Platform</h4>
-            <p>You agree to use the Platform only for lawful purposes and in accordance with these Terms. You agree not to:</p>
-            <ul>
-                <li>Use the Platform in any way that violates any applicable law or regulation.</li>
-                <li>Infringe on the intellectual property rights of others.</li>
-                <li>Transmit any material that is harassing, obscene, defamatory, or threatening.</li>
-                <li>Interfere with or disrupt the Platform or the servers or networks connected to the Platform.</li>
-                <li>Use the Platform to create a false identity or impersonate any other person.</li>
-            </ul>
-            <h4>4. Listings and Bids</h4>
-            <ul>
-                <li><strong>Listings:</strong> You are responsible for the accuracy of your vehicle listings and any information you provide on the Platform.</li>
-                <li><strong>Bids:</strong> You are responsible for honoring your bids on vehicles.</li>
-            </ul>
-            <h4>5. Fees and Payments</h4>
-            <p>Driven Deals may charge fees for certain services offered on the Platform. You agree to pay all applicable fees in a timely manner.</p>
-            <h4>6. Disclaimer</h4>
-            <p>The Platform and the information provided on the Platform are provided "as is" without warranty of any kind, express or implied. Driven Deals disclaims all warranties, including, but not limited to, warranties of merchantability, fitness for a particular purpose, and non-infringement.</p>
-            <h4>7. Limitation of Liability</h4>
-            <p>Driven Deals will not be liable for any damages arising out of or related to your use of the Platform, including, but not limited to, direct, indirect, incidental, consequential, or punitive damages.</p>
-            <h4>8. Termination</h4>
-            <p>Driven Deals may terminate your access to the Platform at any time, for any reason, without notice.</p>
-            <h4>9. Governing Law</h4>
-            <p>These Terms will be governed by and construed in accordance with the laws of the State of The Democratic Socialist Republic of Sri Lanka, without regard to its conflict of law’s provisions.</p>
-            <h4>10. Dispute Resolution</h4>
-            <p>Any dispute arising out of or related to these Terms will be resolved by binding arbitration in accordance with the rules of the Sri Lankan Arbitration Association.</p>
-            <h4>11. Entire Agreement</h4>
-            <p>These Terms constitute the entire agreement between you and Driven Deals regarding your use of the Platform.</p>
-            <h4>12. Severability</h4>
-            <p>If any provision of these Terms is held to be invalid or unenforceable, such provision shall be struck and the remaining provisions shall remain in full force and effect.</p>
-            <h4>13. Changes to these Terms</h4>
-            <p>Driven Deals may update these Terms from time to time. We will notify you of any changes by posting the new Terms on the Platform.</p>
-            <h4>14. Contact Us</h4>
-            <p>If you have any questions about these Terms, please contact us at <a href="mailto:drivendeals@gmail.com">drivendeals@gmail.com</a>.</p>
-        </div>
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="terms-of-use">
+        <h2><strong>DrivenDeals Terms of Use</strong></h2>
+        <p style="font-size: 12px;"><strong>Effective Date:</strong> 25/06/2024</p>
+        <p>These Terms of Use govern your access to and use of the Driven Deals online vehicle bidding platform. By accessing or using the Platform, you agree to be bound by these Terms.</p>
+        <h4>1. Eligibility</h4>
+        <p>You must be at least 18 years old and have the legal capacity to enter into contracts to use the Platform.</p>
+        <h4>2. User Accounts</h4>
+        <p>You may be required to create an account to access certain features of the Platform. You are responsible for maintaining the confidentiality of your account information, including your password. You agree to be responsible for all activities that occur under your account.</p>
+        <h4>3. Use of the Platform</h4>
+        <p>You agree to use the Platform only for lawful purposes and in accordance with these Terms. You agree not to:</p>
+        <ul>
+            <li>Use the Platform in any way that violates any applicable law or regulation.</li>
+            <li>Infringe on the intellectual property rights of others.</li>
+            <li>Transmit any material that is harassing, obscene, defamatory, or threatening.</li>
+            <li>Interfere with or disrupt the Platform or the servers or networks connected to the Platform.</li>
+            <li>Use the Platform to create a false identity or impersonate any other person.</li>
+        </ul>
+        <h4>4. Listings and Bids</h4>
+        <ul>
+            <li><strong>Listings:</strong> You are responsible for the accuracy of your vehicle listings and any information you provide on the Platform.</li>
+            <li><strong>Bids:</strong> You are responsible for honoring your bids on vehicles.</li>
+        </ul>
+        <h4>5. Fees and Payments</h4>
+        <p>Driven Deals may charge fees for certain services offered on the Platform. You agree to pay all applicable fees in a timely manner.</p>
+        <h4>6. Disclaimer</h4>
+        <p>The Platform and the information provided on the Platform are provided "as is" without warranty of any kind, express or implied. Driven Deals disclaims all warranties, including, but not limited to, warranties of merchantability, fitness for a particular purpose, and non-infringement.</p>
+        <h4>7. Limitation of Liability</h4>
+        <p>Driven Deals will not be liable for any damages arising out of or related to your use of the Platform, including, but not limited to, direct, indirect, incidental, consequential, or punitive damages.</p>
+        <h4>8. Termination</h4>
+        <p>Driven Deals may terminate your access to the Platform at any time, for any reason, without notice.</p>
+        <h4>9. Governing Law</h4>
+        <p>These Terms will be governed by and construed in accordance with the laws of the State of The Democratic Socialist Republic of Sri Lanka, without regard to its conflict of law’s provisions.</p>
+        <h4>10. Dispute Resolution</h4>
+        <p>Any dispute arising out of or related to these Terms will be resolved by binding arbitration in accordance with the rules of the Sri Lankan Arbitration Association.</p>
+        <h4>11. Entire Agreement</h4>
+        <p>These Terms constitute the entire agreement between you and Driven Deals regarding your use of the Platform.</p>
+        <h4>12. Severability</h4>
+        <p>If any provision of these Terms is held to be invalid or unenforceable, such provision shall be struck and the remaining provisions shall remain in full force and effect.</p>
+        <h4>13. Changes to these Terms</h4>
+        <p>Driven Deals may update these Terms from time to time. We will notify you of any changes by posting the new Terms on the Platform.</p>
+        <h4>14. Contact Us</h4>
+        <p>If you have any questions about these Terms, please contact us at <a href="mailto:drivendeals@gmail.com">drivendeals@gmail.com</a>.</p>
     </div>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</body>
-</html>
+</div>
+{% endblock %}
