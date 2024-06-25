@@ -445,9 +445,5 @@ def contact(request):
 
 
 
-def contact_success(request):
-    return render(request, 'vehicles/contact_success.html')
-
-
 
 
