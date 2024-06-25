@@ -55,6 +55,7 @@
     .register-container .terms {
         margin-top: 20px;
         font-size: 12px;
+
     }
 
     .register-container .terms a {
@@ -71,6 +72,14 @@
     .register-container .checkbox-container input {
         margin-right: 10px;
     }
+
+    .register-container .checkbox-container label {
+        margin: 0; /* Ensure label has no margin */
+        font-size: 14px; /* Adjust font size for label */
+        text-align: left; /* Ensure text is left-aligned */
+        color:#ffffff;
+    }
+
 </style>
 {% endblock %}
 
@@ -102,9 +111,9 @@
                 <p>By registering, you agree to our <a href="{% url 'privacy_policy' %}">Privacy Policy</a> and <a href="{% url 'terms_of_use' %}">Terms of Use</a></p>
                 <p>Already have an account? <a href="{% url 'login' %}?next={{ next }}">Log In</a></p>
                 <p>Next URL: {{ next }}</p>
-            {% if error_message %}
-                <p class="error-message">{{ error_message }}</p>
-            {% endif %}
+                {% if error_message %}
+                    <p class="error-message">{{ error_message }}</p>
+                {% endif %}
             </div>
         </div>
     </div>
