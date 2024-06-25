@@ -3,64 +3,245 @@
 
 {% block extra_head %}
 <style>
-    h1 {
-        margin-bottom: 20px;
-        font-size: 24px;
-    }
-    .form-group {
-        text-align: left;
-        margin-bottom: 15px;
-    }
-    .form-group label {
-        display: block;
-        margin-bottom: 5px;
-        font-size: 16px;
-    }
-    .form-control {
-        width: 100%;
-        padding: 10px;
-        margin-bottom: 10px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        font-size: 16px;
-    }
-    .btn {
-        background-color: #e74c3c;
-        color: white;
-        padding: 10px 20px;
-        border-radius: 5px;
-        text-decoration: none;
-        display: inline-block;
-        margin-top: 10px;
-    }
-    .btn:hover {
-        background-color: #bf3c32;
-    }
-    .btn-secondary {
-        margin-top: 10px;
-    }
-    .car-listings-heading {
-        font-size: 36px;
-        text-align: center;
-        margin-bottom: 20px;
-        color: #333;
-    }
-    /* Additional styles for readonly mode */
-    .form-control[readonly] {
-        background-color: #f0f0f0;
-    }
+html, body {
+    overflow-x: hidden;
+    font-family: 'Open Sans', 'Titillium Web', 'PT Sans', Arial, sans-serif;
+    background: linear-gradient(to bottom, #FEFEFE 0%, #E1DBD6 100%); /* Gradient from light to dark */
+    transition: background-color 0.3s;
+}
+
+.vehicle-details {
+    width: 100%;
+    height: auto;
+}
+
+.vehicle-header {
+    width: 100%;
+    height: 300px; /* Adjust height as needed */
+    overflow: hidden;
+    position: relative;
+    margin-top: -150px;
+    margin-bottom: 50px;
+}
+
+.background-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    filter: brightness(0.7); /* Darkens the image */
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.7));
+}
+
+.vehicle-overlay {
+    font-family: 'Open Sans', 'Titillium Web', 'PT Sans', Arial, sans-serif;
+    position: absolute;
+    top: 180px;
+    left: 180px;
+    color: white;
+    padding: 5px 10px;
+    font-size: 36px;
+    font-weight: bold;
+    z-index: 10;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8); /* Optional: Add text shadow for better contrast */
+}
+
+.nav-tabs {
+    margin-left: 5px; /* Adjust margin as needed */
+}
+
+.nav-tabs .nav-item .nav-link {
+    color: #333; /* Default text color */
+    font-weight: bold;
+    border: none;
+    background-color: transparent;
+    padding: 10px 20px;
+    margin-right: 10px;
+    border-radius: 5px 5px 0 0;
+    transition: background-color 0.3s;
+}
+
+.nav-tabs .nav-item .nav-link.active {
+    background-color: #de483d; /* Active tab background color */
+    color: white; /* Active tab text color */
+}
+
+.nav-tabs .nav-item .nav-link:hover {
+    background-color: #bf3c32; /* Hover tab background color */
+    color: white; /* Hover tab text color */
+}
+
+/* Button styling for Log Out */
+.nav-tabs .nav-item .nav-link#logout-tab {
+    background-color: #f48f85;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.nav-tabs .nav-item .nav-link#logout-tab:hover {
+    background-color: #bf3c32;
+}
+
+.profile-card {
+    max-width: 1150px; /* Adjust maximum width as needed */
+    margin-top: 40px;
+    margin-bottom: 40px;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Optional: Add a subtle shadow */
+    font-family: 'Open Sans', 'Titillium Web', 'PT Sans', Arial, sans-serif;
+}
+
+.profile-card h1 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.profile-card .form-group label {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.profile-card .form-control {
+    font-size: 16px;
+}
+
+.profile-card .card-header {
+    background-color: transparent; /* Light background for the header */
+    border-bottom: 1px solid #dee2e6; /* Optional: Add a border to separate header */
+    padding: 10px 20px;
+}
+
+.profile-card .card-body {
+    padding: 20px;
+    font-family: 'Open Sans', 'Titillium Web', 'PT Sans', Arial, sans-serif;
+}
+
+.profile-input {
+    font-size: 16px;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 15px;
+}
+
+.save-changes-btn {
+    margin-top: 10px;
+}
+
+h1 {
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+.form-group {
+    text-align: left;
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 16px;
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.btn {
+    background-color: #e74c3c;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 10px;
+}
+
+.btn:hover {
+    background-color: #bf3c32;
+}
+
+.btn-secondary {
+    background-color: #de483d; /* Adjust background color as needed */
+    color: white; /* Text color */
+    border: none; /* Remove border */
+    padding: 10px 20px; /* Padding inside button */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s; /* Smooth transition for background color */
+    margin-bottom: 20px; /* Space below button */
+    font-family: 'Open Sans', 'Titillium Web', 'PT Sans', Arial, sans-serif;
+}
+
+.btn-secondary:hover {
+    background-color: #b43d2b; /* Darker background color on hover */
+}
+
+.car-listings-heading {
+    font-size: 36px;
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+/* Additional styles for readonly mode */
+.form-control[readonly] {
+    background-color: #f0f0f0;
+}
+
+.darken-on-scroll {
+    background-color: transparent; /* Initial background color */
+    transition: background-color 0.3s; /* Smooth transition for background color change */
+}
+
+.darken-on-scroll.darken {
+    background-color: #333; /* Darkened background color */
+}
+
 </style>
 {% endblock %}
 
 {% block content %}
-<h1 class="car-listings-heading">Edit Profile</h1>
+<div class="vehicle-details" data-aos="fade-down" data-aos-duration="500" data-aos-delay="200">
+    <div class="vehicle-header">
+        <div class="background-image"
+             style="background-image: url('https://www.freewebheaders.com/wp-content/gallery/cars/cache/toyota-gt86-dashboard-car-website-header.jpg-nggid043742-ngg0dyn-1280x375x100-00f0w010c010r110f110r010t010.jpg');">
+            <div class="overlay"></div>
+            <div class="vehicle-overlay">{{ user.first_name }}'s Profile</div>
+        </div>
+    </div>
+</div>
 
-        <ul class="nav nav-tabs" id="myTab" role="tablist">
+<ul class="nav nav-tabs" id="myTab" role="tablist" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="300">
     <li class="nav-item" role="presentation">
-        <a class="nav-link active" id="profile-tab" href="{% url 'edit_profile' %}" role="tab" aria-controls="profile" aria-selected="false">Profile</a>
+        <a class="nav-link active" id="profile-tab" href="{% url 'edit_profile' %}" role="tab" aria-controls="profile" aria-selected="true">Profile</a>
     </li>
     <li class="nav-item" role="presentation">
-        <a class="nav-link" id="watchlist-tab" href="{% url 'watchlist' %}" role="tab" aria-controls="watchlist" aria-selected="true">Watchlist</a>
+        <a class="nav-link" id="watchlist-tab" href="{% url 'watchlist' %}" role="tab" aria-controls="watchlist" aria-selected="false">Watchlist</a>
     </li>
     <li class="nav-item" role="presentation">
         <a class="nav-link" id="my-listings-tab" href="{% url 'my_listings' %}" role="tab" aria-controls="my-listings" aria-selected="false">My Listings</a>
@@ -73,45 +254,46 @@
     </li>
 </ul>
 
-<div class="tab-content" id="myTabContent">
-    <div class="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-        <div class="card mt-4">
+<div class="container mt-4 darken-on-scroll">
+    <div class="card profile-card" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="500">
 
-            <div class="card-body">
-                <button id="edit-toggle-btn" class="btn btn-secondary mt-3">Edit Profile</button>
-                <form id="profile-edit-form" method="post" action="{% url 'edit_profile' %}">
-                    {% csrf_token %}
-                    <div class="form-group">
-                        <label for="username">Username:</label>
-                        <input type="text" id="username" name="username" value="{{ user.username }}" class="form-control" readonly>
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email:</label>
-                        <input type="email" id="email" name="email" value="{{ user.email }}" class="form-control" readonly>
-                    </div>
-                    <div class="form-group">
-                        <label for="first_name">First Name:</label>
-                        <input type="text" id="first_name" name="first_name" value="{{ user.first_name }}" class="form-control" readonly>
-                    </div>
-                    <div class="form-group">
-                        <label for="last_name">Last Name:</label>
-                        <input type="text" id="last_name" name="last_name" value="{{ user.last_name }}" class="form-control" readonly>
-                    </div>
-                    <div class="form-group">
-                        <label for="mobile_number">Mobile Number:</label>
-                        <input type="text" id="mobile_number" name="mobile_number" value="{{ user.mobile_number }}" class="form-control" readonly>
-                    </div>
-                    <div class="form-group">
-                        <label for="postal_code">Postal Code:</label>
-                        <input type="text" id="postal_code" name="postal_code" value="{{ user.postal_code }}" class="form-control" readonly>
-                    </div>
-                    <div class="form-group">
-                        <label for="trading_address">Trading Address:</label>
-                        <input type="text" id="trading_address" name="trading_address" value="{{ user.trading_address }}" class="form-control" readonly>
-                    </div>
-                    <button type="submit" class="btn btn-primary" style="display: none;">Save Changes</button>
-                </form>
-            </div>
+        <div class="card-header d-flex justify-content-end">
+            <button id="edit-toggle-btn" class="btn btn-secondary">Toggle Editing Profile</button>
+        </div>
+
+        <div class="card-body">
+            <form id="profile-edit-form" method="post" action="{% url 'edit_profile' %}">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" value="{{ user.username }}" class="form-control" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" value="{{ user.email }}" class="form-control" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="first_name">First Name:</label>
+                    <input type="text" id="first_name" name="first_name" value="{{ user.first_name }}" class="form-control" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="last_name">Last Name:</label>
+                    <input type="text" id="last_name" name="last_name" value="{{ user.last_name }}" class="form-control" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="mobile_number">Mobile Number:</label>
+                    <input type="text" id="mobile_number" name="mobile_number" value="{{ user.mobile_number }}" class="form-control" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="postal_code">Postal Code:</label>
+                    <input type="text" id="postal_code" name="postal_code" value="{{ user.postal_code }}" class="form-control" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="trading_address">Trading Address:</label>
+                    <input type="text" id="trading_address" name="trading_address" value="{{ user.trading_address }}" class="form-control" readonly>
+                </div>
+                <button type="submit" class="btn btn-primary" style="display: none;">Save Changes</button>
+            </form>
         </div>
     </div>
 </div>
@@ -145,21 +327,18 @@
                     input.removeAttribute('readonly');
                     input.classList.remove('form-control-readonly');
                 });
+            } else {
+                editToggleBtn.removeAttribute('disabled');
+                submitBtn.style.display = 'none';
+
+                // Disable editing
+                formInputs.forEach(function(input) {
+                    input.setAttribute('readonly', 'readonly');
+                    input.classList.add('form-control-readonly');
+                });
             }
         });
-
-        submitBtn.addEventListener('click', function() {
-            // After clicking save, revert to non-editable state
-            isEditing = false;
-            editToggleBtn.removeAttribute('disabled');
-            submitBtn.style.display = 'none';
-
-            // Disable editing
-            formInputs.forEach(function(input) {
-                input.setAttribute('readonly', 'readonly');
-                input.classList.add('form-control-readonly');
-            });
-        });
     });
+
 </script>
 {% endblock %}

@@ -97,7 +97,7 @@ def my_listings_view(request):
     debug_info = []
 
     try:
-        vehicles = Vehicle.objects.filter(seller_id=user_id)
+        vehicles = Vehicle.objects.filter(seller_id=user_id).order_by('-posted_date')
         debug_info.append(f"Fetched vehicles: {list(vehicles)}")
         debug_info.append(f"Logged in user id: {user_id}")
     except Vehicle.DoesNotExist:

@@ -30,7 +30,7 @@ def list_vehicle(request):
             vehicle.seller = request.user
             vehicle.save()
             messages.success(request, 'Your vehicle has been listed successfully!')
-            return redirect('vehicle_success')  # Redirect to a success page
+            return redirect('my_listings')  # Redirect to a success page
         else:
             messages.error(request, 'Please correct the error below.')
     else:
@@ -233,7 +233,7 @@ def add_vehicle(request):
         form = VehicleForm(request.POST, request.FILES, seller=request.user)
         if form.is_valid():
             form.save()
-            return redirect('vehicle_success')  # Replace 'success_url' with the actual URL name or path
+            return redirect('my_listings')  # Replace 'success_url' with the actual URL name or path
         else:
             print("Form is invalid")
             print(form.errors)  # Debug: Print form errors to the console
