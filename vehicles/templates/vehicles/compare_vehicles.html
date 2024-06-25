@@ -42,7 +42,31 @@
             max-width: 300px;
             max-height: 300px;
         }
+        /* Animation styles */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        .fade-in.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
     </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $(window).scroll(function() {
+                $(".fade-in").each(function() {
+                    var position = $(this).offset().top;
+                    var scrollPosition = $(window).scrollTop() + $(window).height();
+                    if (scrollPosition > position) {
+                        $(this).addClass("active");
+                    }
+                });
+            });
+        });
+    </script>
 {% endblock %}
 
 {% block content %}
@@ -57,26 +81,26 @@
 
         {% if compared_data %}
         <hr>
-        <h2 class="car-listings-heading">Comparison Results</h2>
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>Feature</th>
-                    <th>{{ vehicle1 }}</th>
-                    <th>{{ vehicle2 }}</th>
+        <h2 class="car-listings-heading fade-in">Comparison Results</h2>
+        <table class="table table-striped fade-in">
+            <thead class="fade-in">
+                <tr class="fade-in">
+                    <th class="fade-in">Feature</th>
+                    <th class="fade-in">{{ vehicle1 }}</th>
+                    <th class="fade-in">{{ vehicle2 }}</th>
                 </tr>
             </thead>
-            <tbody>
-                <tr>
-                    <td></td>
-                    <td><img src="{{ vehicle1.picture.url }}" alt="Vehicle 1" class="vehicle-image"></td>
-                    <td><img src="{{ vehicle2.picture.url }}" alt="Vehicle 2" class="vehicle-image"></td>
+            <tbody class="fade-in">
+                <tr class="fade-in">
+                    <td class="fade-in"></td>
+                    <td class="fade-in"><img src="{{ vehicle1.picture.url }}" alt="Vehicle 1" class="vehicle-image"></td>
+                    <td class="fade-in"><img src="{{ vehicle2.picture.url }}" alt="Vehicle 2" class="vehicle-image"></td>
                 </tr>
                 {% for field_name, value1, value2 in compared_data %}
-                <tr>
-                    <td>{{ field_name }}</td>
-                    <td>{{ value1 }}</td>
-                    <td>{{ value2 }}</td>
+                <tr class="fade-in">
+                    <td class="fade-in">{{ field_name }}</td>
+                    <td class="fade-in">{{ value1 }}</td>
+                    <td class="fade-in">{{ value2 }}</td>
                 </tr>
                 {% endfor %}
             </tbody>
