@@ -74,17 +74,13 @@ html, body {
     background-color: #c43b35 !important;
 }
 
-
-
-
-
-    .max-w-7xl {
+.max-w-7xl {
     max-width: 100vw; /* Set maximum width to full viewport width */
     margin-left: auto; /* Center align content */
     margin-right: auto; /* Center align content */
     width: 80%;
-    margin-top:50px
-    }
+    margin-top:50px;
+}
 
     .edit-profile-btn {
         display: inline-block;
@@ -120,6 +116,7 @@ html, body {
         border-radius: 10px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
         margin-right: 20px;
+        margin-bottom:100px;
     }
     .form-content {
         background-color: #ffffff;
@@ -127,6 +124,7 @@ html, body {
         border-radius: 10px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
         width: 75%;
+        margin-bottom:100px;
     }
     .form-content .step {
         display: none;
@@ -261,7 +259,7 @@ html, body {
 </div>
 
 
-<div class="max-w-7xl mx-auto px-4">
+<div class="max-w-7xl mx-auto px-4" data-aos="fade-down" data-aos-duration="500" data-aos-delay="400">
     <!-- Progress Bar -->
     <div class="mb-10">
         <div class="relative pt-1">
@@ -275,7 +273,7 @@ html, body {
         </div>
     </div>
 </div>
-<div class="form-container">
+<div class="form-container" data-aos="fade-down" data-aos-duration="500" data-aos-delay="600">
     <!-- Sidebar Menu -->
     <div class="sidebar">
         <div id="sidebar" class="space-y-4">
@@ -298,12 +296,12 @@ html, body {
     </div>
 
     <!-- Form Content -->
-    <div class="form-content">
+    <div class="form-content" data-aos="fade-down" data-aos-duration="500" data-aos-delay="400">
         <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
 
             <!-- Step 1: Contact Details -->
-            <div class="step active" id="step-1">
+            <div class="step active" id="step-1" data-aos="fade-down" data-aos-duration="500" data-aos-delay="400">
                 <h2 class="text-2xl font-semibold mb-6">Contact Details</h2>
 
                 <div class="grid grid-cols-2 gap-6">
@@ -338,7 +336,7 @@ html, body {
             </div>
 
             <!-- Step 2: Add Your Vehicle -->
-            <div class="step" id="step-2">
+            <div class="step" id="step-2" data-aos="fade-down" data-aos-duration="500" data-aos-delay="400">
                 <h2 class="text-2xl font-semibold mb-6">Add Your Vehicle Details</h2>
 
                 <label for="id_make">Make:</label>
@@ -480,114 +478,158 @@ html, body {
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-    const sidebarItems = document.querySelectorAll('#sidebar div');
-    const steps = document.querySelectorAll('.form-content .step');
-    const progressBar = document.getElementById('progress-bar');
-    const nextButtons = document.querySelectorAll('.nextBtn');
-    const publishButton = document.querySelector('.save-btn');
-    const form = document.querySelector('form');
+        const sidebarItems = document.querySelectorAll('#sidebar div');
+        const steps = document.querySelectorAll('.form-content .step');
+        const progressBar = document.getElementById('progress-bar');
+        const nextButtons = document.querySelectorAll('.nextBtn');
+        const publishButton = document.querySelector('.save-btn');
+        const form = document.querySelector('form');
 
-    // Function to validate Step 2 fields
-    function validateStep2() {
-        const step2Inputs = document.querySelectorAll('#step-2 input[type="text"], #step-2 input[type="number"], #step-2 select');
-        let isValid = true;
+        // Function to validate Step 2 fields
+        function validateStep2() {
+            const step2Inputs = document.querySelectorAll('#step-2 input[type="number"]');
+            let isValid = true;
+            let hasError = false;
 
-        step2Inputs.forEach(input => {
-            if (input.value.trim() === '') {
+            step2Inputs.forEach(input => {
+                if (input.value.trim() === '' || parseFloat(input.value) < 0) {
+                    isValid = false;
+                    hasError = true;
+                }
+            });
+
+            // Additional validation for the year field
+            const yearInput = document.querySelector('#id_year');
+            if (!validateYear(yearInput.value)) {
                 isValid = false;
+                hasError = true;
             }
-        });
 
-        if (!isValid) {
-            alert('Please fill in all fields in Step 2.');
+            if (!isValid && hasError) {
+                alert('Please fill all fields correctly!');
+                return false; // Stop further validation and form progression
+            }
+
+            return true; // All validations passed
         }
 
-        return isValid;
-    }
+        // Function to validate Step 4 (Photo Upload) fields
+        function validateStep4() {
+            const firstPhoto = document.querySelector('#id_picture');
+            if (!firstPhoto.value) {
+                alert('Please upload at least one picture!');
+                return false;
+            }
+            return true;
+        }
 
-    // Function to handle form submission
-    form.addEventListener('submit', function(event) {
-        const currentStep = document.querySelector('.form-content .step.active').id.split('-')[1];
+        // Function to handle form submission
+        form.addEventListener('submit', function(event) {
+            const currentStep = document.querySelector('.form-content .step.active').id.split('-')[1];
 
-        if (currentStep === '2') {
-            if (!validateStep2()) {
+            if (currentStep === '2' && !validateStep2()) {
                 event.preventDefault(); // Prevent form submission if Step 2 validation fails
                 return; // Stop execution
             }
+
+            if (currentStep === '4' && !validateStep4()) {
+                event.preventDefault(); // Prevent form submission if Step 4 validation fails
+                return; // Stop execution
+            }
+        });
+
+        // Event listener for Next buttons
+        nextButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const currentStep = document.querySelector('.form-content .step.active').id.split('-')[1];
+                let nextStep = parseInt(currentStep) + 1;
+
+                if (currentStep === '2' && !validateStep2()) {
+                    return; // Stop proceeding if Step 2 validation fails
+                }
+
+                if (currentStep === '4' && !validateStep4()) {
+                    return; // Stop proceeding if Step 4 validation fails
+                }
+
+                if (nextStep <= 5) {
+                    updateSidebar(nextStep);
+                    updateSteps(nextStep);
+                    updateProgressBar(nextStep);
+                    scrollToTop(); // Scroll to top of the page
+                }
+            });
+        });
+
+        // Function to scroll to top of the page with smooth animation
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
         }
-    });
 
-    // Event listener for Next buttons
-    nextButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            const currentStep = document.querySelector('.form-content .step.active').id.split('-')[1];
-            let nextStep = parseInt(currentStep) + 1;
-
-            if (currentStep === '2') {
-                if (!validateStep2()) {
-                    return; // Stop proceeding if Step 2 validation fails
-                }
-            }
-
-            if (nextStep <= 5) {
-                updateSidebar(nextStep);
-                updateSteps(nextStep);
-                updateProgressBar(nextStep);
-            }
-        });
-    });
-
-    // Event listener for sidebar items (steps)
-    sidebarItems.forEach(item => {
-        item.addEventListener('click', function() {
-            const step = this.getAttribute('data-step');
-
-            // Validate Step 2 fields when clicking sidebar items
-            if (step === '3') { // Assuming '3' corresponds to Step 3 in your setup
-                if (!validateStep2()) {
-                    return; // Stop proceeding if Step 2 validation fails
-                }
-            }
-
-            updateSidebar(step);
-            updateSteps(step);
-            updateProgressBar(step);
-        });
-    });
-
-    function updateSidebar(step) {
+        // Event listener for sidebar items (steps)
         sidebarItems.forEach(item => {
-            item.classList.remove('border-red-600', 'text-red-600', 'font-bold');
-            item.classList.add('border-gray-300', 'text-gray-600');
+            item.addEventListener('click', function() {
+                const step = this.getAttribute('data-step');
+
+                if (step === '3' && !validateStep2()) { // Validate Step 2 before moving to Step 3
+                    return; // Stop proceeding if Step 2 validation fails
+                }
+
+                if (step === '5' && !validateStep4()) { // Validate Step 4 before moving to Step 5
+                    return; // Stop proceeding if Step 4 validation fails
+                }
+
+                updateSidebar(step);
+                updateSteps(step);
+                updateProgressBar(step);
+                scrollToTop(); // Scroll to top of the page
+            });
         });
 
-        const currentItem = document.querySelector(`#sidebar div[data-step="${step}"]`);
-        currentItem.classList.remove('border-gray-300', 'text-gray-600');
-        currentItem.classList.add('border-red-600', 'text-red-600', 'font-bold');
-    }
+        function updateSidebar(step) {
+            sidebarItems.forEach(item => {
+                item.classList.remove('border-red-600', 'text-red-600', 'font-bold');
+                item.classList.add('border-gray-300', 'text-gray-600');
+            });
 
-    function updateSteps(step) {
-        steps.forEach(s => {
-            s.classList.remove('active');
-        });
+            const currentItem = document.querySelector(`#sidebar div[data-step="${step}"]`);
+            currentItem.classList.remove('border-gray-300', 'text-gray-600');
+            currentItem.classList.add('border-red-600', 'text-red-600', 'font-bold');
+        }
 
-        const currentStep = document.getElementById(`step-${step}`);
-        currentStep.classList.add('active');
-    }
+        function updateSteps(step) {
+            steps.forEach(s => {
+                s.classList.remove('active');
+            });
 
-    function updateProgressBar(step) {
-        const percentage = (step / 5) * 100;
-        progressBar.style.width = `${percentage}%`;
-    }
+            const currentStep = document.getElementById(`step-${step}`);
+            currentStep.classList.add('active');
+        }
 
-    // Initial setup
-    updateSidebar(1);
-    updateSteps(1);
-    updateProgressBar(1);
-});
+        function updateProgressBar(step) {
+            const percentage = (step / 5) * 100;
+            progressBar.style.width = `${percentage}%`;
+        }
 
+        function validateYear(year) {
+            const currentYear = new Date().getFullYear();
+            const yearRegex = /^(19|20)\d{2}$/; // Matches years from 1900 to 2099
+
+            if (yearRegex.test(year) && parseInt(year) <= currentYear) {
+                return true;
+            }
+            return false;
+        }
+
+        // Initial setup
+        updateSidebar(1);
+        updateSteps(1);
+        updateProgressBar(1);
+    });
 </script>
-
 
 
 

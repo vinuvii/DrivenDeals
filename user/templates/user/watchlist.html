@@ -4,87 +4,211 @@
 {% block extra_head %}
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 <style>
-    /* CSS for styling */
-    .car-list-container {
-        padding: 20px;
-    }
-    .car-item {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        padding: 20px;
-        background-color: #ffffff;
-        border-radius: 10px;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        margin-bottom: 20px;
-        position: relative;
-    }
-    .car-item img {
-        width: 200px;
-        height: 150px;
-        border-radius: 10px;
-        object-fit: cover;
-        margin-right: 20px;
-    }
-    .car-details {
-        flex: 1;
-        min-width: 250px;
-    }
-    .car-details h3 {
-        font-size: 22px;
-        margin-bottom: 10px;
-    }
-    .car-price {
-        background-color: #e74c3c;
-        color: white;
-        padding: 5px 10px; /* Reduced padding */
-        font-size: 20px; /* Reduced font size */
-        font-weight: bold;
-        text-align: right;
-        position: absolute;
-        top: 20px;
-        right: 20px;
-        border-radius: 5px;
-    }
-    .car-item a {
-        text-decoration: none;
-        color: inherit;
-        position: relative;
-    }
-    .car-item:hover {
-        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-    }
-    .view-details-button, .watchlist-button, .remove-watchlist-button {
-        background-color: #e74c3c;
-        color: white;
-        padding: 10px 20px;
-        border-radius: 5px;
-        text-decoration: none;
-        display: inline-block;
-        margin-top: 10px;
-        cursor: pointer;
-    }
-    .view-details-button:hover, .remove-watchlist-button:hover {
-        background-color: #bf3c32; /* Darker shade for hover effect */
-    }
-    .car-listings-heading {
-        font-size: 36px;
-        text-align: center;
-        margin-bottom: 20px; /* Space below the heading */
-        color: #333; /* Ensure heading text color */
-    }
-    .no-bids-message {
-        font-size: 24px;
-        text-align: center;
-        margin-top: 20px; /* Space above the message */
-    }
+html, body {
+    overflow-x: hidden;
+    font-family: 'Open Sans', 'Titillium Web', 'PT Sans', Arial, sans-serif;
+    background: linear-gradient(to bottom, #FEFEFE 0%, #E1DBD6 100%); /* Gradient from light to dark */
+    transition: background-color 0.3s;
+}
+
+.vehicle-details {
+    width: 100%;
+    height: auto;
+}
+
+.vehicle-header {
+    width: 100%;
+    height: 300px; /* Adjust height as needed */
+    overflow: hidden;
+    position: relative;
+    margin-top: -150px;
+    margin-bottom: 50px;
+}
+
+.background-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Adjust opacity as desired */
+}
+
+.vehicle-overlay {
+    font-family: 'Open Sans', 'Titillium Web', 'PT Sans', Arial, sans-serif;
+    position: absolute;
+    top: 180px;
+    left: 180px;
+    color: white;
+    padding: 5px 10px;
+    font-size: 36px;
+    font-weight: bold;
+    z-index: 10;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8); /* Optional: Add text shadow for better contrast */
+}
+
+.nav-tabs {
+    margin-left: 5px; /* Adjust margin as needed */
+}
+
+.nav-tabs .nav-item .nav-link {
+    color: #333; /* Default text color */
+    font-weight: bold;
+    border: none;
+    background-color: transparent;
+    padding: 10px 20px;
+    margin-right: 10px;
+    border-radius: 5px 5px 0 0;
+    transition: background-color 0.3s;
+}
+
+.nav-tabs .nav-item .nav-link.active {
+    background-color: #de483d; /* Active tab background color */
+    color: white; /* Active tab text color */
+}
+
+.nav-tabs .nav-item .nav-link:hover {
+    background-color: #bf3c32; /* Hover tab background color */
+    color: white; /* Hover tab text color */
+}
+
+/* Button styling for Log Out */
+.nav-tabs .nav-item .nav-link#logout-tab {
+    background-color: #f48f85;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.nav-tabs .nav-item .nav-link#logout-tab:hover {
+    background-color: #bf3c32;
+}
+
+.car-list-container {
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.car-item {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 30px;
+    margin-left: 10px;
+    margin-right: 10px;
+    position: relative;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    font-family: 'Open Sans', 'Titillium Web', 'PT Sans', Arial, sans-serif;
+}
+
+.car-item.animate-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.car-item img {
+    width: 200px;
+    height: 150px;
+    border-radius: 10px;
+    object-fit: cover;
+    margin-right: 20px;
+}
+
+.car-details {
+    flex: 1;
+    min-width: 250px;
+}
+
+.car-details h3 {
+    font-size: 22px;
+    margin-bottom: 10px;
+}
+
+.car-price {
+    background-color: #e74c3c;
+    color: white;
+    padding: 5px 10px; /* Reduced padding */
+    font-size: 20px; /* Reduced font size */
+    font-weight: bold;
+    text-align: right;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    border-radius: 5px;
+}
+
+.car-item a {
+    text-decoration: none;
+    color: inherit;
+    position: relative;
+}
+
+.car-item:hover {
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.view-details-button, .watchlist-button, .remove-watchlist-button {
+    background-color: #e74c3c;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.view-details-button:hover, .remove-watchlist-button:hover {
+    background-color: #bf3c32; /* Darker shade for hover effect */
+}
+
+.car-listings-heading {
+    font-size: 36px;
+    text-align: center;
+    margin-bottom: 20px; /* Space below the heading */
+    color: #333; /* Ensure heading text color */
+}
+
+.no-bids-message {
+    font-size: 24px;
+    text-align: center;
+    margin-top: 20px; /* Space above the message */
+}
+
 </style>
 {% endblock %}
+
 {% block content %}
+<div class="vehicle-details" data-aos="fade-down" data-aos-duration="500" data-aos-delay="200">
+    <div class="vehicle-header">
+        <div class="background-image"
+             style="background-image: url('https://www.freewebheaders.com/wp-content/gallery/cars/cache/toyota-gt86-dashboard-car-website-header.jpg-nggid043742-ngg0dyn-1280x375x100-00f0w010c010r110f110r010t010.jpg');">
+            <div class="overlay"></div>
+            <div class="vehicle-overlay">{{ user.first_name }}'s Watchlist</div>
+        </div>
+    </div>
+</div>
 
-<h1 class="car-listings-heading">My Watchlist</h1>
-
-<ul class="nav nav-tabs" id="myTab" role="tablist">
+<ul class="nav nav-tabs" id="myTab" role="tablist" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="300">
     <li class="nav-item" role="presentation">
         <a class="nav-link" id="profile-tab" href="{% url 'edit_profile' %}" role="tab" aria-controls="profile" aria-selected="false">Profile</a>
     </li>
@@ -101,7 +225,8 @@
         <button class="nav-link" id="logout-tab" onclick="confirmLogout()" role="tab" aria-controls="logout" aria-selected="false">Log Out</button>
     </li>
 </ul>
-<div class="tab-content" id="myTabContent">
+
+<div class="tab-content" id="myTabContent" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="600">
     <div class="tab-pane fade show active" id="watchlist" role="tabpanel" aria-labelledby="watchlist-tab">
         <div class="car-list-container">
             {% if watchlist_items %}
@@ -112,7 +237,7 @@
                         <img src="{{ item.vehicle.picture.url }}" alt="Vehicle Image">
                         {% endif %}
                         <div class="car-details">
-                            <h3>{{ item.vehicle.make }} {{ item.vehicle.model }}</h3>
+                            <h3><strong>{{ item.vehicle.make|title }} - {{ item.vehicle.model|title }}</strong></h3>
                             <strong>{{ item.vehicle.year }}</strong><br>
                             <span class="car-price">LKR {{ item.vehicle.price|intcomma }}</span><br>
                             <p>{{ item.vehicle.description }}</p>
@@ -125,7 +250,7 @@
                     {% endfor %}
                 </ul>
             {% else %}
-                <p class="no-bids-message">You have no items in your watchlist.</p>
+            <p class="no-bids-message"><strong>You Have No Items In Your Watchlist.</strong></p>
             {% endif %}
         </div>
     </div>
@@ -133,6 +258,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
     function confirmLogout() {
         const result = confirm("Are you sure you want to logout?");
@@ -175,8 +301,21 @@
                 });
             });
         });
+
+        // Trigger scroll event on page load to animate items already in view
+        $(window).scroll(function() {
+            $(".car-item").each(function() {
+                var position = $(this).offset().top;
+                var scrollPosition = $(window).scrollTop() + $(window).height();
+                if (scrollPosition > position) {
+                    $(this).addClass("animate-in");
+                }
+            });
+        });
+
+        // Initial trigger to animate items already in view
+        $(window).scroll();
     });
 </script>
 {% endblock %}
-
 
