@@ -1,6 +1,8 @@
 from django import forms
 from django.contrib.auth import get_user_model
 from .models import Vehicle
+from .models import ContactMessage
+
 
 User = get_user_model()
 
@@ -138,3 +140,11 @@ class VehicleFilterForm(forms.Form):
 class VehicleComparisonForm(forms.Form):
     vehicle1 = forms.ModelChoiceField(queryset=Vehicle.objects.all(), label='Select Vehicle 1')
     vehicle2 = forms.ModelChoiceField(queryset=Vehicle.objects.all(), label='Select Vehicle 2')
+
+class ContactForm(forms.ModelForm):
+    class Meta:
+        model = ContactMessage
+        fields = ['name', 'email', 'review']
+
+
+

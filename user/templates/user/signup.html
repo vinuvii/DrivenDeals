@@ -120,10 +120,10 @@
             <div class="terms">
                 <p>By registering, you agree to our <a href="{% url 'privacy_policy' %}">Privacy Policy</a> and <a href="{% url 'terms_of_use' %}">Terms of Use</a></p>
                 <p>Already have an account? <a href="{% url 'login' %}?next={{ next }}">Log In</a></p>
-                <p>Next URL: {{ next }}</p>
-                {% if error_message %}
-                    <p class="error-message">{{ error_message }}</p>
-                {% endif %}
+    
+            {% if error_message %}
+                <p class="error-message">{{ error_message }}</p>
+            {% endif %}
             </div>
         </div>
     </div>

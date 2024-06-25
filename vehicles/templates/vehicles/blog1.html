@@ -2,122 +2,123 @@
 
 {% block extra_head %}
 <style>
-    .blog-section {
+    .section {
         padding: 50px 20px;
-        background-color: #ffffff;
         color: #333;
         position: relative;
-        overflow: hidden; /* Ensure child elements do not overflow */
-    }
-    .blog-section::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
+        overflow: hidden;
         background: url('https://www.seat.com/content/dam/public/seat-website/myco/2425/carworlds/leon/overview/version-view/leon-fr/seat-leon-5d-fr-trim-desire-red-colour-alloy-wheels.png') no-repeat center center/cover;
-        opacity: 0; /* Start with full transparency */
-        transform: scale(1.2); /* Start with a slight zoom */
-        transition: opacity 1.5s ease-in-out, transform 1.5s ease-in-out; /* Transition for opacity and transform */
-        z-index: 0;
+        background-attachment: fixed; /* Ensure the background image remains fixed */
     }
-    .blog-section.visible::before {
-        opacity: 0.05; /* End with light opacity */
-        transform: scale(1); /* End with original size */
-    }
-    .blog-section h1, .blog-section p {
+    .content {
         position: relative;
         z-index: 1;
-        transform: translateY(50px); /* Start position for the slide-up effect */
-        opacity: 0; /* Start with full transparency */
-        transition: transform 1s ease-in-out, opacity 1s ease-in-out; /* Transition for both transform and opacity */
+        transform: translateY(50px);
+        opacity: 0;
+        transition: transform 1s ease-in-out, opacity 1s ease-in-out;
+        max-width: 800px;
+        margin: 0 auto;
+        background-color: rgba(255, 255, 255, 0.9); /* Background color for content area */
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* Box shadow for content area */
     }
-    .blog-section.visible h1, .blog-section.visible p {
-        transform: translateY(0); /* End position for the slide-up effect */
-        opacity: 1; /* End with full opacity */
+
+    .section.visible .content {
+        transform: translateY(0);
+        opacity: 1;
     }
-    .blog-section h1 {
+
+    h1 {
         text-align: center;
         margin-bottom: 20px;
+        font-size: 36px;
     }
-    .blog-section p {
+
+    p {
+
+        margin: 10px auto;
+    }
+
+    .service {
+        margin-bottom: 30px;
+        padding: 20px;
+        background-color: rgba(255, 255, 255, 0.9); /* Background color for each service box */
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* Box shadow for each service box */
+    }
+
+    .service h2 {
+        font-size: 24px;
+        color: #de483d;
+    }
+
+    .service p {
         text-align: justify;
-        margin: 0 auto 20px auto; /* Added margin-bottom for spacing between paragraphs */
-        max-width: 800px;
+        margin-bottom: 0;
     }
 </style>
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-        const blogSection = document.querySelector('.blog-section');
+        const sections = document.querySelectorAll('.section');
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    blogSection.classList.add('visible');
+                    entry.target.classList.add('visible');
                 }
             });
         });
-        observer.observe(blogSection);
+        sections.forEach(section => {
+            observer.observe(section);
+        });
     });
 </script>
 {% endblock %}
 
 {% block content %}
-<div class="blog-section">
-    <h1 style="font-size: 36px;">Latest Trends in the Car Market</h1>
-    <p>
-        The car market is constantly evolving, and staying updated with the latest trends can help you make informed decisions whether you're buying or selling a vehicle. One of the most notable trends is the rise of electric vehicles (EVs). With increasing concerns about environmental sustainability and advancements in technology, more consumers are considering EVs as a viable option. Companies like Tesla, Nissan, and Chevrolet are leading the way with their innovative electric models that offer impressive ranges and performance.
-    </p>
-    <p>
-        Another significant trend is the integration of advanced driver-assistance systems (ADAS). These systems enhance safety by providing features such as lane-keeping assistance, adaptive cruise control, and automatic emergency braking. Cars equipped with ADAS are becoming more popular as they offer an added layer of security and convenience for drivers.
-    </p>
-    <p>
-        Connectivity is also a major focus in the automotive industry. Modern vehicles are now equipped with infotainment systems that offer seamless integration with smartphones, providing access to navigation, music, and communication apps. This trend is transforming cars into smart devices on wheels, enhancing the driving experience.
-    </p>
-
-    <h1 style="font-size: 36px;">Tips for Maintaining Your Vehicle</h1>
-    <p>
-        Proper maintenance is crucial to ensure the longevity and performance of your vehicle. Here are some essential tips to keep your car in top shape:
-    </p>
-    <p>
-        <strong>Regular Oil Changes:</strong> Changing your car's oil at recommended intervals is vital for keeping the engine running smoothly. It helps to reduce friction and wear on engine components.
-    </p>
-    <p>
-        <strong>Check Tire Pressure:</strong> Maintaining the correct tire pressure is important for safety and fuel efficiency. Underinflated tires can cause poor handling and increased fuel consumption.
-    </p>
-    <p>
-        <strong>Inspect Brakes:</strong> Regularly check your brake pads and discs for wear. If you notice any squeaking or reduced braking performance, it's time to get them inspected and replaced if necessary.
-    </p>
-    <p>
-        <strong>Keep the Battery in Good Condition:</strong> Ensure your car's battery is clean and securely mounted. Check the terminals for corrosion and clean them if needed. If your battery is over three years old, consider having it tested to ensure it holds a charge.
-    </p>
-    <p>
-        <strong>Replace Air Filters:</strong> A clogged air filter can reduce engine performance and fuel efficiency. Check your air filter regularly and replace it as needed.
-    </p>
-    <p>
-        <strong>Regular Servicing:</strong> Follow your vehicle's service schedule as recommended by the manufacturer. Regular servicing can help identify and address potential issues before they become major problems.
-    </p>
-
-    <h1 style="font-size: 36px;">Stories from Our Satisfied Customers</h1>
-    <p>
-        At DrivenDeals, we take pride in the satisfaction of our customers. Here are some of their stories:
-    </p>
-    <p>
-        <strong>John D.</strong> - "I had an excellent experience with DrivenDeals. The platform made it easy to find the perfect car for my needs. The customer service was top-notch, and I couldn't be happier with my purchase."
-    </p>
-    <p>
-        <strong>Emily R.</strong> - "Selling my car through DrivenDeals was a breeze. The listing process was straightforward, and I received multiple offers within days. I highly recommend DrivenDeals to anyone looking to buy or sell a car."
-    </p>
-    <p>
-        <strong>Michael S.</strong> - "The team at DrivenDeals went above and beyond to help me find the right vehicle. They were knowledgeable, friendly, and always available to answer my questions. I'm thrilled with my new car and the overall experience."
-    </p>
-    <p>
-        <strong>Sarah K.</strong> - "DrivenDeals made car buying so much easier. I was able to browse through a wide selection of vehicles and compare prices. The process was smooth, and I felt confident in my decision. Thank you, DrivenDeals!"
-    </p>
+<div class="section">
+    <div class="content">
+        <h1>Latest Trends in the Car Market</h1>
+        <p>
+            The car market is constantly evolving, and staying updated with the latest trends can help you make informed decisions whether you're buying or selling a vehicle. One of the most notable trends is the rise of electric vehicles (EVs). With increasing concerns about environmental sustainability and advancements in technology, more consumers are considering EVs as a viable option. Companies like Tesla, Nissan, and Chevrolet are leading the way with their innovative electric models that offer impressive ranges and performance.
+        </p>
+        <p>
+            Another significant trend is the integration of advanced driver-assistance systems (ADAS). These systems enhance safety by providing features such as lane-keeping assistance, adaptive cruise control, and automatic emergency braking. Cars equipped with ADAS are becoming more popular as they offer an added layer of security and convenience for drivers.
+        </p>
+        <p>
+            Connectivity is also a major focus in the automotive industry. Modern vehicles are now equipped with infotainment systems that offer seamless integration with smartphones, providing access to navigation, music, and communication apps. This trend is transforming cars into smart devices on wheels, enhancing the driving experience.
+        </p>
+    </div>
 </div>
+
+<div class="section">
+    <div class="content">
+        <h1>Tips for Maintaining Your Vehicle</h1>
+        <div class="service">
+            <h2>Regular Oil Changes</h2>
+            <p>Changing your car's oil at recommended intervals is vital for keeping the engine running smoothly. It helps to reduce friction and wear on engine components.</p>
+        </div>
+        <div class="service">
+            <h2>Check Tire Pressure</h2>
+            <p>Maintaining the correct tire pressure is important for safety and fuel efficiency. Underinflated tires can cause poor handling and increased fuel consumption.</p>
+        </div>
+        <div class="service">
+            <h2>Inspect Brakes</h2>
+            <p>Regularly check your brake pads and discs for wear. If you notice any squeaking or reduced braking performance, it's time to get them inspected and replaced if necessary.</p>
+        </div>
+        <div class="service">
+            <h2>Keep the Battery in Good Condition</h2>
+            <p>Ensure your car's battery is clean and securely mounted. Check the terminals for corrosion and clean them if needed. If your battery is over three years old, consider having it tested to ensure it holds a charge.</p>
+        </div>
+        <div class="service">
+            <h2>Replace Air Filters</h2>
+            <p>A clogged air filter can reduce engine performance and fuel efficiency. Check your air filter regularly and replace it as needed.</p>
+        </div>
+        <div class="service">
+            <h2>Regular Servicing</h2>
+            <p>Follow your vehicle's service schedule as recommended by the manufacturer. Regular servicing can help identify and address potential issues before they become major problems.</p>
+        </div>
+    </div>
+</div>
+
 {% endblock %}
-
-
-
-
-

@@ -2,120 +2,154 @@
 
 {% block extra_head %}
 <style>
-    .blog-section {
+    .section {
         padding: 50px 20px;
-        background-color: #ffffff;
         color: #333;
         position: relative;
-        overflow: hidden; /* Ensure child elements do not overflow */
-    }
-    .blog-section::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
+        overflow: hidden;
         background: url('https://www.seat.com/content/dam/public/seat-website/myco/2425/carworlds/leon/overview/version-view/leon-fr/seat-leon-5d-fr-trim-desire-red-colour-alloy-wheels.png') no-repeat center center/cover;
-        opacity: 0; /* Start with full transparency */
-        transform: scale(1.2); /* Start with a slight zoom */
-        transition: opacity 1.5s ease-in-out, transform 1.5s ease-in-out; /* Transition for opacity and transform */
-        z-index: 0;
+        background-attachment: fixed; /* Ensure the background image remains fixed */
     }
-    .blog-section.visible::before {
-        opacity: 0.05; /* End with light opacity */
-        transform: scale(1); /* End with original size */
-    }
-    .blog-section h1, .blog-section p {
+    .content {
         position: relative;
         z-index: 1;
-        transform: translateY(50px); /* Start position for the slide-up effect */
-        opacity: 0; /* Start with full transparency */
-        transition: transform 1s ease-in-out, opacity 1s ease-in-out; /* Transition for both transform and opacity */
+        transform: translateY(50px);
+        opacity: 0;
+        transition: transform 1s ease-in-out, opacity 1s ease-in-out;
+        max-width: 800px;
+        margin: 0 auto;
+        background-color: rgba(255, 255, 255, 0.9); /* Background color for content area */
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* Box shadow for content area */
     }
-    .blog-section.visible h1, .blog-section.visible p {
-        transform: translateY(0); /* End position for the slide-up effect */
-        opacity: 1; /* End with full opacity */
+
+    .section.visible .content {
+        transform: translateY(0);
+        opacity: 1;
     }
-    .blog-section h1 {
+
+    h1 {
         text-align: center;
         margin-bottom: 20px;
+        font-size: 36px;
     }
-    .blog-section p {
+
+    p {
+
+        margin: 10px auto;
+    }
+
+    .service {
+        margin-bottom: 30px;
+        padding: 20px;
+        background-color: rgba(255, 255, 255, 0.9); /* Background color for each service box */
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* Box shadow for each service box */
+    }
+
+    .service h2 {
+        font-size: 24px;
+        color: #de483d;
+    }
+
+    .service p {
         text-align: justify;
-        margin: 0 auto 20px auto; /* Added margin-bottom for spacing between paragraphs */
-        max-width: 800px;
+        margin-bottom: 0;
     }
 </style>
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-        const blogSection = document.querySelector('.blog-section');
+        const sections = document.querySelectorAll('.section');
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    blogSection.classList.add('visible');
+                    entry.target.classList.add('visible');
                 }
             });
         });
-        observer.observe(blogSection);
+        sections.forEach(section => {
+            observer.observe(section);
+        });
     });
 </script>
 {% endblock %}
 
 {% block content %}
-<div class="blog-section">
-    <h1 style="font-size: 36px;">The Benefits of Regular Car Maintenance</h1>
-    <p>
-        Regular car maintenance is essential to keep your vehicle running smoothly and efficiently. By staying on top of routine maintenance tasks, you can extend the life of your car, improve its performance, and avoid costly repairs down the road. Here are some key benefits of regular car maintenance:
-    </p>
-    <p>
-        <strong>Improved Safety:</strong> Regular maintenance helps ensure that your car's critical systems, such as brakes and tires, are in good working condition. This reduces the risk of accidents caused by mechanical failures.
-    </p>
-    <p>
-        <strong>Better Fuel Efficiency:</strong> A well-maintained car operates more efficiently, which can lead to better fuel economy. Tasks like keeping your tires properly inflated and changing the oil regularly can make a significant difference in your car's fuel consumption.
-    </p>
-    <p>
-        <strong>Extended Vehicle Lifespan:</strong> Regular maintenance helps prevent major issues that can shorten the life of your vehicle. By addressing small problems early, you can avoid more serious and expensive repairs later on.
-    </p>
-    <p>
-        <strong>Higher Resale Value:</strong> A car that has been well-maintained typically has a higher resale value. Potential buyers are more likely to pay a premium for a vehicle that comes with a documented history of regular maintenance.
-    </p>
+<div class="section">
+    <div class="content">
+        <h1>The Benefits of Regular Car Maintenance</h1>
+        <p>
+            Regular car maintenance is essential to keep your vehicle running smoothly and efficiently. By staying on top of routine maintenance tasks, you can extend the life of your car, improve its performance, and avoid costly repairs down the road. Here are some key benefits of regular car maintenance:
+        </p>
+        <div class="service">
+            <h2>Improved Safety</h2>
+            <p>Regular maintenance helps ensure that your car's critical systems, such as brakes and tires, are in good working condition. This reduces the risk of accidents caused by mechanical failures.</p>
+        </div>
+        <div class="service">
+            <h2>Better Fuel Efficiency</h2>
+            <p>A well-maintained car operates more efficiently, which can lead to better fuel economy. Tasks like keeping your tires properly inflated and changing the oil regularly can make a significant difference in your car's fuel consumption.</p>
+        </div>
+        <div class="service">
+            <h2>Extended Vehicle Lifespan</h2>
+            <p>Regular maintenance helps prevent major issues that can shorten the life of your vehicle. By addressing small problems early, you can avoid more serious and expensive repairs later on.</p>
+        </div>
+        <div class="service">
+            <h2>Higher Resale Value</h2>
+            <p>A car that has been well-maintained typically has a higher resale value. Potential buyers are more likely to pay a premium for a vehicle that comes with a documented history of regular maintenance.</p>
+        </div>
+    </div>
+</div>
 
-    <h1 style="font-size: 36px;">The Importance of Vehicle Inspections Before Buying a Used Car</h1>
-    <p>
-        Buying a used car can be a great way to save money, but it's important to ensure that the vehicle is in good condition before making a purchase. Here are some reasons why a thorough vehicle inspection is crucial:
-    </p>
-    <p>
-        <strong>Uncover Hidden Issues:</strong> A detailed inspection can reveal hidden problems that may not be immediately apparent during a test drive. This can include issues with the engine, transmission, or other critical components.
-    </p>
-    <p>
-        <strong>Ensure Safety:</strong> An inspection can identify safety concerns such as worn brakes, tires, or suspension components. Addressing these issues before buying can prevent accidents and costly repairs.
-    </p>
-    <p>
-        <strong>Verify the Vehicle's History:</strong> A professional inspection can verify the accuracy of the vehicle's history report, ensuring there are no discrepancies related to accidents, repairs, or mileage.
-    </p>
-    <p>
-        <strong>Negotiate a Better Price:</strong> If the inspection uncovers issues, you can use this information to negotiate a lower price with the seller. This can save you money and give you leverage during the buying process.
-    </p>
+<div class="section">
+    <div class="content">
+        <h1>The Importance of Vehicle Inspections Before Buying a Used Car</h1>
+        <p>
+            Buying a used car can be a great way to save money, but it's important to ensure that the vehicle is in good condition before making a purchase. Here are some reasons why a thorough vehicle inspection is crucial:
+        </p>
+        <div class="service">
+            <h2>Uncover Hidden Issues</h2>
+            <p>A detailed inspection can reveal hidden problems that may not be immediately apparent during a test drive. This can include issues with the engine, transmission, or other critical components.</p>
+        </div>
+        <div class="service">
+            <h2>Ensure Safety</h2>
+            <p>An inspection can identify safety concerns such as worn brakes, tires, or suspension components. Addressing these issues before buying can prevent accidents and costly repairs.</p>
+        </div>
+        <div class="service">
+            <h2>Verify the Vehicle's History</h2>
+            <p>A professional inspection can verify the accuracy of the vehicle's history report, ensuring there are no discrepancies related to accidents, repairs, or mileage.</p>
+        </div>
+        <div class="service">
+            <h2>Negotiate a Better Price</h2>
+            <p>If the inspection uncovers issues, you can use this information to negotiate a lower price with the seller. This can save you money and give you leverage during the buying process.</p>
+        </div>
+    </div>
+</div>
 
-    <h1 style="font-size: 36px;">DIY Car Maintenance Tips</h1>
-    <p>
-        While some car maintenance tasks are best left to professionals, there are several simple tasks that you can do yourself to keep your car in good shape. Here are some DIY car maintenance tips:
-    </p>
-    <p>
-        <strong>Check Fluid Levels:</strong> Regularly check and top off essential fluids such as engine oil, coolant, brake fluid, and windshield washer fluid. This helps ensure that your car's systems function properly.
-    </p>
-    <p>
-        <strong>Replace Wiper Blades:</strong> Worn wiper blades can reduce visibility during rain or snow. Replacing them is a simple task that can make a big difference in your safety.
-    </p>
-    <p>
-        <strong>Inspect and Replace Air Filters:</strong> A clean air filter improves engine performance and fuel efficiency. Check your air filter regularly and replace it when it's dirty.
-    </p>
-    <p>
-        <strong>Check Tire Pressure and Tread:</strong> Maintaining the correct tire pressure improves fuel efficiency and safety. Additionally, regularly inspect the tread for wear and replace tires as needed.
-    </p>
-    <p>
-        <strong>Clean and Protect Your Car:</strong> Regularly wash and wax your car to protect the paint and keep it looking good. Cleaning the interior and using protective products on the dashboard and seats can also help maintain your car's value.
-    </p>
+<div class="section">
+    <div class="content">
+        <h1>DIY Car Maintenance Tips</h1>
+        <p>While some car maintenance tasks are best left to professionals, there are several simple tasks that you can do yourself to keep your car in good shape. Here are some DIY car maintenance tips:</p>
+        <div class="service">
+            <h2>Check Fluid Levels</h2>
+            <p>Regularly check and top off essential fluids such as engine oil, coolant, brake fluid, and windshield washer fluid. This helps ensure that your car's systems function properly.</p>
+        </div>
+        <div class="service">
+            <h2>Replace Wiper Blades</h2>
+            <p>Worn wiper blades can reduce visibility during rain or snow. Replacing them is a simple task that can make a big difference in your safety.</p>
+        </div>
+        <div class="service">
+            <h2>Inspect and Replace Air Filters</h2>
+            <p>A clean air filter improves engine performance and fuel efficiency. Check your air filter regularly and replace it when it's dirty.</p>
+        </div>
+        <div class="service">
+            <h2>Check Tire Pressure and Tread</h2>
+            <p>Maintaining the correct tire pressure improves fuel efficiency and safety. Additionally, regularly inspect the tread for wear and replace tires as needed.</p>
+        </div>
+        <div class="service">
+            <h2>Clean and Protect Your Car</h2>
+            <p>Regularly wash and wax your car to protect the paint and keep it looking good. Cleaning the interior and using protective products on the dashboard and seats can also help maintain your car's value.</p>
+        </div>
+    </div>
 </div>
 {% endblock %}

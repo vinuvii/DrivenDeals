@@ -3,6 +3,7 @@ import pytz
 from django.utils import timezone
 from django.conf import settings
 
+
 class Vehicle(models.Model):
     MANUFACTURER_CHOICES = [
         ('Audi', 'Audi'),
@@ -112,3 +113,16 @@ class Vehicle(models.Model):
 
     def __str__(self):
         return f"{self.year} {self.make} {self.model}"
+
+class ContactMessage(models.Model):
+    name = models.CharField(max_length=100)
+    email = models.EmailField()
+    review = models.TextField()  # This will be used as a testimonial
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.name} - {self.timestamp}"
+
+
+
+
