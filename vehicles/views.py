@@ -334,6 +334,19 @@ def filter_vehicles(request):
         if form.cleaned_data['leather_seats']:
             vehicles = vehicles.filter(leather_seats=form.cleaned_data['leather_seats'])
 
+        search_query = request.GET.get('search', '')
+        if search_query:
+            vehicles = vehicles.filter(
+                Q(make__icontains=search_query) |
+                Q(model__icontains=search_query) |
+                Q(description__icontains=search_query)  # Add other fields as necessary
+            )
+
+    context = {
+        'form': form,
+        'vehicles': vehicles,
+    }
+
     return render(request, 'vehicles/filter_vehicles.html', {'form': form, 'vehicles': vehicles})
 
 

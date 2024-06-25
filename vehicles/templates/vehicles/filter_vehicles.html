@@ -5,14 +5,11 @@
 <!-- Add any additional head content for filter_vehicles.html here if necessary -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-l5XddQ8R13IoD41D8r9qR+ldvi2njK2Kc1zT2LOPzqEGlXqD4T6GkRWJY7YzG2sFXuvJgV0NN0cBl1JdBTpObQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <style>
-
     .filter-form {
         margin: 20px 0;
-        margin-top:20px;
     }
     .filter-form .form-group {
         margin-bottom: 15px;
-         margin-top: 20px;
     }
     .filter-form .btn-primary {
         margin-top: 20px;
@@ -22,21 +19,21 @@
         border: 2px solid #e74c3c;
         border-radius: 10px;
         padding: 15px; /* Add padding for better separation */
-
-
+        opacity: 0;
+        transform: translateY(100px);
+        animation: slideUp 0.5s forwards;
     }
     .card img {
         width: 100%;
         height: 200px; /* Set a fixed height */
         object-fit: cover; /* Ensures the image covers the area while maintaining aspect ratio */
         border-radius: 10px 10px 0 0;
-         margin-top: 20px;
     }
     .car-listings-heading {
         font-size: 36px;
         text-align: center;
         margin-bottom: 20px; /* Space below the heading */
-        margin-top: 20px;
+         margin-top: 20px; /* Space above the heading */
     }
     .filter-button {
         padding: 10px 20px;
@@ -75,13 +72,9 @@
         background-color: #f8f9fa;
         padding: 20px;
         border-right: 1px solid #ddd;
-
-
     }
     .sidebar .filter-section {
         margin-bottom: 20px;
-
-
     }
     .sidebar .filter-section h3 {
         font-size: 22px;
@@ -90,7 +83,6 @@
         display: flex;
         align-items: center; /* Align text and image vertically */
         color: #e74c3c;
-
     }
     .sidebar .filter-section h4 {
         font-size: 30px;
@@ -99,32 +91,35 @@
         display: flex;
         align-items: center; /* Align text and image vertically */
         color: black;
-
-     }
+    }
     .sidebar .filter-section h3 img {
         max-width: 30px; /* Adjust width of the image as needed */
         height: auto; /* Maintain aspect ratio */
         margin-right: 10px; /* Space between image and text */
+    }
 
-    }
-    .col-md-9 .card {
-        margin-top: 30px;
-    }
-     .col-md-3 .card {
-        margin-top: 30px;
+    @keyframes slideUp {
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
     }
 </style>
 {% endblock %}
 
 {% block content %}
 <div class="container-fluid">
-    <div class="row">
-        <div class="col-md-3">
+    <h2 class="car-listings-heading"></i> Advanced Filter</h2>
+    <div class="filter-container">
+        <div class="filter-sidebar">
             <div class="card">
                 <div class="sidebar">
                     <form method="get" class="filter-form">
+			<div class="form-group">
+                            <input type="text" name="search" class="form-control" placeholder="Search by keyword" value="{{ request.GET.search }}">
+                        </div>
                         <div class="filter-section">
-                            <h4><i class="fas fa-filter"></i>  Filter Options</h4>
+                            <h4><i class="fas fa-filter"></i> Filter Options</h4>
                             <h3 onclick="toggleSection('vehicle-info')"><i class="fas fa-car"></i> Vehicle Information</h3>
                             <div id="vehicle-info" class="filter-section-content">
                                 <div class="form-group">
@@ -233,13 +228,14 @@
 
                             </div>
                         </div>
+
                         <button type="submit" class="filter-button">Filter</button>
                         <a href="{% url 'filter_vehicles' %}" class="clear-filters-button">Clear Filters</a>
                     </form>
                 </div>
             </div>
         </div>
-        <div class="col-md-9">
+        <div class="filter-results">
             <div class="card">
                 {% if vehicles %}
                     <h2 class="car-listings-heading"><i class="fas fa-car"></i> Results</h2>
@@ -289,4 +285,3 @@
     });
 </script>
 {% endblock %}
-
